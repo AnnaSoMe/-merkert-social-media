@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Start-Process \"C:\\\\Users\\\\annam\\\\Projekte\\\\merkert-social-media\\\\index.html\")",
+      "PowerShell(New-Item *)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\annam\\\\Downloads\\\\MerkertContentBibliothek.html\" | Select-Object FullName, @{Name='SizeKB';Expression={[math]::Round\\($_.Length/1KB,2\\)}})",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(netlify *)",
+      "PowerShell(Start-Process \"https://merkertsocialmedia.com\")",
+      "PowerShell(winget upgrade *)",
+      "PowerShell(Start-Process \"C:\\\\Users\\\\annam\\\\Projekte\\\\merkert-social-media\\\\index.backup.html\")",
+      "Skill(update-config)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$j = [Console]::In.ReadToEnd() | ConvertFrom-Json; if ($j.tool_input.file_path -like '*index.backup.html') { Start-Process 'C:\\Users\\annam\\Projekte\\merkert-social-media\\index.backup.html' }"
+          }
+        ]
+      }
+    ]
+  }
+}

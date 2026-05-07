@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Zahlung erfolgreich – Merkert Social Media</title>
+<style>
+  :root{--cream:#F5F0E8;--coral:#C67B5A;--dark:#2C2420;--green:#4A6741;--sand:#E0D8CE}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Georgia,serif;background:var(--cream);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+  .card{background:white;border-radius:16px;padding:3rem;max-width:540px;width:100%;text-align:center;box-shadow:0 16px 48px rgba(44,36,32,.12)}
+  .icon{font-size:3.5rem;margin-bottom:1rem}
+  h1{font-size:1.8rem;color:var(--dark);font-weight:normal;margin-bottom:.75rem;line-height:1.3}
+  .sub{font-family:sans-serif;font-size:15px;color:#6B5B4E;line-height:1.7;margin-bottom:2rem}
+  .highlight{background:#f0f5ee;border-radius:8px;padding:1rem 1.25rem;margin-bottom:2rem;font-family:sans-serif;font-size:13px;color:var(--green);text-align:left}
+  .highlight strong{display:block;margin-bottom:.3rem;font-size:14px}
+  .btn{display:inline-block;background:var(--coral);color:white;padding:12px 28px;border-radius:4px;font-family:sans-serif;font-size:14px;text-decoration:none;font-weight:600}
+  .btn-outline{display:inline-block;border:1.5px solid var(--sand);color:#6B5B4E;padding:11px 24px;border-radius:4px;font-family:sans-serif;font-size:14px;text-decoration:none;margin-top:.75rem}
+  .actions{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+  .footer-note{font-family:sans-serif;font-size:11px;color:#aaa;margin-top:2rem}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">🎉</div>
+  <h1>Zahlung erfolgreich!</h1>
+  <p class="sub">
+    Vielen Dank für deinen Kauf.<br>
+    Du erhältst in Kürze eine Bestätigungs-E-Mail mit deinen personalisierten Posts.
+  </p>
+  <div class="highlight">
+    <strong>📬 Was passiert als Nächstes?</strong>
+    Anna erstellt deine Posts innerhalb von 24–48 Stunden und schickt sie dir per E-Mail zu. Du kannst sie direkt auf Instagram, Facebook oder LinkedIn posten.
+  </div>
+  <div class="actions">
+    <a href="/" class="btn">← Zurück zur Startseite</a>
+    <a href="mailto:a.merkert58@googlemail.com" class="btn-outline">Frage stellen</a>
+  </div>
+  <p class="footer-note">Bei Fragen: a.merkert58@googlemail.com · © 2026 Merkert Social Media</p>
+</div>
+<script>
+  // Optionaler Konfetti-Effekt beim Laden
+  const params = new URLSearchParams(window.location.search);
+  const sessionId = params.get('session_id');
+  if (sessionId) {
+    // session_id vorhanden = echte Zahlung bestätigt
+    document.querySelector('.icon').textContent = '✅';
+  }
+</script>
+</body>
+</html>
