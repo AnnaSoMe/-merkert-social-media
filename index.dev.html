@@ -150,6 +150,9 @@ nav{background:var(--white);border-bottom:1px solid var(--sand);padding:1rem 2.5
 .s-icon{font-size:1.3rem}
 .s-title{font-family:Georgia,serif;font-size:1.1rem;font-weight:700}
 .s-cnt{margin-left:auto;font-size:11px;color:var(--warm-brown);background:var(--sand);padding:2px 9px;border-radius:20px}
+.s-steckbrief-hint{font-family:sans-serif;font-size:13px;color:#8B6F5A;background:#FBF5EE;border:1.5px solid var(--coral);border-radius:8px;padding:.6rem 1rem;margin-bottom:1rem;line-height:1.5}
+.s-steckbrief-link{color:var(--coral);font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--coral);padding-bottom:1px;transition:opacity .15s}
+.s-steckbrief-link:hover{opacity:.75}
 .blist{display:flex;flex-direction:column;gap:4px}
 [data-bwrap].hidden{display:none}
 .bbtn{background:white;border:1.5px solid var(--sand);border-radius:8px;padding:12px 16px;text-align:left;cursor:pointer;transition:all .15s;font-family:sans-serif;position:relative;width:100%;display:flex;align-items:center;gap:10px}
@@ -2917,6 +2920,9 @@ function buildLibrary(){
     const blocks=LIB_BLOCKS.filter(b=>b.sid===s.id);
     html+=`<div class="lib-saeule" id="ls-${s.id}">`;
     html+=`<div class="s-hdr"><span class="s-icon">${s.icon}</span><span class="s-title">${s.name}</span><span class="s-cnt">${s.cnt} Posts</span></div>`;
+    if(s.id==='s03'){
+      html+=`<div class="s-steckbrief-hint">✦ Für vollständig individualisierten Content: Füll deinen <a href="steckbrief.html" class="s-steckbrief-link">Steckbrief</a> aus – auch Teil des Berufsstarter-Bundles.</div>`;
+    }
     html+=`<div class="blist" id="g-${s.id}">`;
     blocks.forEach(bl=>{
       const posts=LIB_DATA.filter(p=>p.b===bl.id);
