@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mein Steckbrief – Merkert Social Media</title>
+<style>
+:root{--cream:#F5F0E8;--coral:#C67B5A;--dark:#2C2420;--sand:#E0D8CE;--green:#4A6741;--warm:#8B6F5A}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:sans-serif;background:var(--cream);color:var(--dark);min-height:100vh}
+
+.sb-header{background:var(--dark);color:var(--cream);padding:1.25rem 2rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100}
+.sb-header h1{font-family:Georgia,serif;font-size:1.2rem;font-weight:normal}
+.sb-logo{font-size:.75rem;color:#bbb;margin-bottom:.15rem;letter-spacing:.05em}
+.back-link{margin-left:auto;color:var(--coral);text-decoration:none;font-size:.85rem;white-space:nowrap}
+.cart-badge{background:var(--coral);color:#fff;border-radius:20px;padding:.3rem .9rem;font-size:.8rem;cursor:pointer;border:none;font-family:sans-serif;display:none;white-space:nowrap}
+.cart-badge.show{display:inline-block}
+
+.progress-wrap{background:var(--sand);height:4px}
+.progress-bar{height:100%;background:var(--coral);transition:width .4s ease;width:0%}
+
+.sb-main{max-width:740px;margin:0 auto;padding:2rem 1.5rem 6rem}
+
+.sb-intro{text-align:center;margin-bottom:2.5rem}
+.sb-intro h2{font-family:Georgia,serif;font-size:1.9rem;font-weight:normal;margin-bottom:.6rem}
+.sb-intro p{color:var(--warm);font-size:.93rem;line-height:1.7;max-width:520px;margin:0 auto}
+.sb-intro strong{color:var(--coral)}
+
+.sb-section{background:#fff;border-radius:16px;padding:1.6rem;margin-bottom:1.1rem;border:1px solid var(--sand);box-shadow:0 2px 8px rgba(44,36,32,.05)}
+.sb-section-hook{font-size:.73rem;color:var(--coral);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.sb-section-title{font-family:Georgia,serif;font-size:1.15rem;margin-bottom:1rem}
+.sb-section-hint{font-size:.81rem;color:var(--warm);margin-bottom:.9rem;line-height:1.5}
+.section-num{display:inline-block;background:var(--coral);color:#fff;border-radius:50%;width:21px;height:21px;font-size:.72rem;font-weight:700;text-align:center;line-height:21px;margin-right:.4rem}
+
+.field-wrap{margin-bottom:.8rem}
+.field-label{font-size:.8rem;font-weight:600;margin-bottom:.3rem;display:block}
+input[type=text],textarea{width:100%;padding:.58rem .8rem;border:1.5px solid var(--sand);border-radius:8px;font-family:sans-serif;font-size:.87rem;color:var(--dark);background:var(--cream);outline:none;transition:border-color .2s}
+input[type=text]:focus,textarea:focus{border-color:var(--coral);background:#fff}
+input.error,textarea.error{border-color:#d94f4f;background:#fff5f5}
+textarea{resize:vertical;min-height:80px}
+.char-count{font-size:11px;color:var(--warm);text-align:right;margin-top:2px}
+.char-count.over{color:#d94f4f;font-weight:700}
+
+.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-bottom:.85rem}
+.option-grid-3{grid-template-columns:1fr 1fr 1fr}
+.opt-card{border:1.5px solid var(--sand);border-radius:10px;padding:.7rem .85rem;cursor:pointer;transition:all .18s;background:var(--cream);font-size:.83rem;line-height:1.4;color:var(--dark);display:block}
+.opt-card:hover{border-color:var(--coral);background:#fff8f5}
+.opt-card.selected{border-color:var(--coral);background:var(--coral);color:#fff}
+.opt-card.selected small{opacity:.85}
+.opt-card input[type=radio]{display:none}
+.opt-card small{display:block;opacity:.62;margin-top:.2rem;font-size:.76rem}
+
+.custom-toggle{font-size:.8rem;color:var(--coral);cursor:pointer;text-decoration:underline;margin-bottom:.5rem;display:inline-block}
+.custom-area{display:none;margin-top:.45rem}
+.custom-area.open{display:block}
+
+.either-or-list{display:flex;flex-direction:column;gap:.65rem}
+.either-or-pair{display:flex;align-items:center;gap:.45rem}
+.eo-btn{flex:1;padding:.55rem .4rem;border:1.5px solid var(--sand);border-radius:8px;background:var(--cream);cursor:pointer;font-size:.83rem;transition:all .18s;color:var(--dark);font-family:sans-serif}
+.eo-btn:hover{border-color:var(--coral);background:#fff8f5}
+.eo-btn.selected{background:var(--coral);border-color:var(--coral);color:#fff;font-weight:600}
+.eo-sep{width:26px;text-align:center;color:var(--warm);font-size:.76rem;flex-shrink:0}
+
+.facts-counter{font-size:.8rem;color:var(--warm);margin-bottom:.65rem}
+.facts-counter span{color:var(--coral);font-weight:700}
+.facts-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.9rem}
+.fact-chip{padding:.38rem .75rem;border:1.5px solid var(--sand);border-radius:20px;cursor:pointer;font-size:.78rem;transition:all .16s;background:var(--cream);color:var(--dark);user-select:none}
+.fact-chip:hover:not(.disabled){border-color:var(--coral);background:#fff8f5}
+.fact-chip.selected{background:var(--coral);border-color:var(--coral);color:#fff}
+.fact-chip.disabled{opacity:.32;cursor:not-allowed;pointer-events:none}
+.or-divider{display:flex;align-items:center;gap:.65rem;margin:.85rem 0;color:var(--warm);font-size:.76rem}
+.or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--sand)}
+
+.btn-submit{background:var(--coral);color:#fff;border:none;border-radius:12px;padding:1rem 2rem;font-size:1rem;cursor:pointer;width:100%;margin-top:1.4rem;font-family:Georgia,serif;transition:opacity .2s;box-shadow:0 4px 16px rgba(198,123,90,.35)}
+.btn-submit:hover{opacity:.87}
+
+/* ── PREVIEW ─────────────────────────────────────────────────── */
+.preview-section{display:none;margin-top:2.5rem}
+.preview-header{text-align:center;margin-bottom:1.5rem}
+.preview-header h2{font-family:Georgia,serif;font-size:1.6rem;font-weight:normal;margin-bottom:.4rem}
+.preview-header p{font-size:.88rem;color:var(--warm);line-height:1.6}
+.preview-header .select-all-btn{margin-top:.75rem;background:transparent;border:1.5px solid var(--coral);color:var(--coral);border-radius:8px;padding:.45rem 1.1rem;font-size:.82rem;cursor:pointer;transition:all .2s;font-family:sans-serif}
+.preview-header .select-all-btn:hover{background:var(--coral);color:#fff}
+
+.post-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+.post-card{background:#fff;border-radius:14px;border:1.5px solid var(--sand);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .2s}
+.post-card:hover{box-shadow:0 4px 18px rgba(44,36,32,.1)}
+.post-card.in-cart{border-color:var(--green);box-shadow:0 0 0 2px rgba(74,103,65,.2)}
+
+.post-card-top{background:var(--dark);padding:.65rem 1rem;display:flex;align-items:center;gap:.5rem}
+.post-tag-badge{font-size:.7rem;color:var(--coral);background:rgba(198,123,90,.18);border-radius:12px;padding:.2rem .6rem;letter-spacing:.05em}
+.post-block-name{font-size:.72rem;color:#bbb;margin-left:auto}
+
+.post-card-body{padding:1rem;flex:1;display:flex;flex-direction:column;gap:.65rem}
+.post-hook{font-family:Georgia,serif;font-size:.92rem;font-weight:normal;line-height:1.4;color:var(--dark)}
+.post-preview-text{font-size:.78rem;color:var(--warm);line-height:1.55;flex:1}
+.post-edit-area{display:none;flex-direction:column;gap:.35rem}
+.post-edit-area.open{display:flex}
+.post-edit-area textarea{font-size:.78rem;line-height:1.55;min-height:140px;background:var(--cream);color:var(--dark);border:1.5px solid var(--sand);border-radius:6px;padding:.6rem;resize:vertical}
+.post-edit-area textarea:focus{border-color:var(--coral)}
+
+.post-card-actions{padding:.75rem 1rem;border-top:1px solid var(--sand);display:flex;gap:.5rem}
+.btn-edit{flex:1;background:transparent;border:1.5px solid var(--sand);border-radius:8px;padding:.5rem;font-size:.78rem;cursor:pointer;color:var(--dark);transition:all .18s;font-family:sans-serif}
+.btn-edit:hover{border-color:var(--coral);color:var(--coral)}
+.btn-edit.editing{border-color:var(--coral);color:var(--coral);background:#fff8f5}
+.btn-cart{flex:1;background:var(--coral);border:none;border-radius:8px;padding:.5rem;font-size:.78rem;cursor:pointer;color:#fff;transition:all .18s;font-family:sans-serif}
+.btn-cart:hover{opacity:.85}
+.btn-cart.added{background:var(--green)}
+
+/* ── CART BAR ────────────────────────────────────────────────── */
+.cart-bar{position:fixed;bottom:0;left:0;right:0;background:var(--dark);color:var(--cream);padding:.9rem 1.5rem;display:flex;align-items:center;justify-content:space-between;transform:translateY(100%);transition:transform .35s cubic-bezier(.25,.46,.45,.94);z-index:200;box-shadow:0 -4px 20px rgba(44,36,32,.3)}
+.cart-bar.show{transform:translateY(0)}
+.cart-bar-info{font-size:.85rem;color:#ccc}
+.cart-bar-info strong{color:var(--cream);font-size:1rem;display:block}
+.btn-to-cart{background:var(--coral);color:#fff;border:none;border-radius:10px;padding:.65rem 1.5rem;font-size:.9rem;cursor:pointer;font-family:Georgia,serif;white-space:nowrap;transition:opacity .2s}
+.btn-to-cart:hover{opacity:.87}
+
+/* ── OUTPUT ──────────────────────────────────────────────────── */
+.sb-output{background:#fff;border-radius:14px;padding:1.5rem;margin-top:1.5rem;border:1.5px solid var(--sand)}
+.sb-output h3{font-family:Georgia,serif;font-size:1.1rem;color:var(--coral);margin-bottom:.9rem}
+.output-text{background:var(--cream);border-radius:7px;padding:.9rem 1rem;font-size:.78rem;line-height:1.75;white-space:pre-wrap;color:var(--dark);border:1px solid var(--sand);max-height:260px;overflow-y:auto;font-family:'Courier New',monospace}
+.btn-copy{background:var(--dark);color:var(--cream);border:none;border-radius:8px;padding:.55rem 1.2rem;font-size:.82rem;cursor:pointer;margin-top:.65rem;transition:opacity .2s;font-family:sans-serif}
+.btn-copy:hover{opacity:.82}
+.copy-ok{font-size:.8rem;color:var(--green);margin-top:.4rem;display:none}
+.copy-ok.show{display:block}
+
+/* ── FORMAT SWITCHER ────────────────────────────────────────── */
+.format-switcher{background:#fff;border-radius:14px;border:1.5px solid var(--sand);padding:.9rem 1.2rem;margin-bottom:1.2rem;display:none}
+.format-switcher.show{display:block}
+.fmt-label{font-size:.73rem;color:var(--warm);font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:.55rem}
+.fmt-btns{display:flex;gap:.45rem;flex-wrap:wrap}
+.fmt-btn{padding:.45rem .85rem;border:1.5px solid var(--sand);border-radius:10px;background:var(--cream);font-size:.78rem;cursor:pointer;color:var(--dark);transition:all .18s;font-family:sans-serif;line-height:1.3;text-align:center;min-width:68px}
+.fmt-btn small{display:block;font-size:.63rem;opacity:.7;margin-top:.1rem}
+.fmt-btn:hover{border-color:var(--coral);background:#fff8f5}
+.fmt-btn.active{border-color:var(--coral);background:var(--coral);color:#fff}
+.fmt-btn.active small{opacity:.85}
+/* ── MAJA (steckbrief) ───────────────────────────────────────── */
+.maja-wrap{position:fixed;bottom:80px;right:16px;z-index:300;display:flex;flex-direction:column;align-items:flex-end;gap:6px;opacity:0;pointer-events:none;transform:translateY(20px);transition:opacity .4s ease,transform .4s ease}
+.maja-wrap.visible{opacity:1;pointer-events:auto;transform:none}
+.maja-speech{background:#fff;border:1.5px solid var(--coral);border-radius:14px 14px 4px 14px;padding:.75rem 1rem 1rem;max-width:220px;box-shadow:0 4px 18px rgba(44,36,32,.18);font-size:.8rem;line-height:1.5;color:var(--dark);position:relative;display:none}
+.maja-speech.show{display:block}
+.maja-speech-t{font-weight:700;color:var(--coral);font-size:.76rem;margin-bottom:.25rem}
+.maja-x{position:absolute;top:.35rem;right:.5rem;background:none;border:none;font-size:.9rem;cursor:pointer;color:var(--warm);padding:0;line-height:1}
+.maja-av{width:64px;height:80px;object-fit:contain;cursor:pointer;filter:drop-shadow(0 2px 8px rgba(44,36,32,.2));transition:transform .2s;display:block;margin-left:auto;mix-blend-mode:multiply}
+.maja-av:hover{transform:scale(1.07)}
+
+@media(max-width:600px){
+  .option-grid,.option-grid-3,.post-grid{grid-template-columns:1fr}
+  .sb-main{padding:1.5rem 1rem 7rem}
+  .sb-header{padding:1rem 1.1rem}
+  .fmt-btns{gap:.35rem}
+}
+</style>
+</head>
+<body>
+
+<div class="sb-header">
+  <div>
+    <div class="sb-logo">MERKERT SOCIAL MEDIA</div>
+    <h1>Mein persönlicher Steckbrief</h1>
+  </div>
+  <button class="cart-badge" id="header-cart-badge" onclick="scrollToCart()">🛒 <span id="header-cart-count">0</span> Posts</button>
+  <a class="back-link" href="index.dev.html">← Zurück</a>
+</div>
+<div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+
+<div class="sb-main">
+
+  <div class="sb-intro">
+    <h2>Erzähl mir von dir ✨</h2>
+    <p>Fülle den Steckbrief aus – ich generiere daraus deine individuelle <strong>Hero Story</strong> als fertige Social-Media-Posts, die du direkt in den Warenkorb legen kannst.</p>
+  </div>
+
+  <!-- SEKTION 1 -->
+  <div class="sb-section">
+    <div class="sb-section-hook">Darf ich mich vorstellen?</div>
+    <div class="sb-section-title"><span class="section-num">1</span>Basis-Daten</div>
+    <div class="field-wrap">
+      <label class="field-label">Dein Name</label>
+      <input type="text" id="f-name" placeholder="z.B. Anna Merkert">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+      <div class="field-wrap">
+        <label class="field-label">Alter</label>
+        <input type="text" id="f-alter" placeholder="z.B. 28">
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">Wohnort</label>
+        <input type="text" id="f-wohnort" placeholder="z.B. München">
+      </div>
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Früherer Beruf</label>
+      <input type="text" id="f-beruf" placeholder="z.B. Lehrerin, Verkäufer, Student …">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Mein Coach / meine Gruppenleitung</label>
+      <input type="text" id="f-coach" placeholder="Name deines Coaches">
+    </div>
+  </div>
+
+  <!-- SEKTION 2 -->
+  <div class="sb-section">
+    <div class="sb-section-hook">Was mich wirklich antreibt</div>
+    <div class="sb-section-title"><span class="section-num">2</span>Mein Warum</div>
+    <p class="sb-section-hint">Wähle das, was am besten zu dir passt – oder schreib es selbst.</p>
+    <div class="option-grid">
+      <label class="opt-card" onclick="selectOpt('warum','sicherheit',this)"><input type="radio" name="warum" value="sicherheit">🛡️ Sicherheit geben<small>Ich möchte Menschen absichern und Stabilität schenken.</small></label>
+      <label class="opt-card" onclick="selectOpt('warum','traeume',this)"><input type="radio" name="warum" value="traeume">🌟 Träume ermöglichen<small>Ich helfe Menschen, ihre Lebensziele zu erreichen.</small></label>
+      <label class="opt-card" onclick="selectOpt('warum','chancen',this)"><input type="radio" name="warum" value="chancen">🚀 Chancengeber sein<small>Ich öffne Türen, die andere nicht mal sehen.</small></label>
+      <label class="opt-card" onclick="selectOpt('warum','wissen',this)"><input type="radio" name="warum" value="wissen">📚 Wissensvermittler<small>Finanzwissen für alle – verständlich und ehrlich.</small></label>
+    </div>
+    <span class="custom-toggle" onclick="toggleCustom('warum-custom')">✏️ Eigene Antwort schreiben</span>
+    <div class="custom-area" id="warum-custom">
+      <textarea id="f-warum-custom" placeholder="Was treibt dich wirklich an? (max. 300 Zeichen)" maxlength="300" oninput="countChars(this,'warum-count',300)"></textarea>
+      <div class="char-count" id="warum-count">0 / 300</div>
+    </div>
+  </div>
+
+  <!-- SEKTION 3 -->
+  <div class="sb-section">
+    <div class="sb-section-hook">Mein Weg zum Finanzcoach</div>
+    <div class="sb-section-title"><span class="section-num">3</span>Hero Story</div>
+    <p class="sb-section-hint">Wähle deinen Startpunkt – der Text wird automatisch vorgefüllt und kann angepasst werden.</p>
+    <div class="option-grid option-grid-3">
+      <label class="opt-card" onclick="selectOpt('hero','freiheit',this);prefillHero('freiheit')"><input type="radio" name="hero" value="freiheit">🕊️ Wunsch nach Freiheit<small>Raus aus dem 9-to-5.</small></label>
+      <label class="opt-card" onclick="selectOpt('hero','sinn',this);prefillHero('sinn')"><input type="radio" name="hero" value="sinn">💡 Suche nach Sinn<small>Mehr als nur ein Job.</small></label>
+      <label class="opt-card" onclick="selectOpt('hero','karriere',this);prefillHero('karriere')"><input type="radio" name="hero" value="karriere">📈 Karriere-Hunger<small>Wachsen und aufsteigen.</small></label>
+    </div>
+    <span class="custom-toggle" onclick="toggleCustom('hero-custom')">✏️ Story schreiben / anpassen</span>
+    <div class="custom-area" id="hero-custom">
+      <textarea id="f-hero-custom" placeholder="Erzähl deinen Weg in eigenen Worten. (max. 1.000 Zeichen)" maxlength="1000" oninput="countChars(this,'hero-count',1000)" rows="5"></textarea>
+      <div class="char-count" id="hero-count">0 / 1000</div>
+    </div>
+  </div>
+
+  <!-- SEKTION 4 -->
+  <div class="sb-section">
+    <div class="sb-section-hook">Wie ich als Coach arbeite</div>
+    <div class="sb-section-title"><span class="section-num">4</span>Meine Philosophie</div>
+    <p class="sb-section-hint">Was ist das Fundament deiner Arbeit mit Kunden?</p>
+    <div class="option-grid">
+      <label class="opt-card" onclick="selectOpt('philo','ehrlichkeit',this)"><input type="radio" name="philo" value="ehrlichkeit">🤝 Ehrlichkeit<small>Keine Versprechen, die ich nicht halte.</small></label>
+      <label class="opt-card" onclick="selectOpt('philo','langfrist',this)"><input type="radio" name="philo" value="langfrist">🌱 Langfristigkeit<small>Ich denke in Jahren, nicht in Abschlüssen.</small></label>
+      <label class="opt-card" onclick="selectOpt('philo','verstaendlich',this)"><input type="radio" name="philo" value="verstaendlich">💬 Verständlichkeit<small>Finanzen einfach erklärt – immer.</small></label>
+      <label class="opt-card" onclick="selectOpt('philo','mensch',this)"><input type="radio" name="philo" value="mensch">❤️ Menschlichkeit<small>Hinter jedem Vertrag steht ein Mensch.</small></label>
+    </div>
+    <span class="custom-toggle" onclick="toggleCustom('philo-custom')">✏️ Eigene Philosophie beschreiben</span>
+    <div class="custom-area" id="philo-custom">
+      <textarea id="f-philo-custom" placeholder="Was ist dein Arbeitsmotto? (max. 400 Zeichen)" maxlength="400" oninput="countChars(this,'philo-count',400)"></textarea>
+      <div class="char-count" id="philo-count">0 / 400</div>
+    </div>
+  </div>
+
+  <!-- SEKTION 5 -->
+  <div class="sb-section">
+    <div class="sb-section-hook">Quick-Check: Wer bin ich?</div>
+    <div class="sb-section-title"><span class="section-num">5</span>Entweder-Oder</div>
+    <p class="sb-section-hint">Schnell entscheiden – was bist du eher?</p>
+    <div class="either-or-list">
+      <div class="either-or-pair">
+        <button class="eo-btn" onclick="selectEo('essen','Pizza 🍕',this)">🍕 Pizza</button>
+        <span class="eo-sep">oder</span>
+        <button class="eo-btn" onclick="selectEo('essen','Pasta 🍝',this)">🍝 Pasta</button>
+      </div>
+      <div class="either-or-pair">
+        <button class="eo-btn" onclick="selectEo('natur','Berge ⛰️',this)">⛰️ Berge</button>
+        <span class="eo-sep">oder</span>
+        <button class="eo-btn" onclick="selectEo('natur','Meer 🌊',this)">🌊 Meer</button>
+      </div>
+      <div class="either-or-pair">
+        <button class="eo-btn" onclick="selectEo('getraenk','Kaffee ☕',this)">☕ Kaffee</button>
+        <span class="eo-sep">oder</span>
+        <button class="eo-btn" onclick="selectEo('getraenk','Tee 🍵',this)">🍵 Tee</button>
+      </div>
+      <div class="either-or-pair">
+        <button class="eo-btn" onclick="selectEo('denken','Strategie 🧠',this)">🧠 Strategie</button>
+        <span class="eo-sep">oder</span>
+        <button class="eo-btn" onclick="selectEo('denken','Bauchgefühl 💫',this)">💫 Bauchgefühl</button>
+      </div>
+      <div class="either-or-pair">
+        <button class="eo-btn" onclick="selectEo('tageszeit','Frühaufsteher 🌅',this)">🌅 Frühaufsteher</button>
+        <span class="eo-sep">oder</span>
+        <button class="eo-btn" onclick="selectEo('tageszeit','Nachteule 🌙',this)">🌙 Nachteule</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEKTION 6 -->
+  <div class="sb-section">
+    <div class="sb-section-hook">5 Dinge über mich</div>
+    <div class="sb-section-title"><span class="section-num">6</span>Random Fakten</div>
+    <div class="facts-counter">Noch <span id="facts-remaining">5</span> von 5 auswählbar:</div>
+    <div class="facts-chips">
+      <span class="fact-chip" onclick="toggleFact(this,'Ich war vorher in einem ganz anderen Beruf – und bin heute froh über den Wechsel.')">Quereinsteiger mit Überzeugung</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Familie ist mein größter Antrieb – jeden Tag.')">Familie als Antrieb</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich erkläre komplizierte Dinge am liebsten mit einfachen Worten.')">Erklärer aus Leidenschaft</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Sport ist mein bester Ausgleich – Kopf frei, Körper fit.')">Sport als Ausgleich</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich war am Anfang selbst skeptisch gegenüber dem Thema Finanzen – heute bin ich überzeugt.')">War selbst skeptisch</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich lese regelmäßig Bücher – am liebsten über Persönlichkeitsentwicklung und Finanzen.')">Bücherwurm 📚</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ohne meinen Morgenkaffee geht gar nichts.')">Kaffee-Junkie ☕</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich glaube: Jeder verdient Zugang zu guter Finanzberatung – nicht nur die Reichen.')">Finanzen für alle</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich mache Dinge gerne 100 % oder gar nicht.')">Alles-oder-Nichts</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich bin Teamplayer durch und durch – gemeinsam sind wir stärker.')">Teamplayer</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich liebe Aha-Momente – bei meinen Kunden und bei mir selbst.')">Aha-Momente lieben</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Mein Job ist gleichzeitig meine Leidenschaft – das merkt man hoffentlich.')">Job = Leidenschaft</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich setze auf langfristige Beziehungen – Vertrauen wächst mit der Zeit.')">Langfristiger Denker</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Reisen lädt meine Batterien auf und gibt mir neue Perspektiven.')">Reiseliebhaber ✈️</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich starte jeden Morgen mit einem festen Ritual – das gibt mir Struktur und Energie.')">Morgenritual</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Musik läuft bei mir fast immer im Hintergrund – ohne geht es nicht.')">Musik-Fan 🎵</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich bin spontan und liebe es, wenn Dinge nicht ganz nach Plan laufen.')">Spontan & flexibel</span>
+      <span class="fact-chip" onclick="toggleFact(this,'Ich bin Mutter/Vater – und das prägt, wie ich auf Menschen zugehe.')">Mama/Papa mit Herz</span>
+    </div>
+    <div class="or-divider">oder eigene Fakten eingeben</div>
+    <div>
+      <div class="field-wrap"><input type="text" class="custom-fact-input" placeholder="Eigener Fakt 1 (max. 100 Zeichen)" maxlength="100" oninput="countSingle(this)"><div class="char-count single-count">0 / 100</div></div>
+      <div class="field-wrap"><input type="text" class="custom-fact-input" placeholder="Eigener Fakt 2 (max. 100 Zeichen)" maxlength="100" oninput="countSingle(this)"><div class="char-count single-count">0 / 100</div></div>
+      <div class="field-wrap"><input type="text" class="custom-fact-input" placeholder="Eigener Fakt 3 (max. 100 Zeichen)" maxlength="100" oninput="countSingle(this)"><div class="char-count single-count">0 / 100</div></div>
+    </div>
+  </div>
+
+  <button class="btn-submit" onclick="generate()">✨ Posts generieren & Vorschau ansehen</button>
+
+  <!-- TEXT ZUSAMMENFASSUNG -->
+  <div class="sb-output" id="sb-output" style="display:none">
+    <h3>Dein Steckbrief (Zusammenfassung)</h3>
+    <div class="output-text" id="output-text"></div>
+    <button class="btn-copy" onclick="copyOutput()">📋 Kopieren</button>
+    <div class="copy-ok" id="copy-ok">✅ Kopiert!</div>
+  </div>
+
+  <!-- PREVIEW GRID -->
+  <div class="preview-section" id="preview-section">
+    <div class="preview-header">
+      <h2>Deine personalisierten Posts 🎉</h2>
+      <p>Alle 14 Personal Brand Posts wurden mit deinen Antworten gefüllt.<br>Passe sie an, wähle deine Favoriten und leg sie direkt in den Warenkorb.</p>
+      <button class="select-all-btn" onclick="selectAll()">Alle in den Warenkorb</button>
+    </div>
+    <div class="format-switcher" id="format-switcher">
+      <div class="fmt-label">📐 Format für die Vorschau wählen</div>
+      <div class="fmt-btns">
+        <button class="fmt-btn active" onclick="setFmt(this,'portrait')">▭ Portrait<small>4:5 Feed</small></button>
+        <button class="fmt-btn" onclick="setFmt(this,'story')">📱 Story<small>9:16 Reels</small></button>
+        <button class="fmt-btn" onclick="setFmt(this,'square')">⬜ Quadrat<small>1:1 Post</small></button>
+        <button class="fmt-btn" onclick="setFmt(this,'landscape')">🖼 Landscape<small>16:9 Banner</small></button>
+      </div>
+    </div>
+    <div class="post-grid" id="post-grid"></div>
+  </div>
+
+</div>
+
+<!-- WARENKORB-LEISTE -->
+<div class="cart-bar" id="cart-bar">
+  <div class="cart-info">
+    <strong id="cart-bar-count">0 Posts ausgewählt</strong>
+    <span style="font-size:.78rem;color:#aaa">Klick auf „Weiter" um zum Warenkorb zu gehen</span>
+  </div>
+  <button class="btn-to-cart" onclick="goToCart()">Weiter zum Warenkorb →</button>
+</div>
+
+<script>
+// ─── State ───────────────────────────────────────────────────────────────────
+const S={warum:null,hero:null,philo:null,eo:{},facts:[]};
+const cart=new Set();
+// ─── Formate ──────────────────────────────────────────────────────────────────
+const FMTS={portrait:{w:200,h:250},story:{w:150,h:267},square:{w:220,h:220},landscape:{w:280,h:158}};
+let activeFmt='portrait';
+
+// ─── Helper text maps ─────────────────────────────────────────────────────────
+const WARUM_FULL={
+  sicherheit:'Ich möchte Menschen absichern. Ihnen Stabilität schenken. Ein Leben ohne finanzielle Angst – das ist es, wofür ich jeden Tag arbeite.',
+  traeume:'Ich möchte Träume möglich machen. Jeder Mensch hat Ziele. Mein Job ist es, den finanziellen Weg dorthin zu ebnen.',
+  chancen:'Ich bin Chancengeber. Ich öffne Türen, die viele Menschen gar nicht kennen – und zeige, was wirklich möglich ist.',
+  wissen:'Finanzwissen sollte kein Privileg sein. Ich erkläre kompliziert klingende Themen so, dass sie wirklich jeder versteht – und davon profitiert.'
+};
+const HERO_FULL={
+  freiheit:'Ich wollte meinen eigenen Weg gehen – raus aus dem 9-to-5, rein in eine Tätigkeit, die ich selbst gestalte. Als ich die Möglichkeit der Finanzberatung entdeckt habe, war klar: Das ist die Freiheit, nach der ich gesucht hatte.',
+  sinn:'Ich wollte mehr als nur einen Job. Ich wollte etwas bewegen – echten Mehrwert für echte Menschen schaffen. Als ich gemerkt habe, dass Finanzberatung Leben verändern kann, war die Entscheidung klar.',
+  karriere:'Ich bin ein Macher. Stillstand ist nichts für mich – ich wollte wachsen, Verantwortung übernehmen und mein volles Potenzial ausschöpfen. In der Finanzberatung habe ich genau das gefunden.'
+};
+const PHILO_FULL={
+  ehrlichkeit:'Ehrlichkeit ist für mich kein Marketingbegriff – es ist die Grundlage für alles. Ich sage, was ich denke. Auch wenn es unbequem ist.',
+  langfrist:'Ich denke in Jahren, nicht in Abschlüssen. Meine Kunden sollen in 10 Jahren noch sagen: „Gut, dass ich damals mit ihr gesprochen habe."',
+  verstaendlich:'Finanzen können einfach sein. Ich mache es zu meiner Aufgabe, jeden Fachbegriff so zu erklären, dass er sofort sitzt.',
+  mensch:'Hinter jedem Vertrag steht ein Mensch mit einer Geschichte, Träumen und Sorgen. Das vergesse ich nie – auch nicht beim zehnten Gespräch des Tages.'
+};
+
+// ─── Post-Templates (14 Personal Brand Posts) ────────────────────────────────
+function makeTemplates(d){
+  const fn=d.name.split(' ')[0]||d.name||'ich';
+  const wt=d.warumFull||'Menschen zu helfen, finanzielle Sicherheit aufzubauen.';
+  const ht=d.heroFull||'Ich habe mich bewusst für diesen Weg entschieden – und bereue es keinen Tag.';
+  const pt=d.philoFull||'Mit Ehrlichkeit und Weitblick.';
+  const beruf=d.beruf&&d.beruf!=='–'?d.beruf:'meinem früheren Beruf';
+  const wo=d.wohnort&&d.wohnort!=='–'?' aus '+d.wohnort:'';
+  const facts=d.allFacts.length>0?d.allFacts:['Ich lerne täglich dazu.','Mein Job ist meine Leidenschaft.'];
+  const eoStr=Object.values(d.eo).join(' · ')||'Pizza · Meer · Kaffee · Strategie · Frühaufsteher';
+
+  return [
+    {
+      id:'pb-01',tag:'Über mich',block:'Wer ich bin',
+      hook:`Wer ich bin – und warum ich diesen Beruf liebe.`,
+      body:`Ich bin ${d.name}${wo} – und ich bin Vermögensberaterin aus vollem Herzen.\n\nMein Antrieb: ${wt}\n\nIch komme aus ${beruf} und hätte damals nicht gedacht, dass ich mal genau hier stehen würde. Aber rückblickend: Es war die beste Entscheidung meines Lebens.\n\nWenn du mich fragst, was mich jeden Morgen aufstehen lässt – dann ist es die Möglichkeit, echten Unterschied im Leben von Menschen zu machen.\n\n#PersonalBrand #Vermögensberaterin #MeinWarum #FinanceCoach`
+    },
+    {
+      id:'pb-02',tag:'Über mich',block:'Meine Geschichte',
+      hook:`Meine Geschichte als Finanzcoach.`,
+      body:`Es begann mit einer einzigen Frage:\n\n„Was wäre, wenn ich wirklich das tue, was mich begeistert?"\n\n${ht}\n\nHeute begleite ich Menschen dabei, finanzielle Entscheidungen zu treffen – die ihr Leben verändern. Und jedes Mal, wenn ich sehe, wie jemand aufatmet weil endlich alles klar ist, weiß ich: Genau dafür bin ich hier.\n\n#MeineGeschichte #Finanzberaterin #Quereinsteiger #PersonalBrand`
+    },
+    {
+      id:'pb-03',tag:'Über mich',block:'Mein Weg',
+      hook:`Warum ich diesen Weg gegangen bin.`,
+      body:`Es war nicht der naheliegendste Weg.\n\nNach ${beruf} dachte ich: Finanzberatung – ist das wirklich meins?\n\n${ht}\n\nUnd heute? Heute kann ich mir keinen anderen Beruf vorstellen. Denn hier verbinde ich Sinn, Freiheit und echten Impact – jeden Tag.\n\n„Du kannst nicht zurückschauen und die Punkte verbinden. Du kannst sie nur vorausschauend verbinden." – Steve Jobs\n\n#MeinWeg #Finanzberaterin #Quereinsteiger #PersonalBrand`
+    },
+    {
+      id:'pb-04',tag:'Über mich',block:'Was mich unterscheidet',
+      hook:`Was mich von anderen Beratern unterscheidet.`,
+      body:`Es gibt viele Finanzberater.\n\nAber hier ist, was bei mir anders ist:\n\n1️⃣ ${pt}\n\n2️⃣ Ich nehme mir Zeit. Wirklich. Kein Schnellgespräch, keine Standardlösung.\n\n3️⃣ Ich denke langfristig – auch wenn der kurzfristige Weg verlockender aussieht.\n\nDu suchst jemanden, der dir zuhört? Dann lass uns reden.\n\n#MeinAnsatz #Finanzberaterin #Vertrauen #PersonalBrand`
+    },
+    {
+      id:'pb-05',tag:'Über mich',block:'Meine Werte',
+      hook:`Meine 3 Werte: Ehrlichkeit. Kompetenz. Vertrauen.`,
+      body:`Drei Wörter, die alles sagen.\n\n🤝 Ehrlichkeit – Ich sage, was ich denke. Auch wenn es nicht das ist, was du hören möchtest.\n\n📚 Kompetenz – Ich lerne täglich. Für mich. Für meine Kunden.\n\n🌱 Vertrauen – Das braucht Zeit. Und das ist in Ordnung. Ich nehme sie mir.\n\n${pt}\n\n#MeineWerte #Finanzberaterin #PersonalBrand #Authentisch`
+    },
+    {
+      id:'pb-06',tag:'Über mich',block:'Steckbrief',
+      hook:`5 Fakten – das bin ich.`,
+      body:`Lass mich mich kurz vorstellen:\n\n${facts.slice(0,5).map((f,i)=>`${i+1}. ${f}`).join('\n')}\n\nKurz zusammengefasst: Ich bin ${fn} – Vermögensberaterin${wo}, die wirklich für ihre Kunden da ist.\n\nUnd du? Was macht dich aus? 👇\n\n#Steckbrief #PersonalBrand #5Fakten #Finanzberaterin`
+    },
+    {
+      id:'pb-07',tag:'Über mich',block:'Beruf & Leidenschaft',
+      hook:`Beruf und Leidenschaft – für mich ist es beides.`,
+      body:`Das klingt wie ein Klischee. Ich weiß.\n\nAber hier ist, warum ich es wirklich so meine:\n\nIch gehe Montags nicht mit Bauchschmerzen in die Woche. Ich freue mich auf meine Gespräche. Ich denke abends noch über Lösungen nach – nicht weil ich muss, sondern weil es mich antreibt.\n\nMein Warum: ${wt}\n\nWenn das Leidenschaft ist – dann ja. Schuldig.\n\n#Leidenschaft #Finanzberaterin #MeinJob #PersonalBrand`
+    },
+    {
+      id:'pb-08',tag:'Meine Arbeitsweise',block:'Vorbereitung',
+      hook:`So bereite ich mich auf Kundengespräche vor.`,
+      body:`Was ich immer tue, bevor wir uns treffen:\n\n📋 Ich lese alles, was du mir vorher schickst – wirklich alles.\n\n🧠 Ich denke über deine Situation nach, nicht über Produkte.\n\n📌 Ich komme mit Fragen, nicht mit Antworten.\n\nWarum? Weil ${pt.toLowerCase()}\n\nDeine Zeit ist wertvoll. Ich möchte, dass du nach unserem Gespräch mehr weißt – nicht mehr Fragezeichen hast.\n\n#Vorbereitung #Arbeitsweise #Finanzberaterin #PersonalBrand`
+    },
+    {
+      id:'pb-09',tag:'Meine Arbeitsweise',block:'Antrieb',
+      hook:`Was mich täglich antreibt.`,
+      body:`Nicht das Gehalt. Nicht die Zahlen.\n\nSondern ${wt}\n\nJeden Tag sehe ich, was passiert, wenn Menschen endlich Klarheit über ihre Finanzen haben. Wie die Schultern nach unten gehen. Wie aus Angst Zuversicht wird.\n\nDas ist mein Warum. Jeden Tag neu.\n\n#MeinAntrieb #Finanzberaterin #Sinn #PersonalBrand`
+    },
+    {
+      id:'pb-10',tag:'Meine Arbeitsweise',block:'Erstgespräch',
+      hook:`So läuft unser erstes Gespräch ab.`,
+      body:`Damit du weißt, was dich erwartet:\n\n1️⃣ Kein Verkaufsgespräch – ich höre zuerst zu.\n\n2️⃣ Ich stelle Fragen, die zählen: Was sind deine Ziele? Was bereitet dir Sorgen?\n\n3️⃣ Keine Entscheidung unter Druck. Niemals.\n\nMein Versprechen: ${pt}\n\nDas Erstgespräch ist kostenlos, unverbindlich und für dich da. Schreib mir einfach.\n\n#Erstgespräch #KeineAngst #Finanzberaterin #PersonalBrand`
+    },
+    {
+      id:'pb-11',tag:'Meine Arbeitsweise',block:'Kein Druck',
+      hook:`Kein Druck. Kein Verkauf. Nur ein echtes Gespräch.`,
+      body:`Ich verkaufe nicht.\n\nIch berate.\n\nDas klingt gleich – ist es aber nicht.\n\nVerkaufen bedeutet: Ich brauche deinen Abschluss.\nBeraten bedeutet: Ich brauche, dass du die richtige Entscheidung triffst. Auch wenn das heißt: Jetzt noch nicht.\n\n${pt}\n\nWenn du also Angst vor einem „Drücker" hast – dann bin ich nicht das Problem. 😊\n\n#KeinDruck #Ehrlichkeit #Finanzberaterin #PersonalBrand`
+    },
+    {
+      id:'pb-12',tag:'Meine Arbeitsweise',block:'Vertrauen',
+      hook:`Warum ich auf Vertrauen setze – nicht auf Verkauf.`,
+      body:`Langfristige Beziehungen schlagen kurzfristige Abschlüsse. Das ist meine Überzeugung.\n\nUnd das ist der Grund:\n\nEin Abschluss bringt mir einmal Geld. Ein zufriedener Kunde empfiehlt mich weiter – ein Leben lang.\n\n${pt}\n\nVertrauen kann man nicht kaufen. Man muss es verdienen. Jeden Tag neu.\n\n#Vertrauen #Nachhaltigkeit #Finanzberaterin #PersonalBrand`
+    },
+    {
+      id:'pb-13',tag:'Behind the Scenes',block:'Mein Alltag',
+      hook:`Ein Tag in meinem Leben als Finanzcoach.`,
+      body:`Heute nehme ich dich mal mit:\n\n🌅 Morgens: Ich bin ein ${d.eo.tageszeit||'Frühaufsteher 🌅'} – der Tag beginnt strukturiert.\n\n📞 Vormittags: Kundengespräche, Vorbereitung, manchmal spontane Anrufe.\n\n💡 Mittags: Weiterbildung – weil Stillstand keine Option ist.\n\n🌆 Abends: Nachbereitung, manchmal Networking. Und dann: abschalten.\n\n${d.eo.getraenk?'Läuft auf '+d.eo.getraenk+'-Basis. ☕':''}\n\n#Alltag #BehindTheScenes #Finanzberaterin #PersonalBrand`
+    },
+    {
+      id:'pb-14',tag:'Behind the Scenes',block:'Homeoffice',
+      hook:`Mein Homeoffice-Setup – und was wirklich bei mir auf dem Schreibtisch steht.`,
+      body:`Von hier aus begleite ich meine Kunden.\n\nWas ich dir heute zeige:\n\n💻 Laptop – natürlich.\n${d.eo.getraenk?'☕ '+d.eo.getraenk+' – unverzichtbar.\n':''}\n📓 Notizbuch – ich schreibe alles mit der Hand.\n\nAber das Wichtigste auf meinem Schreibtisch?\n\nFotos. Von Menschen, denen ich bereits helfen konnte.\n\nDie erinnern mich täglich daran, warum ich das hier mache.\n\n#Homeoffice #Setup #BehindTheScenes #Finanzberaterin`
+    }
+  ];
+}
+
+// ─── Generate everything ──────────────────────────────────────────────────────
+function generate(){
+  const name=document.getElementById('f-name').value.trim()||'Dein Name';
+  const d={
+    name,
+    alter:document.getElementById('f-alter').value.trim()||'–',
+    wohnort:document.getElementById('f-wohnort').value.trim()||'–',
+    beruf:document.getElementById('f-beruf').value.trim()||'–',
+    coach:document.getElementById('f-coach').value.trim()||'–',
+    warum:S.warum,
+    warumCustom:document.getElementById('f-warum-custom').value.trim(),
+    hero:S.hero,
+    heroCustom:document.getElementById('f-hero-custom').value.trim(),
+    philo:S.philo,
+    philoCustom:document.getElementById('f-philo-custom').value.trim(),
+    eo:S.eo,
+    facts:S.facts,
+    allFacts:[...S.facts,...[...document.querySelectorAll('.custom-fact-input')].map(i=>i.value.trim()).filter(Boolean)]
+  };
+  d.warumFull=S.warum?WARUM_FULL[S.warum]:(d.warumCustom||null);
+  d.heroFull=d.heroCustom||(S.hero?HERO_FULL[S.hero]:null);
+  d.philoFull=S.philo?PHILO_FULL[S.philo]:(d.philoCustom||null);
+
+  buildTextOutput(d);
+  buildPreview(d);
+
+  try{localStorage.setItem('merkert_steckbrief',JSON.stringify(d));}catch(e){}
+
+  document.getElementById('sb-output').style.display='block';
+  document.getElementById('preview-section').style.display='block';
+  document.getElementById('format-switcher').classList.add('show');
+  setTimeout(()=>document.getElementById('sb-output').scrollIntoView({behavior:'smooth',block:'start'}),120);
+  setTimeout(()=>majaShow('Tipp von Maja 🐝','Für WhatsApp Status & Instagram Reels empfehle ich das Story-Format (9:16) – das erreicht oft bis zu 3× mehr Menschen!'),1400);
+}
+
+// ─── Text output ──────────────────────────────────────────────────────────────
+function buildTextOutput(d){
+  const ts=new Date().toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'numeric'});
+  const warumLabel={sicherheit:'Sicherheit geben 🛡️',traeume:'Träume ermöglichen 🌟',chancen:'Chancengeber sein 🚀',wissen:'Wissensvermittler 📚'};
+  const heroLabel={freiheit:'Wunsch nach Freiheit 🕊️',sinn:'Suche nach Sinn 💡',karriere:'Karriere-Hunger 📈'};
+  const philoLabel={ehrlichkeit:'Ehrlichkeit 🤝',langfrist:'Langfristigkeit 🌱',verstaendlich:'Verständlichkeit 💬',mensch:'Menschlichkeit ❤️'};
+  const eoStr=Object.values(d.eo).join('  ·  ')||'–';
+  const factsStr=d.allFacts.length?d.allFacts.map((f,i)=>`  ${i+1}. ${f}`).join('\n'):'  –';
+  const out=`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STECKBRIEF – ${d.name.toUpperCase()}
+Erstellt am ${ts}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 BASIS-DATEN
+   Name:            ${d.name}
+   Alter:           ${d.alter}
+   Wohnort:         ${d.wohnort}
+   Früherer Beruf:  ${d.beruf}
+   Mein Coach:      ${d.coach}
+
+💡 MEIN WARUM
+   ${d.warum?warumLabel[d.warum]:(d.warumCustom||'–')}
+
+🌟 HERO STORY
+   ${d.hero?('['+heroLabel[d.hero]+']'):''}${d.heroFull?'\n   '+d.heroFull:'–'}
+
+🤝 MEINE PHILOSOPHIE
+   ${d.philo?philoLabel[d.philo]:(d.philoCustom||'–')}
+
+⚡ ENTWEDER-ODER
+   ${eoStr}
+
+🎯 5 FAKTEN ÜBER MICH
+${factsStr}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+  document.getElementById('output-text').textContent=out;
+}
+
+// ─── Design-Rendering (kopiert aus index.dev.html) ───────────────────────────
+const DESIGNS=[{id:1,name:'Splitscreen',desc:'Bild & Text nebeneinander'},{id:2,name:'Bold Type',desc:'Großer Headline-Fokus'},{id:3,name:'Card Stack',desc:'Bullet-Karten Struktur'},{id:4,name:'Minimal',desc:'Ruhig & aufgeräumt'},{id:5,name:'Quote Frame',desc:'Zitat im Mittelpunkt'},{id:6,name:'Photo Big',desc:'Foto dominiert'},{id:7,name:'Diagonal Cut',desc:'Dynamischer Schnitt'},{id:8,name:'List View',desc:'Strukturierte Liste'},{id:9,name:'Dark Impact',desc:'Starker Kontrast'},{id:10,name:'Editorial',desc:'Magazin-Stil'},{id:11,name:'Strukturiert A',cat:'Strukturiert',desc:'Kreis rechts unten'},{id:12,name:'Strukturiert B',cat:'Strukturiert',desc:'Kreis oben rechts'},{id:13,name:'Strukturiert C',cat:'Strukturiert',desc:'Kreis links oben'},{id:14,name:'Strukturiert D',cat:'Strukturiert',desc:'Kreis mittig'}];
+const PALETTES=[{name:'Waldgrün',primary:'#1E3A2A',accent:'#4A6741',text:'#fff'},{name:'Sandstein',primary:'#5C4433',accent:'#C67B5A',text:'#fff'},{name:'Cremeweiß',primary:'#3D3228',accent:'#8B6F5A',text:'#fff'},{name:'Salbei',primary:'#2A3B2E',accent:'#6B8F62',text:'#fff'},{name:'Terracotta',primary:'#5C3020',accent:'#D2714A',text:'#fff'},{name:'Olivgrün',primary:'#3A3E1E',accent:'#7A8A3A',text:'#fff'},{name:'Warmes Braun',primary:'#4A3020',accent:'#A07850',text:'#fff'},{name:'Tiefgrün',primary:'#1A3020',accent:'#3A6040',text:'#fff'},{name:'Moosgrün',primary:'#2E3A24',accent:'#586B42',text:'#fff'},{name:'Natur',primary:'#2C2420',accent:'#6B5B4E',text:'#fff'}];
+
+function buildPostPreview(layout,palette,content,imgSrc,w,h){
+  const p=palette||PALETTES[0];
+  const s=(v,base)=>(v/base*h).toFixed(1);
+  const sw=(v,base)=>(v/base*w).toFixed(1);
+  const photoSm=Math.round(w*0.22);
+  const photoEl=(size,pos)=>{
+    const img=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:`<div style="font-size:${(size/100*9).toFixed(1)}px;opacity:0.5;text-align:center;color:${p.text};padding:4px">Foto</div>`;
+    return `<div style="position:absolute;width:${size}px;height:${size}px;${pos};border-radius:6px;border:2px solid rgba(255,255,255,0.35);overflow:hidden;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center">${img}</div>`;
+  };
+  const badgeEl=`<div style="font-family:sans-serif;font-size:${s(9,300)}px;letter-spacing:0.1em;text-transform:uppercase;opacity:0.75;color:${p.text};margin-bottom:${s(6,300)}px">${content.tag}</div>`;
+  const titleEl=(fs)=>`<div style="font-family:Georgia,serif;font-size:${s(fs,300)}px;font-weight:700;color:${p.text};line-height:1.2;margin-bottom:${s(6,300)}px">${content.title}</div>`;
+  const bodyEl=(fs)=>`<div style="font-family:sans-serif;font-size:${s(fs,300)}px;color:${p.text};opacity:0.75;line-height:1.5">${content.body.slice(0,80)}…</div>`;
+  let html='';
+  if(layout===1){html=`<div style="display:flex;width:${w}px;height:${h}px;background:${p.primary}"><div style="width:40%;background:${p.accent};display:flex;align-items:center;justify-content:center"><div style="width:70%;aspect-ratio:1;border-radius:6px;overflow:hidden;border:2px solid rgba(255,255,255,0.3);${imgSrc?'':'background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center'}">${imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:`<div style="font-size:9px;color:rgba(255,255,255,0.6);text-align:center">Foto</div>`}</div></div><div style="flex:1;padding:${s(16,300)}px;display:flex;flex-direction:column;justify-content:center">${badgeEl}${titleEl(16)}${bodyEl(9)}</div></div>`;}
+  else if(layout===2){html=`<div style="position:relative;width:${w}px;height:${h}px;background:${p.primary};padding:${s(18,300)}px;display:flex;flex-direction:column;justify-content:flex-end">${photoEl(photoSm,`top:${s(14,300)}px;right:${sw(14,300)}px`)}${badgeEl}${titleEl(18)}${bodyEl(9)}</div>`;}
+  else if(layout===3){const bullets=['Freie Zeit','Eigenes Team','Kein Limit'];html=`<div style="position:relative;width:${w}px;height:${h}px;background:${p.primary};padding:${s(14,300)}px">${badgeEl}${titleEl(13)}${bullets.map(b=>`<div style="background:rgba(255,255,255,0.08);border-radius:4px;padding:${s(5,300)}px ${sw(8,300)}px;margin-bottom:${s(4,300)}px;display:flex;align-items:center;gap:6px"><span style="color:${p.accent};font-size:10px">✓</span><span style="color:${p.text};font-size:${s(9,300)}px;font-family:sans-serif">${b}</span></div>`).join('')}${photoEl(photoSm,`bottom:${s(14,300)}px;right:${sw(14,300)}px`)}</div>`;}
+  else if(layout===4){html=`<div style="position:relative;width:${w}px;height:${h}px;background:${p.accent};padding:${s(22,300)}px;display:flex;flex-direction:column;justify-content:center"><div style="width:28px;height:2px;background:rgba(255,255,255,0.6);margin-bottom:${s(12,300)}px"></div>${titleEl(15)}${bodyEl(9)}<div style="margin-top:${s(14,300)}px;display:flex;align-items:center;gap:8px"><div style="width:${photoSm*0.55}px;height:${photoSm*0.55}px;border-radius:50%;overflow:hidden;border:1.5px solid rgba(255,255,255,0.4);${imgSrc?'':'background:rgba(255,255,255,0.15)'}">${imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:''}</div><span style="font-size:${s(9,300)}px;font-family:sans-serif;color:rgba(255,255,255,0.8)">Vermögensberatung</span></div></div>`;}
+  else if(layout===5){html=`<div style="position:relative;width:${w}px;height:${h}px;background:${p.primary};padding:${s(20,300)}px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center"><div style="font-size:${s(30,300)}px;color:${p.accent};line-height:0.8;margin-bottom:8px">"</div>${titleEl(14)}<div style="width:28px;height:1.5px;background:${p.accent};margin:${s(8,300)}px auto"></div><div style="width:${photoSm*0.7}px;height:${photoSm*0.7}px;border-radius:50%;overflow:hidden;border:2px solid ${p.accent};${imgSrc?'':'background:rgba(255,255,255,0.1)'}">${imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:''}</div></div>`;}
+  else if(layout===6){html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden">${imgSrc?`<img src="${imgSrc}" style="position:absolute;width:100%;height:100%;object-fit:cover;opacity:0.4">`:`<div style="position:absolute;width:100%;height:100%;background:${p.accent};opacity:0.3"></div>`}<div style="position:absolute;inset:0;background:linear-gradient(to top,${p.primary} 55%,transparent)"></div><div style="position:absolute;bottom:0;padding:${s(18,300)}px">${badgeEl}${titleEl(17)}</div></div>`;}
+  else if(layout===7){html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;background:${p.primary}"><div style="position:absolute;top:0;left:0;width:55%;height:100%;background:${p.accent};clip-path:polygon(0 0,85% 0,100% 100%,0 100%)"></div><div style="position:absolute;top:${s(16,300)}px;left:${sw(14,300)}px;width:42%"><div style="width:100%;aspect-ratio:1;border-radius:6px;overflow:hidden;${imgSrc?'':'background:rgba(255,255,255,0.15)'}">${imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:''}</div></div><div style="position:absolute;right:${sw(12,300)}px;top:${s(16,300)}px;width:42%">${badgeEl}${titleEl(13)}</div></div>`;}
+  else if(layout===8){html=`<div style="position:relative;width:${w}px;height:${h}px;background:${p.primary};padding:${s(14,300)}px"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:${s(10,300)}px">${badgeEl}<div style="width:${photoSm*0.6}px;height:${photoSm*0.6}px;border-radius:4px;overflow:hidden;${imgSrc?'':'background:rgba(255,255,255,0.1)'}">${imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:''}</div></div>${titleEl(13)}${['→ Freie Zeiteinteilung','→ Eigenes Team aufbauen','→ Unlimitiertes Einkommen'].map(b=>`<div style="font-family:sans-serif;font-size:${s(8.5,300)}px;color:rgba(255,255,255,0.7);margin-bottom:3px">${b}</div>`).join('')}</div>`;}
+  else if(layout===9){html=`<div style="position:relative;width:${w}px;height:${h}px;background:#111;padding:${s(18,300)}px;display:flex;flex-direction:column;justify-content:flex-end">${photoEl(photoSm,`top:${s(14,300)}px;right:${sw(14,300)}px`)}<div style="font-family:sans-serif;font-size:${s(8,300)}px;letter-spacing:0.15em;text-transform:uppercase;color:${p.accent};margin-bottom:${s(6,300)}px">${content.tag}</div><div style="font-family:Georgia,serif;font-size:${s(18,300)}px;font-weight:900;color:#fff;line-height:1.1;text-transform:uppercase;margin-bottom:${s(6,300)}px">${content.title}</div><div style="width:100%;height:1px;background:${p.accent}"></div></div>`;}
+  else if(layout===11){
+    const cR11=Math.round(w*0.32),bW11=Math.round(w*0.055),wH11=Math.round(h*0.62);
+    const sP=`<div style="text-align:center;font-family:sans-serif;font-size:8px;color:rgba(44,36,32,0.55);line-height:1.5;padding:2px">📷<br>Dein Foto<br>hier</div>`;
+    const ci11=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:sP;
+    html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;font-family:sans-serif"><div style="position:absolute;inset:0;background:linear-gradient(160deg,#c8d8ea 0%,#98aec0 100%)"></div><div style="position:absolute;top:0;right:0;width:${bW11}px;height:100%;background:${p.accent}"></div><div style="position:absolute;bottom:0;left:0;right:${bW11}px;height:${wH11}px;background:#fff;padding:${s(14,300)}px ${sw(12,300)}px"><div style="font-family:Georgia,serif;font-size:${s(17,300)}px;font-weight:700;color:#1a1a1a;margin-bottom:${s(7,300)}px;line-height:1.15">${content.title}</div><div style="font-size:${s(8.5,300)}px;color:#444;line-height:1.5">${content.body.replace(/\n/g,' ').slice(0,90)}…</div></div><div style="position:absolute;bottom:${Math.round(wH11*0.62)}px;right:${bW11+6}px;width:${cR11}px;height:${cR11}px;border-radius:50%;border:3px solid ${p.accent};background:#b8cede;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,.2)">${ci11}</div></div>`;
+  }
+  else if(layout===12){
+    const cR12=Math.round(w*0.32),bW12=Math.round(w*0.055),wH12=Math.round(h*0.58);
+    const sP=`<div style="text-align:center;font-family:sans-serif;font-size:8px;color:rgba(44,36,32,0.55);line-height:1.5;padding:2px">📷<br>Dein Foto<br>hier</div>`;
+    const ci12=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:sP;
+    html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;font-family:sans-serif"><div style="position:absolute;inset:0;background:linear-gradient(160deg,#c8d8ea 0%,#98aec0 100%)"></div><div style="position:absolute;top:0;right:0;width:${bW12}px;height:100%;background:${p.accent}"></div><div style="position:absolute;bottom:0;left:0;right:${bW12}px;height:${wH12}px;background:#fff;padding:${s(16,300)}px ${sw(12,300)}px"><div style="font-family:Georgia,serif;font-size:${s(17,300)}px;font-weight:700;color:#1a1a1a;margin-bottom:${s(7,300)}px;line-height:1.15">${content.title}</div><div style="font-size:${s(8.5,300)}px;color:#444;line-height:1.5">${content.body.replace(/\n/g,' ').slice(0,90)}…</div></div><div style="position:absolute;top:${s(12,300)}px;right:${bW12+8}px;width:${cR12}px;height:${cR12}px;border-radius:50%;border:3px solid ${p.accent};background:#b8cede;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,.2)">${ci12}</div></div>`;
+  }
+  else if(layout===13){
+    const cR13=Math.round(w*0.35),bW13=Math.round(w*0.055);
+    const sP=`<div style="text-align:center;font-family:sans-serif;font-size:8px;color:rgba(44,36,32,0.55);line-height:1.5;padding:2px">📷<br>Dein Foto<br>hier</div>`;
+    const ci13=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:sP;
+    const tT13=parseFloat(s(14,300))+cR13+12;
+    html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;font-family:sans-serif"><div style="position:absolute;inset:0;background:#fff"></div><div style="position:absolute;top:0;right:0;width:38%;height:100%;background:linear-gradient(160deg,#c8d8ea 0%,#98aec0 100%)"></div><div style="position:absolute;top:0;left:0;width:${bW13}px;height:100%;background:${p.accent}"></div><div style="position:absolute;top:${s(14,300)}px;left:${bW13+10}px;width:${cR13}px;height:${cR13}px;border-radius:50%;border:3px solid ${p.accent};background:#b8cede;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,.2)">${ci13}</div><div style="position:absolute;left:${bW13+10}px;right:40%;top:${tT13.toFixed(1)}px;bottom:${s(14,300)}px"><div style="font-family:Georgia,serif;font-size:${s(16,300)}px;font-weight:700;color:#1a1a1a;margin-bottom:${s(7,300)}px;line-height:1.2">${content.title}</div><div style="font-size:${s(8,300)}px;color:#444;line-height:1.5">${content.body.replace(/\n/g,' ').slice(0,80)}…</div></div></div>`;
+  }
+  else if(layout===14){
+    const cR14=Math.round(w*0.30),bH14=Math.round(h*0.06),sY14=Math.round(h*0.44);
+    const sP=`<div style="text-align:center;font-family:sans-serif;font-size:8px;color:rgba(44,36,32,0.55);line-height:1.5;padding:2px">📷<br>Dein Foto<br>hier</div>`;
+    const ci14=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:sP;
+    const cT14=sY14-Math.round(cR14*0.5);
+    html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;font-family:sans-serif"><div style="position:absolute;top:0;left:0;right:0;height:${sY14}px;background:linear-gradient(160deg,#c8d8ea 0%,#98aec0 100%)"></div><div style="position:absolute;bottom:0;left:0;right:0;height:${h-sY14}px;background:#fff"></div><div style="position:absolute;bottom:0;left:0;right:0;height:${bH14}px;background:${p.accent}"></div><div style="position:absolute;left:50%;transform:translateX(-50%);top:${cT14}px;width:${cR14}px;height:${cR14}px;border-radius:50%;border:3px solid ${p.accent};background:#b8cede;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2)">${ci14}</div><div style="position:absolute;left:${sw(14,300)}px;right:${sw(14,300)}px;bottom:${bH14+8}px;top:${cT14+cR14+8}px;text-align:center;overflow:hidden"><div style="font-family:Georgia,serif;font-size:${s(16,300)}px;font-weight:700;color:#1a1a1a;margin-bottom:${s(5,300)}px;line-height:1.2">${content.title}</div><div style="font-size:${s(8,300)}px;color:#444;line-height:1.45">${content.body.replace(/\n/g,' ').slice(0,70)}…</div></div></div>`;
+  }
+  else{html=`<div style="position:relative;width:${w}px;height:${h}px;background:${p.accent};padding:${s(16,300)}px"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:${s(10,300)}px"><div style="font-family:monospace;font-size:${s(8,300)}px;color:rgba(255,255,255,0.7);letter-spacing:0.1em">MAGAZIN</div><div style="width:${photoSm*0.5}px;height:${photoSm*0.5}px;border-radius:4px;overflow:hidden;${imgSrc?'':'background:rgba(255,255,255,0.15)'}">${imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:''}</div></div><div style="font-size:${s(8,300)}px;color:rgba(255,255,255,0.7);font-family:sans-serif;margin-bottom:4px">— ${content.tag}</div>${titleEl(14)}${bodyEl(8.5)}</div>`;}
+  return html;
+}
+
+// ─── Kein-Design-Banner ───────────────────────────────────────────────────────
+function showNoDesignBanner(){
+  const sec=document.getElementById('preview-section');
+  const noDesignHtml=`
+    <div style="background:#fff;border:2px dashed var(--coral);border-radius:16px;padding:2rem;text-align:center;margin-bottom:1.5rem">
+      <div style="font-size:2rem;margin-bottom:.75rem">🎨</div>
+      <h3 style="font-family:Georgia,serif;font-size:1.2rem;font-weight:normal;margin-bottom:.5rem">Noch kein Design ausgewählt</h3>
+      <p style="font-size:.85rem;color:var(--warm);line-height:1.6;margin-bottom:1.25rem">Du hast noch kein Post-Design gewählt. Wähle jetzt ein Design – dann werden deine personalisierten Posts direkt in deinem gewählten Stil angezeigt.</p>
+      <a href="index.dev.html" style="display:inline-block;background:var(--coral);color:#fff;border-radius:10px;padding:.7rem 1.6rem;font-size:.9rem;text-decoration:none;font-family:Georgia,serif;margin-bottom:1rem">🎨 Jetzt Design auswählen</a>
+      <p style="font-size:.78rem;color:var(--warm)">Oder sieh dir die Vorschau mit einem Standard-Design an:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-top:.75rem">
+        ${DESIGNS.map(d=>`<button onclick="applyQuickDesign(${d.id})" style="padding:.35rem .8rem;border:1.5px solid var(--sand);border-radius:8px;background:var(--cream);font-size:.78rem;cursor:pointer;color:var(--dark);font-family:sans-serif">${d.name}</button>`).join('')}
+      </div>
+    </div>`;
+  sec.insertAdjacentHTML('afterbegin',noDesignHtml);
+}
+
+function applyQuickDesign(id){
+  try{const saved=JSON.parse(localStorage.getItem('merkert_design')||'{}');saved.designId=id;saved.paletteIdx=saved.paletteIdx||1;saved.palette=PALETTES[saved.paletteIdx||1];localStorage.setItem('merkert_design',JSON.stringify(saved));}catch(e){}
+  document.querySelectorAll('[onclick^="applyQuickDesign"]').forEach(b=>b.style.borderColor='var(--sand)');
+  event.target.style.borderColor='var(--coral)';
+  event.target.style.background='var(--coral)';
+  event.target.style.color='#fff';
+  rebuildPostPreviews(id, PALETTES[1]);
+}
+
+function rebuildPostPreviews(designId, palette){
+  document.querySelectorAll('.post-design-wrap').forEach(wrap=>{
+    const postId=wrap.dataset.postid;
+    const ta=document.getElementById('ta-'+postId);
+    if(!ta)return;
+    const content={tag:wrap.dataset.tag,title:wrap.dataset.hook,body:ta.value};
+    wrap.innerHTML=buildPostPreview(designId,palette,content,null,FMTS[activeFmt].w,FMTS[activeFmt].h);
+  });
+}
+
+// ─── Preview grid ─────────────────────────────────────────────────────────────
+function buildPreview(d){
+  let designCfg=null;
+  try{designCfg=JSON.parse(localStorage.getItem('merkert_design'));}catch(e){}
+
+  const designId=designCfg?.designId||null;
+  const palette=designCfg?.palette||null;
+  const hasDesign=!!designId&&!!palette;
+
+  const templates=makeTemplates(d);
+  const grid=document.getElementById('post-grid');
+
+  grid.innerHTML=templates.map(t=>{
+    const contentObj={tag:t.tag,title:t.hook,body:t.body};
+    const designHtml=hasDesign
+      ? `<div class="post-design-wrap" data-postid="${t.id}" data-tag="${t.tag}" data-hook="${t.hook.replace(/"/g,'&quot;')}">${buildPostPreview(designId,palette,contentObj,null,FMTS[activeFmt].w,FMTS[activeFmt].h)}</div>`
+      : `<div class="post-design-wrap post-design-placeholder" data-postid="${t.id}" data-tag="${t.tag}" data-hook="${t.hook.replace(/"/g,'&quot;')}"><div style="width:${FMTS[activeFmt].w}px;height:${FMTS[activeFmt].h}px;background:linear-gradient(135deg,#e8e0d8,#d4cbc0);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:.5rem"><span style="font-size:1.8rem">🎨</span><span style="font-size:.72rem;color:var(--warm);text-align:center;padding:0 1rem">Design wählen<br>für Vorschau</span></div></div>`;
+
+    const preview=t.body.replace(/\n/g,' ').substring(0,100)+'…';
+    return `<div class="post-card" id="card-${t.id}">
+      <div class="post-card-top">
+        <span class="post-tag-badge">${t.tag}</span>
+        <span class="post-block-name">${t.block}</span>
+        ${hasDesign?`<span style="font-size:.65rem;color:${palette.accent||'#C67B5A'};margin-left:auto;background:rgba(255,255,255,0.1);padding:.15rem .5rem;border-radius:10px">${DESIGNS.find(x=>x.id===designId)?.name||'Design'}</span>`:''}
+      </div>
+      <div class="post-card-body">
+        <div style="display:flex;justify-content:center;margin-bottom:.75rem;overflow:hidden;border-radius:8px;line-height:0">${designHtml}</div>
+        <div class="post-hook">${t.hook}</div>
+        <div class="post-preview-text" id="prev-${t.id}">${preview}</div>
+        <div class="post-edit-area" id="edit-${t.id}">
+          <textarea id="ta-${t.id}" oninput="onEditPost('${t.id}')">${t.body}</textarea>
+        </div>
+      </div>
+      <div class="post-card-actions">
+        <button class="btn-edit" id="ebtn-${t.id}" onclick="toggleEdit('${t.id}')">✏️ Anpassen</button>
+        <button class="btn-cart" id="cbtn-${t.id}" onclick="toggleCart('${t.id}','${t.hook.replace(/'/g,"\\'")}')">🛒 In den Warenkorb</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  if(!hasDesign) showNoDesignBanner();
+}
+
+function onEditPost(id){
+  const ta=document.getElementById('ta-'+id);
+  document.getElementById('prev-'+id).textContent=ta.value.replace(/\n/g,' ').substring(0,100)+'…';
+  // Design-Vorschau live aktualisieren
+  let cfg=null; try{cfg=JSON.parse(localStorage.getItem('merkert_design'));}catch(e){}
+  if(!cfg?.designId) return;
+  const wrap=document.querySelector(`[data-postid="${id}"]`);
+  if(!wrap) return;
+  const content={tag:wrap.dataset.tag,title:wrap.dataset.hook,body:ta.value};
+  wrap.innerHTML=buildPostPreview(cfg.designId,cfg.palette,content,null,FMTS[activeFmt].w,FMTS[activeFmt].h);
+}
+
+function toggleEdit(id){
+  const ea=document.getElementById('edit-'+id);
+  const pv=document.getElementById('prev-'+id);
+  const btn=document.getElementById('ebtn-'+id);
+  const isOpen=ea.classList.contains('open');
+  ea.classList.toggle('open');
+  pv.style.display=isOpen?'block':'none';
+  btn.classList.toggle('editing',!isOpen);
+  btn.textContent=isOpen?'✏️ Anpassen':'✅ Fertig';
+}
+
+function toggleCart(id,hook){
+  const btn=document.getElementById('cbtn-'+id);
+  const card=document.getElementById('card-'+id);
+  if(cart.has(id)){
+    cart.delete(id);
+    btn.textContent='🛒 In den Warenkorb';
+    btn.classList.remove('added');
+    card.classList.remove('in-cart');
+  } else {
+    cart.add(id);
+    btn.textContent='✅ Im Warenkorb';
+    btn.classList.add('added');
+    card.classList.add('in-cart');
+  }
+  updateCartBar();
+}
+
+function selectAll(){
+  document.querySelectorAll('.post-card').forEach(card=>{
+    const id=card.id.replace('card-','');
+    if(!cart.has(id)){
+      cart.add(id);
+      const btn=document.getElementById('cbtn-'+id);
+      if(btn){btn.textContent='✅ Im Warenkorb';btn.classList.add('added');}
+      card.classList.add('in-cart');
+    }
+  });
+  updateCartBar();
+}
+
+function updateCartBar(){
+  const n=cart.size;
+  const bar=document.getElementById('cart-bar');
+  const badge=document.getElementById('header-cart-badge');
+  const count=document.getElementById('header-cart-count');
+  document.getElementById('cart-bar-count').textContent=n+' Post'+(n!==1?'s':'')+' ausgewählt';
+  bar.classList.toggle('show',n>0);
+  badge.classList.toggle('show',n>0);
+  count.textContent=n;
+
+  // Save to localStorage
+  const sel=[];
+  cart.forEach(id=>{
+    const ta=document.getElementById('ta-'+id);
+    const hook=document.getElementById('card-'+id)?.querySelector('.post-hook')?.textContent||'';
+    if(ta)sel.push({id,hook,body:ta.value});
+  });
+  try{localStorage.setItem('merkert_cart_posts',JSON.stringify(sel));}catch(e){}
+}
+
+function scrollToCart(){document.getElementById('post-grid').scrollIntoView({behavior:'smooth'});}
+function goToCart(){window.location.href='index.dev.html?cart=1';}
+
+// ─── Form helpers ─────────────────────────────────────────────────────────────
+function updateProgress(){
+  const filled=[
+    document.getElementById('f-name').value.trim(),
+    S.warum||document.getElementById('f-warum-custom').value.trim(),
+    S.hero||document.getElementById('f-hero-custom').value.trim(),
+    S.philo||document.getElementById('f-philo-custom').value.trim(),
+    Object.keys(S.eo).length>0?'x':'',
+    S.facts.length>0||[...document.querySelectorAll('.custom-fact-input')].some(i=>i.value.trim())?'x':''
+  ].filter(Boolean).length;
+  document.getElementById('progress-bar').style.width=(filled/6*100)+'%';
+}
+document.querySelectorAll('input,textarea').forEach(el=>el.addEventListener('input',updateProgress));
+
+function selectOpt(group,val,el){
+  document.querySelectorAll('[name="'+group+'"]').forEach(r=>r.closest('.opt-card').classList.remove('selected'));
+  el.classList.add('selected');
+  S[group]=val;
+  updateProgress();
+}
+function toggleCustom(id){document.getElementById(id).classList.toggle('open');}
+
+const HERO_TEXTS={
+  freiheit:'Ich wollte meinen eigenen Weg gehen – raus aus dem 9-to-5, rein in eine Tätigkeit, die ich selbst gestalte. Als ich die Möglichkeit der Finanzberatung entdeckt habe, war klar: Das ist die Freiheit, nach der ich gesucht hatte. Ich entscheide, wie ich arbeite – und ich brenne für das, was ich tue.',
+  sinn:'Ich wollte mehr als nur einen Job. Ich wollte etwas bewegen – echten Mehrwert für echte Menschen schaffen. Als ich gemerkt habe, dass Finanzberatung Leben verändern kann, war die Entscheidung klar. Heute gehe ich jeden Morgen mit einem klaren Warum an die Arbeit.',
+  karriere:'Ich bin ein Macher. Stillstand ist nichts für mich – ich wollte wachsen, Verantwortung übernehmen und mein volles Potenzial ausschöpfen. In der Finanzberatung habe ich einen Weg gefunden, der mich wirklich fordert, belohnt und täglich besser werden lässt.'
+};
+function prefillHero(key){
+  document.getElementById('hero-custom').classList.add('open');
+  const ta=document.getElementById('f-hero-custom');
+  ta.value=HERO_TEXTS[key];
+  countChars(ta,'hero-count',1000);
+}
+function countChars(el,cid,max){
+  const l=el.value.length;
+  const c=document.getElementById(cid);
+  c.textContent=l+' / '+max;
+  c.classList.toggle('over',l>max);
+  el.classList.toggle('error',l>max);
+  updateProgress();
+}
+function countSingle(el){
+  const l=el.value.length;
+  const c=el.parentElement.querySelector('.single-count');
+  c.textContent=l+' / 100';
+  c.classList.toggle('over',l>100);
+  el.classList.toggle('error',l>100);
+}
+function selectEo(group,val,el){
+  el.closest('.either-or-pair').querySelectorAll('.eo-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  S.eo[group]=val;
+  updateProgress();
+}
+function toggleFact(el,text){
+  if(el.classList.contains('selected')){
+    el.classList.remove('selected');
+    S.facts=S.facts.filter(f=>f!==text);
+  } else {
+    if(S.facts.length>=5)return;
+    el.classList.add('selected');
+    S.facts.push(text);
+  }
+  const rem=5-S.facts.length;
+  document.getElementById('facts-remaining').textContent=rem;
+  document.querySelectorAll('.fact-chip:not(.selected)').forEach(c=>c.classList.toggle('disabled',S.facts.length>=5));
+  updateProgress();
+}
+function copyOutput(){
+  navigator.clipboard.writeText(document.getElementById('output-text').textContent).then(()=>{
+    const n=document.getElementById('copy-ok');
+    n.classList.add('show');
+    setTimeout(()=>n.classList.remove('show'),2800);
+  });
+}
+
+// ─── Format-Umschalter ────────────────────────────────────────────────────────
+function setFmt(btn,id){
+  activeFmt=id;
+  document.querySelectorAll('.fmt-btn').forEach(b=>b.classList.toggle('active',b===btn));
+  let cfg=null; try{cfg=JSON.parse(localStorage.getItem('merkert_design'));}catch(e){}
+  if(!cfg?.designId) return;
+  const f=FMTS[id];
+  document.querySelectorAll('.post-design-wrap').forEach(wrap=>{
+    const postId=wrap.dataset.postid;
+    const ta=document.getElementById('ta-'+postId);
+    if(!ta) return;
+    const content={tag:wrap.dataset.tag,title:wrap.dataset.hook,body:ta.value};
+    wrap.innerHTML=buildPostPreview(cfg.designId,cfg.palette,content,null,f.w,f.h);
+  });
+  if(id==='story') setTimeout(()=>majaShow('Story-Profi-Tipp 🐝','Perfekt! Stories & Reels erzielen die höchste organische Reichweite. Teile sie auch direkt als WhatsApp-Status!'),300);
+  if(id==='landscape') setTimeout(()=>majaShow('Landscape-Tipp 🐝','16:9 eignet sich super für LinkedIn-Banner oder YouTube-Thumbnails!'),300);
+  if(id==='square') setTimeout(()=>majaShow('Quadrat-Tipp 🐝','1:1 ist der Klassiker für Instagram-Feed und Facebook – überall top!'),300);
+}
+
+// ─── Maja ─────────────────────────────────────────────────────────────────────
+let _majaLast={t:'Tipp von Maja 🐝',b:'Klick auf die verschiedenen Formate oben, um deine Posts in Story, Feed oder Quadrat zu sehen!'};
+function majaShow(t,b){
+  _majaLast={t,b};
+  document.getElementById('maja-t').textContent=t;
+  document.getElementById('maja-b').textContent=b;
+  document.getElementById('maja-wrap').classList.add('visible');
+  document.getElementById('maja-speech').classList.add('show');
+}
+function majaClose(){document.getElementById('maja-speech').classList.remove('show');}
+function majaToggle(){
+  const sp=document.getElementById('maja-speech');
+  if(sp.classList.contains('show')){majaClose();}
+  else{majaShow(_majaLast.t,_majaLast.b);}
+}
+</script>
+<!-- MAJA -->
+<div class="maja-wrap" id="maja-wrap">
+  <div class="maja-speech" id="maja-speech">
+    <button class="maja-x" onclick="majaClose()">✕</button>
+    <div class="maja-speech-t" id="maja-t">Tipp von Maja 🐝</div>
+    <div id="maja-b">Wähle das Story-Format (9:16) für WhatsApp Status &amp; Instagram Reels!</div>
+  </div>
+  <img class="maja-av" src="assets/biene.png" alt="Maja" onclick="majaToggle()">
+</div>
+
+</body>
+</html>
