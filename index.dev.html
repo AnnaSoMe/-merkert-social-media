@@ -1491,10 +1491,10 @@ const DESIGNS = [
   {id:8,name:'List View',desc:'Strukturierte Liste'},
   {id:9,name:'Dark Impact',desc:'Starker Kontrast'},
   {id:10,name:'Editorial',desc:'Magazin-Stil'},
-  {id:11,name:'Strukturiert A',cat:'Strukturiert',desc:'Kreis rechts unten'},
-  {id:12,name:'Strukturiert B',cat:'Strukturiert',desc:'Kreis oben rechts'},
-  {id:13,name:'Strukturiert C',cat:'Strukturiert',desc:'Kreis links oben'},
-  {id:14,name:'Strukturiert D',cat:'Strukturiert',desc:'Kreis mittig'},
+  {id:11,name:'Strukturiert 1',cat:'Strukturiert',desc:'Dunkler Hintergrund, Fotorahmen'},
+  {id:12,name:'Strukturiert 2',cat:'Strukturiert',desc:'Warmes Editorial, Label & Titel'},
+  {id:13,name:'Strukturiert 3',cat:'Strukturiert',desc:'Creme & Foto unten'},
+  {id:14,name:'Strukturiert 4',cat:'Strukturiert',desc:'Bürostil, Kreis & Panel'},
 ];
 
 const PALETTES = [
@@ -1616,27 +1616,72 @@ function buildPostPreview(layout, palette, content, imgSrc, w, h, logoSrc) {
       <div style="font-family:Georgia,serif;font-size:${(18/300*h).toFixed(1)}px;font-weight:900;color:#fff;line-height:1.1;text-transform:uppercase;margin-bottom:${(6/300*h).toFixed(1)}px">${content.title}</div>
       <div style="width:100%;height:1px;background:${p.accent}"></div>
     </div>`;
-  } else if(layout===11||layout===12||layout===13||layout===14) {
-    const cR=Math.round(w*0.32),bW=Math.round(w*0.055),wH=Math.round(h*0.58);
-    const photoPlaceholder=`<div style="text-align:center;font-family:sans-serif;font-size:${(7/300*h).toFixed(1)}px;color:rgba(44,36,32,0.55);line-height:1.5;padding:2px">📷<br>Dein Foto<br>hier</div>`;
-    const ci=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:photoPlaceholder;
-    const hookText=content.body.split('\n')[0];
-    const bodyShort=content.body.replace(/\n/g,' ').slice(0,80)+(content.body.length>80?'…':'');
-    // Circle position varies by layout variant
-    let circleStyle='';
-    if(layout===11) circleStyle=`bottom:${Math.round(wH*0.55)}px;right:${bW+4}px`;
-    else if(layout===12) circleStyle=`top:${Math.round(h*0.05)}px;right:${bW+4}px`;
-    else if(layout===13) circleStyle=`top:${Math.round(h*0.05)}px;left:${Math.round(w*0.04)}px`;
-    else circleStyle=`top:50%;right:${bW+4}px;transform:translateY(-50%)`;
+  } else if(layout===11) {
+    // Grau-dunkel: großer Titel oben-links, Kreis oben-rechts, Bildrahmen Mitte, Tag unten
+    const cR11=Math.round(w*0.27),pad11=Math.round(w*0.06);
+    const photoP11=`<div style="text-align:center;font-family:sans-serif;font-size:${(5.5/300*h).toFixed(1)}px;color:rgba(255,255,255,0.65);line-height:1.4">📷<br>Foto</div>`;
+    const ci11=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:photoP11;
+    const fW11=Math.round(w*0.56),fH11=Math.round(h*0.27);
     html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;font-family:sans-serif">
-      <div style="position:absolute;inset:0;background:linear-gradient(160deg,#c8d8ea 0%,#98aec0 100%)"></div>
-      <div style="position:absolute;top:0;right:0;width:${bW}px;height:100%;background:${p.accent}"></div>
-      <div style="position:absolute;bottom:0;left:0;right:${bW}px;height:${wH}px;background:#fff;padding:${Math.round(h*0.04)}px ${Math.round(w*0.06)}px">
-        <div style="font-family:sans-serif;font-size:${(7/300*h).toFixed(1)}px;font-weight:700;color:${p.accent};text-transform:uppercase;letter-spacing:.08em;margin-bottom:${Math.round(h*0.01)}px">${content.tag||'Mal ehrlich…'}</div>
-        <div style="font-family:Georgia,serif;font-size:${(12/300*h).toFixed(1)}px;font-weight:700;color:#1a1a1a;line-height:1.25;margin-bottom:${Math.round(h*0.02)}px">${hookText}</div>
-        <div style="font-size:${(7.5/300*h).toFixed(1)}px;color:#444;line-height:1.5">${bodyShort}</div>
+      <div style="position:absolute;inset:0;background:linear-gradient(145deg,#7a8a9a 0%,#52626e 100%)"></div>
+      <div style="position:absolute;top:${pad11}px;left:${pad11}px;right:${cR11+pad11*2}px">
+        <div style="font-family:Georgia,serif;font-size:${(16/300*h).toFixed(1)}px;font-weight:900;color:#fff;line-height:1.05;text-transform:uppercase">${content.title}</div>
       </div>
-      <div style="position:absolute;${circleStyle};width:${cR}px;height:${cR}px;border-radius:50%;border:${Math.round(w*0.012)}px solid ${p.accent};background:#b8cede;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 14px rgba(0,0,0,.2)">${ci}</div>
+      <div style="position:absolute;top:${pad11}px;right:${pad11}px;width:${cR11}px;height:${cR11}px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.6);background:rgba(255,255,255,0.15);overflow:hidden;display:flex;align-items:center;justify-content:center">${ci11}</div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-40%);width:${fW11}px;height:${fH11}px;border:1.5px solid rgba(255,255,255,0.4);background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center">
+        <div style="font-size:${(5.5/300*h).toFixed(1)}px;color:rgba(255,255,255,0.4);font-family:sans-serif">Hintergrundbild</div>
+      </div>
+      <div style="position:absolute;bottom:${pad11}px;left:${pad11}px;right:${pad11}px;font-family:sans-serif;font-size:${(6/300*h).toFixed(1)}px;color:rgba(255,255,255,0.75);text-transform:uppercase;letter-spacing:.1em">${content.tag}</div>
+    </div>`;
+  } else if(layout===12) {
+    // Warmes Editorial: Label + Titel, Kreis oben-rechts, Bildrahmen Mitte
+    const cR12=Math.round(w*0.25),pad12=Math.round(w*0.07);
+    const photoP12=`<div style="text-align:center;font-family:sans-serif;font-size:${(5.5/300*h).toFixed(1)}px;color:rgba(44,36,32,0.5);line-height:1.4">📷<br>Foto</div>`;
+    const ci12=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:photoP12;
+    const fW12=Math.round(w*0.6),fH12=Math.round(h*0.24);
+    html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;font-family:sans-serif">
+      <div style="position:absolute;inset:0;background:linear-gradient(145deg,#e8d8b8 0%,#c8a878 100%)"></div>
+      <div style="position:absolute;top:${pad12}px;left:${pad12}px;right:${cR12+pad12*2}px">
+        <div style="font-family:sans-serif;font-size:${(5.5/300*h).toFixed(1)}px;color:rgba(44,36,32,0.55);text-transform:uppercase;letter-spacing:.12em;margin-bottom:${Math.round(h*0.01)}px">${content.tag}</div>
+        <div style="font-family:Georgia,serif;font-size:${(15/300*h).toFixed(1)}px;font-weight:900;color:#2C2420;line-height:1.05">${content.title}</div>
+      </div>
+      <div style="position:absolute;top:${pad12}px;right:${pad12}px;width:${cR12}px;height:${cR12}px;border-radius:50%;border:1.5px solid rgba(44,36,32,0.3);background:rgba(255,255,255,0.35);overflow:hidden;display:flex;align-items:center;justify-content:center">${ci12}</div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-20%);width:${fW12}px;height:${fH12}px;border:1.5px solid rgba(44,36,32,0.2);background:rgba(255,255,255,0.3);display:flex;align-items:center;justify-content:center">
+        <div style="font-size:${(5.5/300*h).toFixed(1)}px;color:rgba(44,36,32,0.35);font-family:sans-serif">Bild</div>
+      </div>
+      <div style="position:absolute;bottom:${pad12}px;left:${pad12}px;right:${pad12}px;font-size:${(6/300*h).toFixed(1)}px;color:rgba(44,36,32,0.7);line-height:1.4">${content.body.split('\n')[0].slice(0,55)}</div>
+    </div>`;
+  } else if(layout===13) {
+    // Creme-Clean: heller Hintergrund, Titel+Untertitel links, Kreis oben-rechts, Foto unten
+    const cR13=Math.round(w*0.23),pad13=Math.round(w*0.07),photoAreaH13=Math.round(h*0.38);
+    const photoP13=`<div style="text-align:center;font-family:sans-serif;font-size:${(5.5/300*h).toFixed(1)}px;color:rgba(44,36,32,0.45);line-height:1.4">📷<br>Foto</div>`;
+    const ci13=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:photoP13;
+    html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;font-family:sans-serif;background:#F5F0E8">
+      <div style="position:absolute;top:${pad13}px;left:${pad13}px;right:${cR13+pad13*2}px">
+        <div style="font-family:Georgia,serif;font-size:${(16/300*h).toFixed(1)}px;font-weight:900;color:#2C2420;line-height:1.05;margin-bottom:${Math.round(h*0.014)}px">${content.title}</div>
+        <div style="font-family:sans-serif;font-size:${(7/300*h).toFixed(1)}px;color:#8B6F5A;line-height:1.45">${content.body.split('\n')[0].slice(0,50)}</div>
+      </div>
+      <div style="position:absolute;top:${pad13}px;right:${pad13}px;width:${cR13}px;height:${cR13}px;border-radius:50%;border:2px solid ${p.accent};background:#e0cfc0;overflow:hidden;display:flex;align-items:center;justify-content:center">${ci13}</div>
+      <div style="position:absolute;bottom:0;left:0;right:0;height:${photoAreaH13}px;overflow:hidden">
+        <div style="width:100%;height:100%;background:linear-gradient(135deg,#a0b890 0%,#6a9060 50%,#4a7040 100%);display:flex;align-items:center;justify-content:center">
+          <div style="font-size:${(5.5/300*h).toFixed(1)}px;color:rgba(255,255,255,0.5);font-family:sans-serif">Hintergrundbild</div>
+        </div>
+      </div>
+    </div>`;
+  } else if(layout===14) {
+    // Büro-Stil (10 Fragen): Büro-Hintergrund, weißes Panel, Akzentstreifen rechts, Kreis
+    const cR14=Math.round(w*0.30),bW14=Math.round(w*0.055),wH14=Math.round(h*0.55),pad14=Math.round(w*0.055);
+    const photoP14=`<div style="text-align:center;font-family:sans-serif;font-size:${(5.5/300*h).toFixed(1)}px;color:rgba(44,36,32,0.5);line-height:1.4">📷<br>Foto</div>`;
+    const ci14=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:photoP14;
+    html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;font-family:sans-serif">
+      <div style="position:absolute;inset:0;background:linear-gradient(135deg,#c8d8ea 0%,#90aac0 100%)"></div>
+      <div style="position:absolute;top:0;right:0;width:${bW14}px;height:100%;background:${p.accent}"></div>
+      <div style="position:absolute;bottom:0;left:0;right:${bW14}px;height:${wH14}px;background:#fff;padding:${pad14}px">
+        <div style="font-family:sans-serif;font-size:${(6/300*h).toFixed(1)}px;font-weight:700;color:${p.accent};text-transform:uppercase;letter-spacing:.08em;margin-bottom:${Math.round(h*0.01)}px">${content.tag}</div>
+        <div style="font-family:Georgia,serif;font-size:${(11/300*h).toFixed(1)}px;font-weight:700;color:#1a1a1a;line-height:1.2;margin-bottom:${Math.round(h*0.015)}px">${content.title}</div>
+        <div style="font-size:${(6.5/300*h).toFixed(1)}px;color:#555;line-height:1.4">${content.body.split('\n')[0].slice(0,65)}</div>
+      </div>
+      <div style="position:absolute;bottom:${Math.round(wH14*0.6)}px;right:${bW14+4}px;width:${cR14}px;height:${cR14}px;border-radius:50%;border:2px solid ${p.accent};background:#b8cede;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(0,0,0,.2)">${ci14}</div>
     </div>`;
   } else {
     html=`<div style="position:relative;width:${w}px;height:${h}px;background:${p.accent};padding:${(16/300*h).toFixed(1)}px">
