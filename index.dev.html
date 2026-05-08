@@ -1,3 +1,45 @@
+﻿<!DOCTYPE html>
+</html>
+  } else if(layout>=11&&layout<=17) {
+    const sImgs={11:'assets/strukt-layout-1.png',12:'assets/strukt-layout-2.png',13:'assets/strukt-layout-3.png',14:'assets/strukt-layout-4.png',15:'assets/strukt-1.png',16:'assets/strukt-2.png',17:'assets/strukt-3.png'};
+    const bgImg=sImgs[layout];
+    const bW=Math.round(w*0.055),cR=Math.round(w*0.30),pad=Math.round(w*0.055);
+    const photoP=`<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:${(5.5/300*h).toFixed(1)}px;color:rgba(44,36,32,0.55);flex-direction:column;gap:2px;font-family:sans-serif">📷<span>Dein Foto</span></div>`;
+    const ci=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:photoP;
+    if(layout<=14){
+      const panH=layout===12?Math.round(h*0.62):layout===13?h:layout===14?Math.round(h*0.65):Math.round(h*0.55);
+      const barLeft=(layout===13);
+      const circleT=layout===11?Math.round(h*0.43-cR*0.5):layout===12?Math.round(h*0.36-cR*0.5):layout===13?Math.round(h*0.12):Math.round(h*0.34-cR*0.5);
+      const circlePos=layout===13?`left:${Math.round(w*0.08)}px;top:${circleT}px`:`right:${bW+4}px;top:${circleT}px`;
+      const panStyle=layout===13?`bottom:0;left:${bW}px;width:${Math.round(w*0.72)}px;height:100%;background:#fff;padding:${pad}px`:`bottom:0;left:${barLeft?bW:0}px;right:${barLeft?0:bW}px;height:${panH}px;background:#fff;padding:${pad}px`;
+      html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;font-family:sans-serif">
+        <img src="${bgImg}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <div style="position:absolute;${barLeft?'left:0':'right:0'};top:0;width:${bW}px;height:100%;background:${p.accent}"></div>
+        <div style="position:absolute;${panStyle}">
+          <div style="font-family:sans-serif;font-size:${(5.5/300*h).toFixed(1)}px;font-weight:700;color:${p.accent};text-transform:uppercase;letter-spacing:.08em;margin-bottom:${Math.round(h*0.008)}px">${content.tag}</div>
+          <div style="font-family:Georgia,serif;font-size:${(11/300*h).toFixed(1)}px;font-weight:700;color:#1a1a1a;line-height:1.2;margin-bottom:${Math.round(h*0.01)}px">${content.title}</div>
+          <div style="font-size:${(6/300*h).toFixed(1)}px;color:#555;line-height:1.4">${content.body.split('\n')[0].slice(0,60)}</div>
+        </div>
+        <div style="position:absolute;${circlePos};width:${cR}px;height:${cR}px;border-radius:50%;border:${Math.round(w*0.013)}px solid ${p.accent};background:#c8d8e8;overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(0,0,0,.22)">${ci}</div>
+      </div>`;
+    } else {
+      const cR2=Math.round(w*0.22),pad2=Math.round(w*0.06);
+      const photoP2=`<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:${(5/300*h).toFixed(1)}px;color:rgba(255,255,255,0.6);flex-direction:column;font-family:sans-serif">📷<span>Foto</span></div>`;
+      const ci2=imgSrc?`<img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover">`:photoP2;
+      const panBg=layout===17?'#F5F0E8':layout===16?'rgba(232,216,184,0.92)':'rgba(90,100,110,0.88)';
+      const txtCol=layout===17||layout===16?'#2C2420':'#fff';
+      const subCol=layout===17?'#8B6F5A':layout===16?'rgba(44,36,32,0.65)':'rgba(255,255,255,0.75)';
+      const panH2=layout===17?Math.round(h*0.6):Math.round(h*0.55);
+      html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden;font-family:sans-serif">
+        <img src="${bgImg}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+        <div style="position:absolute;top:0;left:0;right:0;height:${panH2}px;background:${panBg};padding:${pad2}px">
+          <div style="font-family:sans-serif;font-size:${(5.5/300*h).toFixed(1)}px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${subCol};margin-bottom:${Math.round(h*0.008)}px">${content.tag}</div>
+          <div style="font-family:Georgia,serif;font-size:${(14/300*h).toFixed(1)}px;font-weight:900;color:${txtCol};line-height:1.1;margin-bottom:${Math.round(h*0.01)}px">${content.title}</div>
+          <div style="font-size:${(6/300*h).toFixed(1)}px;color:${subCol};line-height:1.4">${content.body.split('\n')[0].slice(0,55)}</div>
+        </div>
+        <div style="position:absolute;top:${pad2}px;right:${pad2}px;width:${cR2}px;height:${cR2}px;border-radius:50%;border:2px solid ${p.accent};background:rgba(255,255,255,0.25);overflow:hidden;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,.2)">${ci2}</div>
+      </div>`;
+    }
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -1495,10 +1537,13 @@ const DESIGNS = [
   {id:8,name:'List View',desc:'Strukturierte Liste'},
   {id:9,name:'Dark Impact',desc:'Starker Kontrast'},
   {id:10,name:'Editorial',desc:'Magazin-Stil'},
-  {id:11,name:'Strukturiert 1',cat:'Strukturiert',desc:'Dunkler Hintergrund, Fotorahmen'},
-  {id:12,name:'Strukturiert 2',cat:'Strukturiert',desc:'Warmes Editorial, Label & Titel'},
-  {id:13,name:'Strukturiert 3',cat:'Strukturiert',desc:'Creme & Foto unten'},
-  {id:14,name:'Strukturiert 4',cat:'Strukturiert',desc:'Bürostil, Kreis & Panel'},
+  {id:11,name:'Strukturiert A',cat:'Strukturiert',desc:'Büro · Panel links unten · Kreis rechts'},
+  {id:12,name:'Strukturiert B',cat:'Strukturiert',desc:'Büro · Panel unten · Kreis oben'},
+  {id:13,name:'Strukturiert C',cat:'Strukturiert',desc:'Büro · Panel links · Kreis oben links'},
+  {id:14,name:'Strukturiert D',cat:'Strukturiert',desc:'Büro · Panel unten · Kreis mittig'},
+  {id:15,name:'Strukturiert E',cat:'Strukturiert',desc:'Dunkel · Großer Titel · Rahmen'},
+  {id:16,name:'Strukturiert F',cat:'Strukturiert',desc:'Warm · Editorial · Label'},
+  {id:17,name:'Strukturiert G',cat:'Strukturiert',desc:'Creme · Sauber · Foto unten'},
 ];
 
 const PALETTES = [
@@ -2701,7 +2746,7 @@ const LIB_DATA=[
 // ─── DESIGN SECTION ──────────────────────────────────────────────────────
 const DS_STYLES = [
   {lid:7, label:'Clean & Minimal', desc:'Nur dein Foto und ein starker Hook. Ruhig, zeitlos.', related:[1,4,2,5,3,10]},
-  {lid:13, label:'Strukturiert', desc:'Klare Elemente, modernes Layout, Foto im Fokus.', related:[11,12,13,14,1,4]},
+  {lid:13, label:'Strukturiert', desc:'Klare Elemente, modernes Layout, Foto im Fokus.', related:[11,12,13,14,15,16,17]},
   {lid:8, label:'Bold & Dark', desc:'Kontraststark, dunkel – bleibt im Kopf.', related:[9,2,7,6,3,10]},
 ];
 
