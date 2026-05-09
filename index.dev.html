@@ -1831,7 +1831,17 @@ function buildPostPreview(layout, palette, content, imgSrc, w, h, logoSrc) {
       <img src="${bgSrc}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:fill">
       ${imgSrc?`<div style="position:absolute;left:${iL}px;top:${iT}px;width:${iSz}px;height:${iSz}px;border-radius:50%;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.25)"><img src="${imgSrc}" style="width:100%;height:100%;object-fit:cover;object-position:center top"></div>`:''}
     </div>`;
-  } else if(layout>=18&&layout<=25) {
+  } else if(layout>=18&&layout<=21) {
+    // PNG-Preview (schnell) – Kreisfoto als Overlay
+    const _pngBg = {18:'assets/designs/strukturiert-1.png',19:'assets/designs/strukturiert-2.png',20:'assets/designs/strukturiert-3.png',21:'assets/designs/strukturiert-4.png'};
+    // Kreismittelpunkt in % der Originalgröße (1080×1350)
+    const _cPos = {18:{lp:77.8,tp:78.1,sp:25},19:{lp:79.6,tp:20.6,sp:23},20:{lp:27.3,tp:20.6,sp:23},21:{lp:50,tp:27.3,sp:25}};
+    const _bg = _pngBg[layout], _c = _cPos[layout];
+    html=`<div style="position:relative;width:${w}px;height:${h}px;overflow:hidden">
+      <img src="${_bg}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:fill">
+      ${imgSrc&&_c?`<div style="position:absolute;left:${_c.lp}%;top:${_c.tp}%;width:${_c.sp}%;padding-bottom:${_c.sp}%;transform:translate(-50%,-50%);border-radius:50%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.3)"><img src="${imgSrc}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top"></div>`:''}
+    </div>`;
+  } else if(layout>=22&&layout<=25) {
     html = buildSVGDesignPreview(layout, p.accent, imgSrc, w, h);
   } else {
     html=`<div style="position:relative;width:${w}px;height:${h}px;background:${p.accent};padding:${(16/300*h).toFixed(1)}px">
