@@ -8,7 +8,6 @@ const supabase = createClient(
 );
 
 export async function handler(event) {
-  // Stripe Signatur prüfen
   let stripeEvent;
   try {
     stripeEvent = stripe.webhooks.constructEvent(
@@ -33,12 +32,12 @@ export async function handler(event) {
     return { statusCode: 200, body: 'No orderId' };
   }
 
-  // Order als 'processing' markieren + E-Mail speichern
+  // Order als 'processing' markieren
   const { error } = await supabase
     .from('orders')
     .update({
       stripe_session: session.id,
-      email,
+      customer_email: email,
       status: 'processing',
     })
     .eq('id', orderId);
@@ -48,13 +47,13 @@ export async function handler(event) {
     return { statusCode: 500, body: 'DB error' };
   }
 
-  // Bildgenerierung asynchron anstoßen (Fire & Forget)
+  // Bildgenerierung anstoßen (Fire & Forget – Netlify Timeout vermeiden)
   const baseUrl = process.env.BASE_URL || 'https://merkertsocialmedia.com';
   fetch(`${baseUrl}/.netlify/functions/generate-image`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ orderId }),
-  }).catch(err => console.error('generate-image call failed:', err));
+  }).catch(err => console.error('generate-image Fehler:', err));
 
   return { statusCode: 200, body: 'OK' };
 }

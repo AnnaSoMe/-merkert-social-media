@@ -1,6 +1,21 @@
 // ── Warenkorb ──────────────────────────────────────────────────────────────
-// Voraussetzung: globale `supabase`-Instanz, `state` aus index.dev.html,
-// `designState` aus designState.js, `renderCart()` aus index.dev.html.
+
+// Design-ID Mapping: UI-ID → Sharp-Template-Name
+const DESIGN_ID_MAP = {
+  18: 'strukturiert-1',
+  19: 'strukturiert-2',
+  20: 'strukturiert-3',
+  21: 'strukturiert-4',
+};
+
+// Body-Text in Untertitel + Caption aufteilen (getrennt durch Leerzeile)
+function parsePostBody(body = '') {
+  const parts = body.split('\n\n');
+  return {
+    subtitle: parts[0]?.trim() || '',
+    caption:  parts.slice(1).join('\n\n').trim(),
+  };
+}
 
 function syncCartBadge() {
   const count = state.cart.length;
@@ -9,7 +24,6 @@ function syncCartBadge() {
 }
 
 function addToCartFromDesignState(product) {
-  // Snapshot des aktuellen Design-States – keine Referenz!
   const item = {
     id:           Date.now(),
     productId:    product.id   || null,
@@ -27,9 +41,6 @@ function addToCartFromDesignState(product) {
   syncCartBadge();
 }
 
-// Kompletten Checkout-Prozess starten:
-// 1. Order in Supabase speichern (Browser → anon key)
-// 2. Stripe-Session über Netlify Function anlegen
 async function startCheckout() {
   if (!state.cart.length) return;
 
@@ -42,27 +53,47 @@ async function startCheckout() {
     return;
   }
 
+  // Foto prüfen
+  const photoUrl = designState.photoUrl || state.uploadedImg || '';
+  if (!photoUrl) {
+    alert('Bitte lade zuerst dein Foto hoch.');
+    return;
+  }
+
   if (btn) { btn.disabled = true; btn.textContent = 'Wird vorbereitet …'; }
 
   try {
     const orderId = crypto.randomUUID();
 
-    // Alle design_configs der Warenkorb-Items
-    const configs = state.cart.map(i => i.designConfig).filter(Boolean);
+    // Ersten Warenkorb-Artikel verarbeiten (MVP: ein Post pro Bestellung)
+    const item    = state.cart[0];
+    const content = state.selectedContent || item?.content || {};
+    const { subtitle, caption } = parsePostBody(content.body || '');
 
+    const designConfig = {
+      design_id: DESIGN_ID_MAP[state.selectedDesign] || 'strukturiert-1',
+      hook:      content.title || '',
+      subtitle,
+      caption,
+      photo_url: photoUrl,
+      post_id:   content.id   || null,
+      colors:    designState.colors || {},
+    };
+
+    // Order in Supabase speichern
     const { error: dbErr } = await supabase.from('orders').insert({
       id:             orderId,
       customer_email: email,
-      design_config:  configs.length === 1 ? configs[0] : configs,
+      design_config:  designConfig,
       status:         'pending',
     });
     if (dbErr) throw new Error('Supabase: ' + dbErr.message);
 
+    // Stripe Checkout starten
     const TAX_RATE = 0.19;
-    const items = state.cart.map(item => ({
-      name:  item.content?.title || item.name || 'Social Media Post',
-      price: parseFloat((item.price * (1 + TAX_RATE)).toFixed(2)),
-      designConfig: item.designConfig || null,
+    const items = state.cart.map(i => ({
+      name:  i.content?.title || i.name || 'Social Media Post',
+      price: parseFloat(((i.price || 9.80) * (1 + TAX_RATE)).toFixed(2)),
     }));
 
     const res = await fetch('/.netlify/functions/create-checkout-session', {
