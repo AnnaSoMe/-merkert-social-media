@@ -1,25 +1,20 @@
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+import Stripe from 'stripe';
 
-exports.handler = async (event) => {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+export async function handler(event) {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
   try {
-    const { items, successUrl, cancelUrl } = JSON.parse(event.body);
+    const { items, orderId, email } = JSON.parse(event.body);
 
     const lineItems = items.map(item => ({
       price_data: {
-        currency: 'eur',
-        product_data: {
-          name: item.title,
-          description: [
-            item.design ? `Design: ${item.design}` : null,
-            item.format ? `Format: ${item.format}` : null,
-            item.palette ? `Farbe: ${item.palette}` : null,
-          ].filter(Boolean).join(' · '),
-        },
-        unit_amount: Math.round(item.grossPrice * 100), // Cent, incl. MwSt
+        currency:     'eur',
+        product_data: { name: item.name },
+        unit_amount:  Math.round(item.price * 100), // Cent, inkl. MwSt.
         tax_behavior: 'inclusive',
       },
       quantity: 1,
@@ -27,14 +22,17 @@ exports.handler = async (event) => {
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card', 'paypal', 'klarna', 'sepa_debit'],
-      line_items: lineItems,
-      mode: 'payment',
-      success_url: successUrl + '?session_id={CHECKOUT_SESSION_ID}',
-      cancel_url: cancelUrl,
+      line_items:           lineItems,
+      mode:                 'payment',
+      locale:               'de',
+      customer_email:       email || undefined,
       billing_address_collection: 'required',
-      locale: 'de',
+      success_url: `${process.env.BASE_URL}/success.html?order_id=${orderId}`,
+      cancel_url:  `${process.env.BASE_URL}/#shop`,
+      metadata: { orderId },
       payment_intent_data: {
         description: 'Merkert Social Media – personalisierte Posts',
+        metadata:    { orderId },
       },
     });
 
@@ -44,11 +42,11 @@ exports.handler = async (event) => {
       body: JSON.stringify({ url: session.url }),
     };
   } catch (err) {
-    console.error('Stripe error:', err);
+    console.error('Checkout error:', err);
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: err.message }),
     };
   }
-};
+}

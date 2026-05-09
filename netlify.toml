@@ -3,6 +3,9 @@
   functions = "netlify/functions"
   command = "npm install"
 
+[build.environment]
+  BASE_URL = "https://merkertsocialmedia.com"
+
 [functions]
   node_bundler = "esbuild"
 
@@ -17,3 +20,9 @@
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
+
+# Stripe-Webhook braucht den raw body (kein JSON-Parsing durch Netlify)
+[[headers]]
+  for = "/.netlify/functions/stripe-webhook"
+  [headers.values]
+    Content-Type = "application/json"

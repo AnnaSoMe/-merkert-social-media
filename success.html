@@ -11,40 +11,129 @@
   .card{background:white;border-radius:16px;padding:3rem;max-width:540px;width:100%;text-align:center;box-shadow:0 16px 48px rgba(44,36,32,.12)}
   .icon{font-size:3.5rem;margin-bottom:1rem}
   h1{font-size:1.8rem;color:var(--dark);font-weight:normal;margin-bottom:.75rem;line-height:1.3}
-  .sub{font-family:sans-serif;font-size:15px;color:#6B5B4E;line-height:1.7;margin-bottom:2rem}
-  .highlight{background:#f0f5ee;border-radius:8px;padding:1rem 1.25rem;margin-bottom:2rem;font-family:sans-serif;font-size:13px;color:var(--green);text-align:left}
-  .highlight strong{display:block;margin-bottom:.3rem;font-size:14px}
-  .btn{display:inline-block;background:var(--coral);color:white;padding:12px 28px;border-radius:4px;font-family:sans-serif;font-size:14px;text-decoration:none;font-weight:600}
-  .btn-outline{display:inline-block;border:1.5px solid var(--sand);color:#6B5B4E;padding:11px 24px;border-radius:4px;font-family:sans-serif;font-size:14px;text-decoration:none;margin-top:.75rem}
-  .actions{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+  .sub{font-family:sans-serif;font-size:15px;color:#6B5B4E;line-height:1.7;margin-bottom:1.5rem}
+
+  /* Status-Box mit Spinner */
+  .status-box{background:#f8f4ef;border:1.5px solid var(--sand);border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;font-family:sans-serif;font-size:13px;color:#6B5B4E;text-align:left}
+  .status-row{display:flex;align-items:center;gap:.6rem}
+  .spinner{width:14px;height:14px;border:2px solid var(--sand);border-top-color:var(--coral);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .check-icon{color:var(--green);font-size:1.1rem;flex-shrink:0}
+
+  /* Download-Bereich */
+  .download-links{display:flex;flex-direction:column;gap:.75rem;margin-top:1.25rem}
+  .btn-download{display:inline-block;background:var(--coral);color:white;padding:13px 28px;border-radius:4px;font-family:sans-serif;font-size:14px;text-decoration:none;font-weight:600;transition:background .15s}
+  .btn-download:hover{background:#b56a47}
+
+  /* Fallback-Info */
+  .info-box{background:#f0f5ee;border-radius:8px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-family:sans-serif;font-size:13px;color:var(--green);text-align:left}
+  .info-box strong{display:block;margin-bottom:.3rem;font-size:14px}
+
+  .actions{display:flex;flex-direction:column;align-items:center;gap:.5rem;margin-top:1rem}
+  .btn{display:inline-block;background:var(--green);color:white;padding:12px 28px;border-radius:4px;font-family:sans-serif;font-size:14px;text-decoration:none;font-weight:600}
+  .btn-outline{display:inline-block;border:1.5px solid var(--sand);color:#6B5B4E;padding:11px 24px;border-radius:4px;font-family:sans-serif;font-size:14px;text-decoration:none}
   .footer-note{font-family:sans-serif;font-size:11px;color:#aaa;margin-top:2rem}
 </style>
 </head>
 <body>
 <div class="card">
-  <div class="icon">🎉</div>
+  <div class="icon" id="main-icon">🎉</div>
   <h1>Zahlung erfolgreich!</h1>
-  <p class="sub">
-    Vielen Dank für deinen Kauf.<br>
-    Du erhältst in Kürze eine Bestätigungs-E-Mail mit deinen personalisierten Posts.
-  </p>
-  <div class="highlight">
-    <strong>📬 Was passiert als Nächstes?</strong>
-    Anna erstellt deine Posts innerhalb von 24–48 Stunden und schickt sie dir per E-Mail zu. Du kannst sie direkt auf Instagram, Facebook oder LinkedIn posten.
+  <p class="sub" id="main-sub">Vielen Dank für deinen Kauf.<br>Dein Post wird gerade personalisiert – einen Moment bitte.</p>
+
+  <!-- Wird angezeigt solange orderId vorhanden -->
+  <div class="status-box" id="status-box" style="display:none">
+    <div class="status-row">
+      <div class="spinner" id="status-spinner"></div>
+      <span id="status-text">Dein Post wird vorbereitet …</span>
+    </div>
+    <div class="download-links" id="download-links" style="display:none"></div>
   </div>
+
+  <!-- Fallback wenn kein orderId oder Timeout -->
+  <div class="info-box" id="info-box" style="display:none">
+    <strong>📬 Du erhältst eine E-Mail</strong>
+    Dein Post ist in Kürze fertig. Wir schicken dir den Download-Link direkt per E-Mail zu.
+  </div>
+
   <div class="actions">
-    <a href="/" class="btn">← Zurück zur Startseite</a>
-    <a href="mailto:a.merkert58@googlemail.com" class="btn-outline">Frage stellen</a>
+    <a href="https://merkertsocialmedia.com" class="btn">← Zurück zur Startseite</a>
+    <a href="mailto:anna@merkertsocialmedia.de" class="btn-outline">Frage stellen</a>
   </div>
-  <p class="footer-note">Bei Fragen: a.merkert58@googlemail.com · © 2026 Merkert Social Media</p>
+  <p class="footer-note">Bei Fragen: anna@merkertsocialmedia.de · © 2026 Merkert Social Media</p>
 </div>
+
 <script>
-  // Optionaler Konfetti-Effekt beim Laden
-  const params = new URLSearchParams(window.location.search);
-  const sessionId = params.get('session_id');
-  if (sessionId) {
-    // session_id vorhanden = echte Zahlung bestätigt
-    document.querySelector('.icon').textContent = '✅';
+  // Supabase-Zugangsdaten (anon key ist für Polling-Lesen ok)
+  const SUPABASE_URL      = 'https://yxhmyoyavozfmvhnzfcf.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_KwHHIMGrLa8jAm4jN0MG1w_gY3_rUvc';
+
+  const params  = new URLSearchParams(location.search);
+  const orderId = params.get('order_id');
+
+  if (orderId) {
+    document.getElementById('status-box').style.display = 'block';
+    pollOrder(orderId);
+  } else {
+    document.getElementById('info-box').style.display = 'block';
+  }
+
+  async function pollOrder(id, attempt = 0) {
+    const MAX = 40; // ~2 Minuten bei 3s-Intervall
+
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/orders?id=eq.${id}&select=status,download_url`,
+        {
+          headers: {
+            apikey:        SUPABASE_ANON_KEY,
+            Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+          },
+        }
+      );
+      const [order] = await res.json();
+
+      if (order?.status === 'ready' && order.download_url) {
+        showDownload(order.download_url.split('\n').filter(Boolean));
+        return;
+      }
+
+      if (order?.status === 'processing') {
+        document.getElementById('status-text').textContent = 'Wird generiert …';
+      }
+
+    } catch (_) { /* Netzwerkfehler → weiter warten */ }
+
+    if (attempt < MAX) {
+      setTimeout(() => pollOrder(id, attempt + 1), 3000);
+    } else {
+      showFallback();
+    }
+  }
+
+  function showDownload(urls) {
+    document.getElementById('main-icon').textContent  = '✅';
+    document.getElementById('main-sub').textContent   = 'Dein Post ist fertig! Hier herunterladen:';
+
+    const spinner = document.getElementById('status-spinner');
+    spinner.style.animation = 'none';
+    spinner.className = 'check-icon';
+    spinner.textContent = '✓';
+
+    document.getElementById('status-text').textContent = 'Fertig!';
+
+    const linksEl = document.getElementById('download-links');
+    linksEl.style.display = 'flex';
+    linksEl.innerHTML = urls.map((url, i) =>
+      `<a href="${url}" download class="btn-download">
+        ${urls.length > 1 ? `Post ${i + 1} ` : ''}herunterladen ↓
+      </a>`
+    ).join('');
+  }
+
+  function showFallback() {
+    document.getElementById('status-box').style.display = 'none';
+    document.getElementById('info-box').style.display   = 'block';
   }
 </script>
 </body>

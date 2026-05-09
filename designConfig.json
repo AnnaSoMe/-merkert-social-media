@@ -1,0 +1,63 @@
+{
+  "version": "1.0",
+  "note": "Koordinaten für die Strukturiert-Designs. Alle Werte als Bruchteil der Bildbreite (w) bzw. Bildhöhe (h). Wird in buildPostPreview() ausgelesen.",
+  "designs": [
+    {
+      "id": 11,
+      "name": "Strukturiert A",
+      "bg": "assets/strukt-layout-1.png",
+      "accentBar": { "side": "right", "thicknessFracOfW": 0.085 },
+      "photoCircle": { "leftFracOfW": 0.46, "topFracOfH": 0.56, "sizeFracOfW": 0.33, "borderFracOfW": 0.016 }
+    },
+    {
+      "id": 12,
+      "name": "Strukturiert B",
+      "bg": "assets/strukt-layout-2.png",
+      "accentBar": { "side": "right", "thicknessFracOfW": 0.085 },
+      "photoCircle": { "leftFracOfW": 0.62, "topFracOfH": 0.01, "sizeFracOfW": 0.28, "borderFracOfW": 0.016 }
+    },
+    {
+      "id": 13,
+      "name": "Strukturiert C",
+      "bg": "assets/strukt-layout-3.png",
+      "accentBar": { "side": "left", "thicknessFracOfW": 0.075 },
+      "photoCircle": { "leftFracOfW": 0.08, "topFracOfH": 0.05, "sizeFracOfW": 0.37, "borderFracOfW": 0.016 }
+    },
+    {
+      "id": 14,
+      "name": "Strukturiert D",
+      "bg": "assets/strukt-layout-4.png",
+      "accentBar": { "side": "bottom", "thicknessFracOfW": 0.055 },
+      "photoCircle": { "leftFracOfW": 0.30, "topFracOfH": 0.04, "sizeFracOfW": 0.36, "borderFracOfW": 0.016 }
+    },
+    {
+      "id": 15,
+      "name": "Strukturiert E",
+      "bg": "assets/strukt-1.png",
+      "accentBar": null,
+      "photoCircle": { "leftFracOfW": 0.65, "topFracOfH": 0.03, "sizeFracOfW": 0.25, "borderFracOfW": 0.016 }
+    },
+    {
+      "id": 16,
+      "name": "Strukturiert F",
+      "bg": "assets/strukt-2.png",
+      "accentBar": null,
+      "photoCircle": { "leftFracOfW": 0.65, "topFracOfH": 0.03, "sizeFracOfW": 0.25, "borderFracOfW": 0.016 }
+    },
+    {
+      "id": 17,
+      "name": "Strukturiert G",
+      "bg": "assets/strukt-3.png",
+      "accentBar": null,
+      "photoCircle": { "leftFracOfW": 0.62, "topFracOfH": 0.03, "sizeFracOfW": 0.26, "borderFracOfW": 0.016 }
+    }
+  ],
+  "futureUse": {
+    "textAreas": {
+      "hook": { "xFracOfW": 0.05, "yFracOfH": 0.10, "widthFracOfW": 0.60, "fontSizePx": 48, "align": "left" },
+      "subline": { "xFracOfW": 0.05, "yFracOfH": 0.18, "widthFracOfW": 0.60, "fontSizePx": 24, "align": "left" },
+      "name": { "xFracOfW": 0.05, "yFracOfH": 0.90, "widthFracOfW": 0.50, "fontSizePx": 20, "align": "left" }
+    },
+    "note": "Text-Bereiche für zukünftige Content-Engine (KI-generierte Posts auf Basis des Steckbriefs)"
+  }
+}
