@@ -1,10 +1,11 @@
 [build]
   publish = "."
   functions = "netlify/functions"
-  command = "npm install"
+  command = "npm install && npm install --platform=linux --arch=x64 sharp"
 
 [build.environment]
-  BASE_URL = "https://merkertsocialmedia.com"
+  BASE_URL    = "https://merkertsocialmedia.com"
+  NODE_VERSION = "20"
 
 [functions]
   node_bundler = "esbuild"
