@@ -1,0 +1,78 @@
+{
+  "colors": [
+    { "id": "coral",  "name": "Coral",      "hex": "#C67B5A" },
+    { "id": "green",  "name": "Grün",       "hex": "#4A6741" },
+    { "id": "dark",   "name": "Dunkelbraun","hex": "#2C2420" }
+  ],
+
+  "pillars": {
+    "teamaufbau": {
+      "name": "Teamaufbau & Recruiting",
+      "icon": "🤝",
+      "tags": ["Recruiting", "Team", "Zielgruppen", "10 Fragen"],
+      "designs": [
+        {
+          "id": "strukturiert-1",
+          "name": "Strukturiert – Layout 1",
+          "canva_page": 1,
+          "bannerbear_template_id": null,
+          "photo_slots": 1,
+          "text_fields": ["hook", "subtitle"]
+        },
+        {
+          "id": "strukturiert-2",
+          "name": "Strukturiert – Layout 2",
+          "canva_page": 2,
+          "bannerbear_template_id": null,
+          "photo_slots": 1,
+          "text_fields": ["hook", "subtitle"]
+        },
+        {
+          "id": "strukturiert-3",
+          "name": "Strukturiert – Layout 3",
+          "canva_page": 3,
+          "bannerbear_template_id": null,
+          "photo_slots": 1,
+          "text_fields": ["hook", "subtitle"]
+        },
+        {
+          "id": "strukturiert-4",
+          "name": "Strukturiert – Layout 4",
+          "canva_page": 4,
+          "bannerbear_template_id": null,
+          "photo_slots": 1,
+          "text_fields": ["hook", "subtitle"]
+        }
+      ]
+    },
+
+    "personal-brand": {
+      "name": "Personal Brand",
+      "icon": "✨",
+      "tags": ["Mindset", "Werdegang", "Werte"],
+      "input_type": "quiz",
+      "designs": []
+    },
+
+    "produktkommunikation": {
+      "name": "Produktkommunikation",
+      "icon": "💼",
+      "tags": [],
+      "designs": []
+    },
+
+    "kundenkommunikation": {
+      "name": "Kundenkommunikation",
+      "icon": "💬",
+      "tags": [],
+      "designs": []
+    },
+
+    "humor": {
+      "name": "Memes & Humor",
+      "icon": "😄",
+      "tags": [],
+      "designs": []
+    }
+  }
+}
