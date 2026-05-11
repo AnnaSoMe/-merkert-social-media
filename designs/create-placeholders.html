@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head><title>Platzhalter erstellen</title></head>
+<body>
+<p>Platzhalter werden erstellt und heruntergeladen...</p>
+<canvas id="c" width="400" height="500" style="display:none"></canvas>
+<script>
+const designs = [
+  // Strukturiert
+  {id:'s1',label:'Strukturiert 1',folder:'strukturiert',bg:'#F0EDE8',text:'#2C2420',border:'#C67B5A'},
+  {id:'s2',label:'Strukturiert 2',folder:'strukturiert',bg:'#F0EDE8',text:'#2C2420',border:'#C67B5A'},
+  {id:'s3',label:'Strukturiert 3',folder:'strukturiert',bg:'#F0EDE8',text:'#2C2420',border:'#C67B5A'},
+  {id:'s4',label:'Strukturiert 4',folder:'strukturiert',bg:'#F0EDE8',text:'#2C2420',border:'#C67B5A'},
+  {id:'s5',label:'Strukturiert 5',folder:'strukturiert',bg:'#F0EDE8',text:'#2C2420',border:'#C67B5A'},
+  // Clean
+  {id:'c1',label:'Clean 1',folder:'clean',bg:'#FFFFFF',text:'#2C2420',border:'#4A6741'},
+  {id:'c2',label:'Clean 2',folder:'clean',bg:'#FFFFFF',text:'#2C2420',border:'#4A6741'},
+  {id:'c3',label:'Clean 3',folder:'clean',bg:'#FFFFFF',text:'#2C2420',border:'#4A6741'},
+  {id:'c4',label:'Clean 4',folder:'clean',bg:'#FFFFFF',text:'#2C2420',border:'#4A6741'},
+  {id:'c5',label:'Clean 5',folder:'clean',bg:'#FFFFFF',text:'#2C2420',border:'#4A6741'},
+  // Bold
+  {id:'b1',label:'Bold 1',folder:'bold',bg:'#2C2420',text:'#FFFFFF',border:'#C8AA22'},
+  {id:'b2',label:'Bold 2',folder:'bold',bg:'#2C2420',text:'#FFFFFF',border:'#C8AA22'},
+  {id:'b3',label:'Bold 3',folder:'bold',bg:'#2C2420',text:'#FFFFFF',border:'#C8AA22'},
+  {id:'b4',label:'Bold 4',folder:'bold',bg:'#2C2420',text:'#FFFFFF',border:'#C8AA22'},
+  {id:'b5',label:'Bold 5',folder:'bold',bg:'#2C2420',text:'#FFFFFF',border:'#C8AA22'},
+];
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+
+designs.forEach((d, i) => {
+  setTimeout(() => {
+    // Hintergrund
+    ctx.fillStyle = d.bg;
+    ctx.fillRect(0, 0, 400, 500);
+    // Rahmen
+    ctx.strokeStyle = d.border;
+    ctx.lineWidth = 8;
+    ctx.strokeRect(4, 4, 392, 492);
+    // Kategorie-Streifen oben
+    ctx.fillStyle = d.border;
+    ctx.fillRect(0, 0, 400, 60);
+    // Kategorie-Text
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold 18px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.folder.toUpperCase(), 200, 38);
+    // Nummer groß
+    ctx.fillStyle = d.border;
+    ctx.font = 'bold 120px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(d.id.slice(1), 200, 320);
+    // Label unten
+    ctx.fillStyle = d.text;
+    ctx.font = '20px sans-serif';
+    ctx.fillText(d.label, 200, 460);
+    // Platzhalter-Hinweis
+    ctx.fillStyle = d.text === '#FFFFFF' ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.2)';
+    ctx.font = '13px sans-serif';
+    ctx.fillText('← Platzhalter ersetzen →', 200, 490);
+
+    // Download
+    const link = document.createElement('a');
+    link.download = d.id + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+
+    if (i === designs.length - 1) {
+      document.body.innerHTML = '<h2 style="font-family:sans-serif;color:green">✓ Alle 15 Platzhalter heruntergeladen!</h2><p style="font-family:sans-serif">Verschiebe die Dateien in die richtigen Unterordner:<br><br>s1-s5.png → designs/strukturiert/<br>c1-c5.png → designs/clean/<br>b1-b5.png → designs/bold/</p>';
+    }
+  }, i * 300);
+});
+</script>
+</body>
+</html>

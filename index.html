@@ -87,6 +87,158 @@ nav{background:var(--white);border-bottom:1px solid var(--sand);padding:1rem 2.5
 .filter-btn.active{background:var(--green);border-color:var(--green);color:white}
 
 /* DESIGN SECTION */
+.design-filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.df-btn{padding:8px 18px;border:1.5px solid var(--sand);border-radius:20px;background:white;font-family:sans-serif;font-size:13px;cursor:pointer;transition:all .15s;color:var(--dark)}
+.df-btn.active,.df-btn:hover{background:var(--coral);border-color:var(--coral);color:white}
+#design-grid{display:block;width:100%;margin-bottom:1.5rem}
+.design-gruppe{display:block;width:100%;margin-bottom:32px}
+.design-gruppe-label{display:block;width:100%;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--coral,#C67B5A);margin-bottom:12px;padding-bottom:8px;border-bottom:1.5px solid var(--sand,#E8DDD0)}
+.design-gruppe-reihe{display:flex;flex-direction:row;flex-wrap:wrap;gap:12px;width:100%;overflow-x:visible}
+.design-gruppe-reihe .design-card{width:130px;min-width:130px;flex-shrink:0}
+.design-card{border:2px solid var(--sand);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .15s;background:white}
+.design-card:hover,.design-card.active{border-color:var(--coral);box-shadow:0 4px 16px rgba(198,123,90,.2);transform:translateY(-2px)}
+.design-card img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;background:var(--sand)}
+.design-card-label{font-size:11px;font-weight:600;padding:6px 8px 6px;color:var(--dark);font-family:sans-serif}
+/* ── FORMAT BUTTONS ── */
+.format-btn{padding:10px 14px;border:1.5px solid var(--sand,#E8DDD0);border-radius:10px;background:white;font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;text-align:center;transition:all .15s;color:var(--dark,#2C2420);line-height:1.4;min-width:70px}
+.format-btn.active,.format-btn:hover{background:var(--coral,#C67B5A);border-color:var(--coral,#C67B5A);color:white}
+.format-icon{font-size:16px;display:block;margin-bottom:4px}
+/* ── DESIGN CANVAS WRAPPER ── */
+#design-preview-container{margin-top:32px;padding:24px;background:var(--cream,#F5F0E8);border-radius:12px;border:1.5px solid var(--sand,#E8DDD0)}
+#design-canvas-wrap{display:flex;justify-content:center;align-items:center}
+/* ── BASIS CANVAS ── */
+#design-canvas{position:relative;overflow:hidden;background:white;box-shadow:0 8px 40px rgba(0,0,0,.15);border-radius:4px;width:324px;height:405px;transition:width .3s,height .3s}
+/* ── HINTERGRUND ── */
+.dc-bg{position:absolute;inset:0;background:#e8e8e8;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.dc-bg img{width:100%;height:100%;object-fit:cover}
+.dc-bg-hint{font-family:'DM Sans',sans-serif;font-size:11px;color:#999;text-align:center;padding:12px;pointer-events:none}
+/* ── DESIGN S1 ── */
+.dc-s1 .dc-textblock{position:absolute;top:0;left:0;width:78%;height:65%;background:white;padding:8% 7%;display:flex;flex-direction:column;justify-content:flex-start;gap:10px;z-index:2}
+.dc-s1 .dc-stripe{position:absolute;top:0;right:0;width:8%;height:100%;background:#2651B8;z-index:2}
+.dc-s1 .dc-circle{position:absolute;bottom:8%;right:10%;width:28%;height:0;padding-bottom:28%;border-radius:50%;background:#b8cef0;border:3px solid #2651B8;overflow:hidden;z-index:3;display:flex;align-items:center;justify-content:center}
+.dc-circle-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:24px;opacity:.5}
+/* ── TEXTE ── */
+.dc-hook{font-family:'Montserrat','DM Sans',sans-serif;font-weight:900;font-size:clamp(14px,4.5%,28px);color:#111;line-height:1.1;word-break:break-word}
+.dc-subtitle{font-family:'DM Sans',sans-serif;font-size:clamp(9px,2.8%,16px);color:#333;line-height:1.5;word-break:break-word}
+/* ── BESTSELLER BADGE ── */
+.dc-bestseller{display:none;position:absolute;top:5%;left:50%;transform:translateX(-50%);background:#FFD700;color:#111;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;padding:5px 14px;border-radius:20px;z-index:10;white-space:nowrap}
+/* ── FORMATE ── */
+#design-canvas.format-portrait{width:324px;height:405px}
+#design-canvas.format-story{width:228px;height:405px}
+#design-canvas.format-whatsapp{width:228px;height:405px}
+#design-canvas.format-whatsapp .dc-bestseller{display:block}
+#design-canvas.format-linkedin{width:405px;height:212px}
+#design-canvas.format-facebook{width:405px;height:212px}
+.format-linkedin .dc-textblock,.format-facebook .dc-textblock{width:60%!important;height:100%!important}
+.format-linkedin .dc-circle,.format-facebook .dc-circle{bottom:50%!important;transform:translateY(50%)!important;right:18%!important;width:20%!important;padding-bottom:20%!important}
+/* ══ DESIGN KONFIGURATOR MODAL ══ */
+#design-konfigurator-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center}
+.dkm-inner{background:white;border-radius:16px;width:min(680px,96vw);max-height:90vh;overflow-y:auto;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.25)}
+.dkm-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #F0EDE8;flex-shrink:0}
+.dkm-modal-title{font-family:'Playfair Display',Georgia,serif;font-size:15px;font-weight:700;color:#2C2420;flex-shrink:0}
+.dkm-modal-close{margin-left:auto;background:none;border:none;font-size:22px;cursor:pointer;color:#999;line-height:1;padding:0 4px;flex-shrink:0}
+.dkm-modal-close:hover{color:#2C2420}
+/* Progress */
+.dkm-progress{display:flex;align-items:center;gap:6px;margin:0 auto}
+.dkm-progress-step{font-family:'DM Sans',sans-serif;font-size:10px;color:#ccc;padding:4px 8px;border-radius:20px;transition:all .2s;white-space:nowrap}
+.dkm-progress-step.active{background:#C67B5A;color:white;font-weight:700}
+.dkm-progress-step.done{color:#4A6741;font-weight:600}
+.dkm-progress-arrow{font-size:10px;color:#ddd}
+/* Stufen */
+.dkm-stufe{padding:24px}
+.dkm-stufe-titel{font-family:'Playfair Display',Georgia,serif;font-size:20px;font-weight:700;color:#2C2420;margin-bottom:6px}
+.dkm-stufe-sub{font-family:'DM Sans',sans-serif;font-size:13px;color:#888;margin-bottom:20px}
+/* Rechte Box */
+.dkm-rechte-box{background:#fdfaf6;border:1.5px solid #E8DDD0;border-radius:10px;padding:14px 16px;margin-bottom:20px}
+.dkm-check-label{display:flex;gap:10px;align-items:flex-start;font-family:'DM Sans',sans-serif;font-size:13px;color:#2C2420;cursor:pointer;margin-bottom:10px;line-height:1.5}
+.dkm-check-label input{margin-top:3px;flex-shrink:0}
+.dkm-rechte-hinweis{font-family:'DM Sans',sans-serif;font-size:11px;color:#4A6741;background:#f0f5ee;padding:8px 10px;border-radius:6px}
+/* Upload */
+.dkm-upload-felder{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.dkm-upload-felder.disabled{opacity:.4;pointer-events:none}
+.dkm-upload-card{border:2px dashed #E8DDD0;border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .15s;position:relative;background:white}
+.dkm-upload-card:hover{border-color:#C67B5A;background:#fdf3ef}
+.dkm-upload-card.optional:hover{border-color:#4A6741;background:#f0f5ee}
+.dkm-upload-badge{position:absolute;top:8px;right:8px;background:#C67B5A;color:white;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;font-family:'DM Sans',sans-serif;letter-spacing:.05em}
+.dkm-upload-badge.optional{background:#4A6741}
+.dkm-upload-icon{font-size:28px;margin-bottom:8px}
+.dkm-upload-card-titel{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;color:#2C2420;margin-bottom:4px}
+.dkm-upload-card-sub{font-family:'DM Sans',sans-serif;font-size:11px;color:#888;line-height:1.4;margin-bottom:8px}
+.dkm-upload-status{font-family:'DM Sans',sans-serif;font-size:10px;color:#aaa}
+/* Crop */
+.dkm-crop-tabs{display:flex;gap:8px;margin-bottom:16px}
+.dkm-crop-tab{padding:7px 16px;border:1.5px solid #E8DDD0;border-radius:20px;background:white;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;transition:all .15s}
+.dkm-crop-tab.active{background:#C67B5A;border-color:#C67B5A;color:white}
+.dkm-crop-container{margin-bottom:16px}
+.dkm-crop-hint{font-family:'DM Sans',sans-serif;font-size:12px;color:#888;margin-bottom:10px}
+.dkm-crop-wrap{width:100%;max-height:300px;overflow:hidden;border-radius:8px;background:#f0ede8}
+.dkm-crop-wrap img{max-width:100%;display:block}
+.dkm-crop-controls{display:flex;gap:8px;margin-top:10px}
+.dkm-crop-controls button{padding:6px 12px;border:1.5px solid #E8DDD0;border-radius:6px;background:white;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.dkm-crop-controls button:hover{border-color:#C67B5A}
+/* Vorschau Stufe 3 */
+.dkm-vorschau-layout{display:flex;gap:24px;margin-bottom:20px}
+.dkm-vorschau-links{display:flex;flex-direction:column;align-items:center;gap:10px;flex-shrink:0}
+.dkm-vorschau-label{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#C67B5A}
+.dkm-einstellungen{flex:1}
+.dkm-setting-block{margin-bottom:16px}
+.dkm-setting-label{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:8px}
+/* dkm-canvas (Vorschau in Stufe 3) */
+.dkm-canvas{position:relative;overflow:hidden;background:white;box-shadow:0 4px 20px rgba(0,0,0,.15);border-radius:4px;transition:width .3s,height .3s;width:200px;height:250px}
+.dkm-canvas.format-portrait{width:300px;height:375px}
+.dkm-canvas.format-story,.dkm-canvas.format-whatsapp{width:211px;height:375px}
+.dkm-canvas.format-linkedin,.dkm-canvas.format-facebook{width:375px;height:196px}
+.dkm-canvas.format-whatsapp .dkm-bestseller{display:block!important}
+.dkm-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#d0d0d0;image-rendering:auto;z-index:1}
+.dkm-stripe{position:absolute;top:0;right:0;width:7%;height:100%;z-index:2}
+.dkm-textblock{position:absolute;top:0;left:0;width:78%;height:65%;background:white;padding:8% 7%;display:flex;flex-direction:column;justify-content:flex-start;gap:6px;z-index:2;box-sizing:border-box}
+.dkm-hook{font-family:'Montserrat','DM Sans',sans-serif;font-weight:900;font-size:18px;color:#111;line-height:1.1;word-break:break-word;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.dkm-subtitle{font-family:'DM Sans',sans-serif;font-size:11px;color:#333;line-height:1.5;word-break:break-word;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
+.dkm-circle{position:absolute;bottom:5%;right:8%;width:28%;aspect-ratio:1/1;border-radius:50%;background:rgba(184,206,240,.9);border:3px solid #2651B8;overflow:hidden;z-index:4;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.dkm-circle-icon{font-size:16px;opacity:.5;line-height:1}
+.dkm-bestseller{display:none;position:absolute;top:5%;left:50%;transform:translateX(-50%);background:#FFD700;color:#111;font-family:'Montserrat',sans-serif;font-size:8px;font-weight:800;letter-spacing:.1em;padding:3px 10px;border-radius:20px;z-index:10;white-space:nowrap}
+.format-linkedin .dkm-textblock,.format-facebook .dkm-textblock{width:60%!important;height:100%!important}
+.format-linkedin .dkm-circle,.format-facebook .dkm-circle{bottom:auto!important;top:50%!important;transform:translateY(-50%)!important;right:14%!important;width:18%!important}
+/* Format Buttons Stufe 3 */
+.dkm-format-row{display:flex;gap:6px;flex-wrap:wrap}
+.dkm-format-btn{padding:8px 10px;border:1.5px solid #E8DDD0;border-radius:8px;background:white;font-family:'DM Sans',sans-serif;font-size:10px;cursor:pointer;text-align:center;transition:all .15s;color:#2C2420;line-height:1.4;min-width:56px}
+.dkm-format-btn.active,.dkm-format-btn:hover{background:#C67B5A;border-color:#C67B5A;color:white}
+/* Farb-Dots */
+.dkm-farb-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.dkm-farb-dot{width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.dkm-farb-dot.active,.dkm-farb-dot:hover{border-color:#2C2420;transform:scale(1.15)}
+/* Abschluss */
+.dkm-abschluss-icon{width:56px;height:56px;border-radius:50%;background:#4A6741;color:white;font-size:24px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.dkm-abschluss-optionen{display:flex;flex-direction:column;gap:10px;margin-top:20px}
+.dkm-option-btn{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1.5px solid #E8DDD0;border-radius:10px;background:white;cursor:pointer;text-align:left;transition:all .15s;width:100%;font-family:'DM Sans',sans-serif}
+.dkm-option-btn:hover{border-color:#C67B5A;background:#fdf3ef}
+.dkm-option-btn.primary{border-color:#C67B5A;background:#C67B5A;color:white}
+.dkm-option-btn.primary:hover{background:#b56a47}
+.dkm-option-icon{font-size:22px;flex-shrink:0}
+.dkm-option-titel{font-size:13px;font-weight:700;margin-bottom:2px}
+.dkm-option-sub{font-size:11px;opacity:.7}
+/* Buttons */
+.dkm-btn-row{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid #F0EDE8}
+.dkm-btn-primary{padding:10px 20px;background:#C67B5A;color:white;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:background .15s}
+.dkm-btn-primary:hover{background:#b56a47}
+.dkm-btn-primary:disabled{opacity:.4;cursor:not-allowed}
+.dkm-btn-ghost{padding:10px 20px;background:none;border:1.5px solid #E8DDD0;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;color:#2C2420;transition:all .15s}
+.dkm-btn-ghost:hover{border-color:#C67B5A}
+@media(max-width:640px){.dkm-upload-felder{grid-template-columns:1fr}.dkm-vorschau-layout{flex-direction:column}}
+/* ── PALETTEN ── */
+.dkm-paletten-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;margin-bottom:14px}
+.dkm-palette-card{border:2px solid #E8DDD0;border-radius:8px;padding:8px;cursor:pointer;transition:all .15s;background:white;text-align:center}
+.dkm-palette-card:hover{border-color:#C67B5A;transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.dkm-palette-card.active{border-color:#C67B5A;box-shadow:0 0 0 3px rgba(198,123,90,.2)}
+.dkm-palette-swatches{display:flex;gap:3px;margin-bottom:6px;border-radius:4px;overflow:hidden;height:28px}
+.dkm-swatch{flex:1;border:.5px solid rgba(0,0,0,.08)}
+.dkm-palette-name{font-family:'DM Sans',sans-serif;font-size:9px;color:#666;line-height:1.2;font-weight:600}
+/* Logo Upload */
+.dkm-logo-upload-wrap{border-top:1px solid #F0EDE8;padding-top:12px;margin-top:4px}
+.dkm-logo-upload-label{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:#888;margin-bottom:8px;letter-spacing:.05em}
+.dkm-logo-upload-zone{border:1.5px dashed #E8DDD0;border-radius:8px;padding:10px 14px;cursor:pointer;transition:all .15s;text-align:center}
+.dkm-logo-upload-zone:hover{border-color:#C67B5A;background:#fdf3ef}
+#dkm-logo-status{font-family:'DM Sans',sans-serif;font-size:12px;color:#aaa}
 .ds-accordion{display:flex;flex-direction:column;gap:10px}
 .ds-item{border:2px solid var(--sand);border-radius:12px;overflow:hidden;background:white;transition:border-color .2s}
 .ds-item[open]{border-color:var(--coral)}
@@ -783,11 +935,15 @@ footer a{color:var(--warm-brown);text-decoration:none}
   <div class="section-eyebrow">Dein Design</div>
   <h2 class="section-title">Wähle dein Design</h2>
   <p class="section-sub" style="margin-bottom:2rem">Klick auf einen Stil – er klappt auf und zeigt dir alle Farbpaletten zur Auswahl.</p>
-  <div class="ds-accordion" id="ds-style-cards">
-    <details class="ds-item"><summary class="ds-item-summary"><div class="ds-item-meta"><div class="ds-item-label">Clean &amp; Minimal</div><div class="ds-item-desc">Nur dein Foto und ein starker Hook. Ruhig, zeitlos.</div></div><span class="ds-item-arrow">▼</span></summary></details>
-    <details class="ds-item"><summary class="ds-item-summary"><div class="ds-item-meta"><div class="ds-item-label">Strukturiert</div><div class="ds-item-desc">Klare Elemente, modernes Layout, Foto im Fokus.</div></div><span class="ds-item-arrow">▼</span></summary></details>
-    <details class="ds-item"><summary class="ds-item-summary"><div class="ds-item-meta"><div class="ds-item-label">Bold &amp; Dark</div><div class="ds-item-desc">Kontraststark, dunkel – bleibt im Kopf.</div></div><span class="ds-item-arrow">▼</span></summary></details>
+  <div class="design-filter-bar">
+    <button class="df-btn active" data-filter="alle" onclick="filterDesigns('alle')">Alle</button>
+    <button class="df-btn" data-filter="strukturiert" onclick="filterDesigns('strukturiert')">Strukturiert</button>
+    <button class="df-btn" data-filter="clean" onclick="filterDesigns('clean')">Clean &amp; Minimal</button>
+    <button class="df-btn" data-filter="bold" onclick="filterDesigns('bold')">Bold &amp; Modern</button>
   </div>
+  <div class="design-grid" id="design-grid"></div>
+
+
 </div>
 
 <!-- CONTENT LIBRARY -->
@@ -1305,6 +1461,170 @@ footer a{color:var(--warm-brown);text-decoration:none}
     <div class="lib-action-btns">
       <button class="lib-btn-primary" onclick="libNoDesignClose();startQuiz()">Zum Design-Quiz →</button>
       <button class="lib-btn-outline" onclick="libNoDesignClose()">Weiter in den Inhalten stöbern</button>
+    </div>
+  </div>
+</div>
+
+<!-- DESIGN KONFIGURATOR MODAL -->
+<div id="design-konfigurator-modal" onclick="closeDesignModal(event)">
+  <div class="dkm-inner">
+    <div class="dkm-header">
+      <div class="dkm-modal-title">Design konfigurieren</div>
+      <div class="dkm-progress">
+        <div class="dkm-progress-step active" data-step="1">📸 Fotos</div>
+        <div class="dkm-progress-arrow">→</div>
+        <div class="dkm-progress-step" data-step="2">✂ Zuschnitt</div>
+        <div class="dkm-progress-arrow">→</div>
+        <div class="dkm-progress-step" data-step="3">👁 Vorschau</div>
+        <div class="dkm-progress-arrow">→</div>
+        <div class="dkm-progress-step" data-step="4">✓ Fertig</div>
+      </div>
+      <button class="dkm-modal-close" onclick="closeDesignModalBtn()">×</button>
+    </div>
+    <div class="dkm-body">
+
+      <!-- STUFE 1 -->
+      <div id="dkm-stufe-1" class="dkm-stufe">
+        <div class="dkm-stufe-titel">Mach den Post zu deinem</div>
+        <div class="dkm-stufe-sub">Lade deine Fotos hoch – sie werden nur in deinem Browser verarbeitet und nicht gespeichert.</div>
+        <div class="dkm-rechte-box">
+          <label class="dkm-check-label">
+            <input type="checkbox" id="dkm-rechte-check" onchange="checkRechte()">
+            <span>Ich bestätige dass ich alle Urheberrechte an den hochgeladenen Fotos besitze, alle abgebildeten Personen der Veröffentlichung zugestimmt haben und ich diese Bedingungen akzeptiere.</span>
+          </label>
+          <div class="dkm-rechte-hinweis">🔒 Deine Fotos werden ausschließlich lokal in deinem Browser verarbeitet. Sie werden zu keinem Zeitpunkt auf unsere Server übertragen oder gespeichert.</div>
+        </div>
+        <div id="dkm-upload-felder" class="dkm-upload-felder disabled">
+          <div class="dkm-upload-card" onclick="triggerUpload('profil')">
+            <div class="dkm-upload-badge">Empfohlen</div>
+            <div class="dkm-upload-icon">👤</div>
+            <div class="dkm-upload-card-titel">Profilbild</div>
+            <div class="dkm-upload-card-sub">Dein Gesicht erscheint rund zugeschnitten im Design</div>
+            <div class="dkm-upload-status" id="profil-status">Noch kein Foto gewählt</div>
+            <input type="file" id="upload-profil" accept="image/*" style="display:none" onchange="handleUpload('profil', this)">
+          </div>
+          <div class="dkm-upload-card optional" onclick="triggerUpload('bg')">
+            <div class="dkm-upload-badge optional">Optional</div>
+            <div class="dkm-upload-icon">🏢</div>
+            <div class="dkm-upload-card-titel">Hintergrundfoto</div>
+            <div class="dkm-upload-card-sub">Dein Büro, dein Team oder ein persönliches Foto als Hintergrund</div>
+            <div class="dkm-upload-status" id="bg-status">Optional – ohne Foto wird ein Beispielbild verwendet</div>
+            <input type="file" id="upload-bg" accept="image/*" style="display:none" onchange="handleUpload('bg', this)">
+          </div>
+        </div>
+        <div class="dkm-btn-row">
+          <button class="dkm-btn-ghost" onclick="dkmOhneFotos()">Vorschau ohne Fotos anzeigen →</button>
+          <button class="dkm-btn-primary" id="dkm-weiter-1" disabled onclick="dkmWeiterZuCrop()">Weiter →</button>
+        </div>
+      </div>
+
+      <!-- STUFE 2 -->
+      <div id="dkm-stufe-2" class="dkm-stufe" style="display:none">
+        <div class="dkm-stufe-titel">Fotos zuschneiden</div>
+        <div class="dkm-crop-tabs" id="dkm-crop-tabs">
+          <button class="dkm-crop-tab active" data-crop="profil" onclick="switchCropTab('profil')">👤 Profilbild</button>
+          <button class="dkm-crop-tab" data-crop="bg" onclick="switchCropTab('bg')" id="dkm-bg-tab" style="display:none">🏢 Hintergrund</button>
+        </div>
+        <div id="crop-container-profil" class="dkm-crop-container">
+          <div class="dkm-crop-hint">Schneide deinen Bildausschnitt zurecht – das Ergebnis erscheint rund</div>
+          <div class="dkm-crop-wrap">
+            <img id="crop-img-profil" src="" alt="Profilbild">
+          </div>
+          <div class="dkm-crop-controls">
+            <button onclick="cropperProfil && cropperProfil.rotate(-90)">↺ Drehen</button>
+            <button onclick="cropperProfil && cropperProfil.rotate(90)">↻ Drehen</button>
+            <button onclick="cropperProfil && cropperProfil.reset()">⟳ Reset</button>
+          </div>
+        </div>
+        <div id="crop-container-bg" class="dkm-crop-container" style="display:none">
+          <div class="dkm-crop-hint">Wähle den Bildausschnitt für den Hintergrund</div>
+          <div class="dkm-crop-wrap">
+            <img id="crop-img-bg" src="" alt="Hintergrund">
+          </div>
+          <div class="dkm-crop-controls">
+            <button onclick="cropperBg && cropperBg.rotate(-90)">↺ Drehen</button>
+            <button onclick="cropperBg && cropperBg.rotate(90)">↻ Drehen</button>
+            <button onclick="cropperBg && cropperBg.reset()">⟳ Reset</button>
+          </div>
+        </div>
+        <div class="dkm-btn-row">
+          <button class="dkm-btn-ghost" onclick="dkmZurueck(1)">← Zurück</button>
+          <button class="dkm-btn-primary" onclick="dkmCropUebernehmen()">Zuschnitt übernehmen →</button>
+        </div>
+      </div>
+
+      <!-- STUFE 3 -->
+      <div id="dkm-stufe-3" class="dkm-stufe" style="display:none">
+        <div class="dkm-vorschau-layout">
+          <div class="dkm-vorschau-links">
+            <div class="dkm-vorschau-label">Dein Post – live Vorschau</div>
+            <div id="dkm-canvas" class="dkm-canvas format-portrait">
+              <div class="dkm-bg" id="dkm-bg"></div>
+              <div class="dkm-stripe" id="dkm-stripe"></div>
+              <div class="dkm-textblock" id="dkm-textblock">
+                <div class="dkm-hook" id="dkm-hook">Mal ehrlich…</div>
+                <div class="dkm-subtitle" id="dkm-subtitle">Auf einer Skala von 1–10: wie zufrieden bist du mit deinem jetzigen Beruf?</div>
+              </div>
+              <div class="dkm-circle" id="dkm-circle">
+                <span class="dkm-circle-icon">👤</span>
+              </div>
+              <div class="dkm-bestseller" id="dkm-bestseller">⭐ BESTSELLER</div>
+            </div>
+          </div>
+          <div class="dkm-einstellungen">
+            <div class="dkm-setting-block">
+              <div class="dkm-setting-label">Format</div>
+              <div class="dkm-format-row">
+                <button class="dkm-format-btn active" data-format="portrait" onclick="setDkmFormat('portrait')"><span>▭</span><br>Instagram<br><small>4:5</small></button>
+                <button class="dkm-format-btn" data-format="story" onclick="setDkmFormat('story')"><span>▯</span><br>Story<br><small>9:16</small></button>
+                <button class="dkm-format-btn" data-format="whatsapp" onclick="setDkmFormat('whatsapp')"><span>▯</span><br>WhatsApp<br><small>⭐</small></button>
+                <button class="dkm-format-btn" data-format="linkedin" onclick="setDkmFormat('linkedin')"><span>▬</span><br>LinkedIn</button>
+                <button class="dkm-format-btn" data-format="facebook" onclick="setDkmFormat('facebook')"><span>▬</span><br>Facebook</button>
+              </div>
+            </div>
+            <div class="dkm-setting-block">
+              <div class="dkm-setting-label">Farbpalette wählen</div>
+              <div class="dkm-paletten-grid" id="dkm-paletten-grid"></div>
+              <div class="dkm-logo-upload-wrap">
+                <div class="dkm-logo-upload-label">🎨 Farben aus Logo übernehmen</div>
+                <div class="dkm-logo-upload-zone" onclick="document.getElementById('dkm-logo-input').click()">
+                  <span id="dkm-logo-status">Logo hochladen → Farben werden automatisch erkannt</span>
+                </div>
+                <input type="file" id="dkm-logo-input" accept="image/*" style="display:none" onchange="handleLogoUpload(this)">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="dkm-btn-row">
+          <button class="dkm-btn-ghost" onclick="dkmZurueck(2)">← Zurück</button>
+          <button class="dkm-btn-primary" onclick="dkmZuStufe(4)">Design übernehmen →</button>
+        </div>
+      </div>
+
+      <!-- STUFE 4 -->
+      <div id="dkm-stufe-4" class="dkm-stufe" style="display:none">
+        <div class="dkm-abschluss-icon">✓</div>
+        <div class="dkm-stufe-titel" style="text-align:center">Dein Design ist bereit</div>
+        <div class="dkm-stufe-sub" style="text-align:center">Was möchtest du als nächstes tun?</div>
+        <div class="dkm-abschluss-optionen">
+          <button class="dkm-option-btn primary" onclick="dkmZuInhalten()">
+            <span class="dkm-option-icon">📝</span>
+            <div><div class="dkm-option-titel">Inhalt wählen</div><div class="dkm-option-sub">Wähle aus 500+ Posts den passenden Text für dein Design</div></div>
+            <span>→</span>
+          </button>
+          <button class="dkm-option-btn" onclick="dkmMehrDesigns()">
+            <span class="dkm-option-icon">🎨</span>
+            <div><div class="dkm-option-titel">Mehr Designs ansehen</div><div class="dkm-option-sub">Andere Layouts und Stile entdecken</div></div>
+            <span>→</span>
+          </button>
+          <button class="dkm-option-btn" onclick="closeDesignModalBtn()">
+            <span class="dkm-option-icon">🔍</span>
+            <div><div class="dkm-option-titel">Weiter stöbern</div><div class="dkm-option-sub">Zurück zur Übersicht und in Ruhe schauen</div></div>
+            <span>→</span>
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -2900,6 +3220,43 @@ const DS_STYLES = [
   {lid:8, label:'Bold & Dark', desc:'Kontraststark, dunkel – bleibt im Kopf.', related:[9,2,7,6,3,10]},
 ];
 
+const DKM_PALETTEN = [
+  { id:'p01', name:'Ocean Blue',     farben:{ akzent:'#2651B8', hintergrund:'#EEF2FB', schrift:'#1a1a2e' } },
+  { id:'p02', name:'Soft Rosé',      farben:{ akzent:'#D4847A', hintergrund:'#FDF0EE', schrift:'#3D2020' } },
+  { id:'p03', name:'Forest Green',   farben:{ akzent:'#3A6B45', hintergrund:'#EDF4EF', schrift:'#1C2E20' } },
+  { id:'p04', name:'Cream & Gold',   farben:{ akzent:'#C8AA22', hintergrund:'#FDFAF0', schrift:'#2C2420' } },
+  { id:'p05', name:'Midnight',       farben:{ akzent:'#2C2420', hintergrund:'#1a1a1a', schrift:'#FFFFFF' } },
+  { id:'p06', name:'Lavender',       farben:{ akzent:'#7B5EA7', hintergrund:'#F3EEF9', schrift:'#2D1F3D' } },
+  { id:'p07', name:'Slate & White',  farben:{ akzent:'#6B7280', hintergrund:'#F9FAFB', schrift:'#111827' } },
+  { id:'p08', name:'Coral & Cream',  farben:{ akzent:'#C67B5A', hintergrund:'#F5F0E8', schrift:'#2C2420' } },
+  { id:'p09', name:'Bold & Bright',  farben:{ akzent:'#E63946', hintergrund:'#FFF5F5', schrift:'#1a0000' } },
+  { id:'p10', name:'Pure White',     farben:{ akzent:'#FFFFFF', hintergrund:'#FFFFFF', schrift:'#111111' } },
+];
+
+const DESIGN_LIBRARY = [
+  // STRUKTURIERT
+  { id:'s1', kategorie:'strukturiert', label:'Strukturiert 1', file:'designs/strukturiert/s1.png', accentElements:['stripe','ring'] },
+  { id:'s2', kategorie:'strukturiert', label:'Strukturiert 2', file:'designs/strukturiert/s2.png', accentElements:['stripe','ring'] },
+  { id:'s3', kategorie:'strukturiert', label:'Strukturiert 3', file:'designs/strukturiert/s3.png', accentElements:['stripe','ring'] },
+  { id:'s4', kategorie:'strukturiert', label:'Strukturiert 4', file:'designs/strukturiert/s4.png', accentElements:['stripe','ring'] },
+  { id:'s5', kategorie:'strukturiert', label:'Strukturiert 5', file:'designs/strukturiert/s5.svg', accentElements:['stripe','ring'] },
+  { id:'s6', kategorie:'strukturiert', label:'Strukturiert 6', file:'designs/strukturiert/s6.svg', accentElements:['stripe','ring'] },
+  // CLEAN & MINIMAL
+  { id:'c1', kategorie:'clean', label:'Clean 1', file:'designs/clean/c1.svg', accentElements:['background','text'] },
+  { id:'c2', kategorie:'clean', label:'Clean 2', file:'designs/clean/c2.svg', accentElements:['background','text'] },
+  { id:'c3', kategorie:'clean', label:'Clean 3', file:'designs/clean/c3.svg', accentElements:['background','text'] },
+  { id:'c4', kategorie:'clean', label:'Clean 4', file:'designs/clean/c4.svg', accentElements:['background','text'] },
+  { id:'c5', kategorie:'clean', label:'Clean 5', file:'designs/clean/c5.svg', accentElements:['background','text'] },
+  { id:'c6', kategorie:'clean', label:'Clean 6', file:'designs/clean/c6.svg', accentElements:['background','text'] },
+  // BOLD & MODERN
+  { id:'b1', kategorie:'bold', label:'Bold 1', file:'designs/bold/b1.svg', accentElements:['background','accent'] },
+  { id:'b2', kategorie:'bold', label:'Bold 2', file:'designs/bold/b2.svg', accentElements:['background','accent'] },
+  { id:'b3', kategorie:'bold', label:'Bold 3', file:'designs/bold/b3.svg', accentElements:['background','accent'] },
+  { id:'b4', kategorie:'bold', label:'Bold 4', file:'designs/bold/b4.svg', accentElements:['background','accent'] },
+  { id:'b5', kategorie:'bold', label:'Bold 5', file:'designs/bold/b5.svg', accentElements:['background','accent'] },
+  { id:'b6', kategorie:'bold', label:'Bold 6', file:'designs/bold/b6.svg', accentElements:['background','accent'] },
+];
+
 const DS_PALETTES = [
   // Hell & Natürlich (helle Hintergründe, dunkler Text)
   {name:'Creme & Koralle', desc:'Hell & warm',            swatches:['#F8F2EA','#C67B5A','#2C2420'], pal:{primary:'#F8F2EA',accent:'#C67B5A',text:'#2C2420'}},
@@ -2945,6 +3302,463 @@ function initDesignSection(){
       }
     });
   });
+}
+
+function renderDesignGrid(filter = 'alle') {
+  const grid = document.getElementById('design-grid');
+  if (!grid) return;
+
+  const kategorien = [
+    { key: 'strukturiert', label: '📐 Strukturiert' },
+    { key: 'clean',        label: '✨ Clean & Minimal' },
+    { key: 'bold',         label: '🔥 Bold & Modern' },
+  ];
+
+  const renderKategorie = (kat) => {
+    const designs = DESIGN_LIBRARY.filter(d => d.kategorie === kat.key);
+    if (designs.length === 0) return '';
+    return `
+      <div class="design-gruppe">
+        <div class="design-gruppe-label">${kat.label}</div>
+        <div class="design-gruppe-reihe">
+          ${designs.map(d => `
+            <div class="design-card ${window._selectedDesign === d.id ? 'active' : ''}"
+                 onclick="selectDesignCard('${d.id}')">
+              <img src="${d.file}" alt="${d.label}"
+                   onerror="this.style.background='#f0ede8';this.style.minHeight='120px'">
+              <div class="design-card-label">${d.label}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  };
+
+  if (filter === 'alle') {
+    grid.innerHTML = kategorien.map(k => renderKategorie(k)).join('');
+  } else {
+    const kat = kategorien.find(k => k.key === filter);
+    grid.innerHTML = kat ? renderKategorie(kat) : '';
+  }
+}
+
+function filterDesigns(filter) {
+  document.querySelectorAll('.df-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector('[data-filter="'+filter+'"]');
+  if (btn) btn.classList.add('active');
+  renderDesignGrid(filter);
+}
+
+function selectDesignCard(id) {
+  window._selectedDesign = id;
+  window._selectedDesignObj = DESIGN_LIBRARY.find(d => d.id === id);
+  const activeBtn = document.querySelector('.df-btn.active');
+  renderDesignGrid(activeBtn ? activeBtn.dataset.filter : 'alle');
+  openDesignModal(id);
+}
+
+function setFormat(format) {
+  const canvas = document.getElementById('design-canvas');
+  if (!canvas) return;
+  canvas.className = canvas.className.replace(/format-\w+/g, '').trim();
+  canvas.classList.add('format-' + format);
+  document.querySelectorAll('.format-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.format === format);
+  });
+  window._selectedFormat = format;
+}
+
+function showDesignPreview() {
+  document.getElementById('design-preview-container').style.display = 'block';
+  document.getElementById('format-auswahl').style.display = 'block';
+  const canvas = document.getElementById('design-canvas');
+  if (!canvas.classList.contains('format-portrait') &&
+      !canvas.className.match(/format-\w+/)) {
+    canvas.classList.add('format-portrait');
+  }
+}
+
+function setAccentColor(color) {
+  document.getElementById('dc-stripe').style.background = color;
+  document.getElementById('dc-circle').style.borderColor = color;
+  window._accentColor = color;
+}
+
+function updateDesignText(hook, subtitle) {
+  const h = document.getElementById('dc-hook');
+  const s = document.getElementById('dc-subtitle');
+  if (h) h.textContent = hook || 'Dein Hook-Text';
+  if (s) s.textContent = subtitle || 'Dein Untertitel erscheint hier';
+}
+
+function setCirclePhoto(src) {
+  const circle = document.getElementById('dc-circle');
+  if (!circle) return;
+  circle.style.backgroundImage = 'url(' + src + ')';
+  circle.style.backgroundSize = 'cover';
+  circle.style.backgroundPosition = 'center';
+  circle.querySelector('.dc-circle-hint').style.display = 'none';
+}
+
+function setBgPhoto(src) {
+  const bg = document.getElementById('dc-bg');
+  if (!bg) return;
+  bg.innerHTML = '<img src="' + src + '" alt="Hintergrund">';
+}
+
+/* ══ DESIGN KONFIGURATOR MODAL ══ */
+let cropperProfil = null;
+let cropperBg = null;
+window._uploadedProfil = null;
+window._uploadedBg = null;
+
+function checkRechte() {
+  const checked = document.getElementById('dkm-rechte-check').checked;
+  const felder = document.getElementById('dkm-upload-felder');
+  const btn = document.getElementById('dkm-weiter-1');
+  felder.classList.toggle('disabled', !checked);
+  if (btn) btn.disabled = !checked;
+}
+
+function triggerUpload(type) {
+  const check = document.getElementById('dkm-rechte-check');
+  if (!check.checked) {
+    const box = check.closest('.dkm-rechte-box');
+    box.style.border = '2px solid #C67B5A';
+    setTimeout(() => box.style.border = '', 1500);
+    return;
+  }
+  document.getElementById('upload-' + type).click();
+}
+
+function handleUpload(type, input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    if (type === 'profil') {
+      window._uploadedProfil = e.target.result;
+      const st = document.getElementById('profil-status');
+      st.textContent = '✓ Foto geladen';
+      st.style.color = '#4A6741';
+      document.getElementById('dkm-bg-tab').style.display = 'block';
+    } else {
+      window._uploadedBg = e.target.result;
+      const st = document.getElementById('bg-status');
+      st.textContent = '✓ Foto geladen';
+      st.style.color = '#4A6741';
+    }
+    const checked = document.getElementById('dkm-rechte-check').checked;
+    const btn = document.getElementById('dkm-weiter-1');
+    if (btn) btn.disabled = !checked;
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function dkmOhneFotos() {
+  window._uploadedProfil = null;
+  window._uploadedBg = null;
+  window._croppedProfil = null;
+  window._croppedBg = null;
+  dkmZuStufe(3);
+  initVorschau();
+}
+
+function dkmWeiterZuCrop() {
+  if (!window._uploadedProfil && !window._uploadedBg) {
+    dkmZuStufe(3);
+    initVorschau();
+    return;
+  }
+  if (window._uploadedProfil) {
+    const imgProfil = document.getElementById('crop-img-profil');
+    if (imgProfil) {
+      imgProfil.src = window._uploadedProfil;
+      imgProfil.onload = function() {
+        if (cropperProfil) cropperProfil.destroy();
+        if (typeof Cropper !== 'undefined') {
+          cropperProfil = new Cropper(imgProfil, { aspectRatio: 1, viewMode: 2, dragMode: 'move' });
+        }
+      };
+    }
+  }
+  if (window._uploadedBg) {
+    const imgBg = document.getElementById('crop-img-bg');
+    if (imgBg) {
+      imgBg.src = window._uploadedBg;
+      const bgTab = document.getElementById('dkm-bg-tab');
+      if (bgTab) bgTab.style.display = 'block';
+    }
+  }
+  dkmZuStufe(2);
+}
+
+function switchCropTab(type) {
+  document.querySelectorAll('.dkm-crop-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.crop === type);
+  });
+  document.getElementById('crop-container-profil').style.display = type === 'profil' ? 'block' : 'none';
+  document.getElementById('crop-container-bg').style.display = type === 'bg' ? 'block' : 'none';
+  if (type === 'bg' && window._uploadedBg && !cropperBg) {
+    const imgBg = document.getElementById('crop-img-bg');
+    imgBg.src = window._uploadedBg;
+    imgBg.onload = function() {
+      cropperBg = new Cropper(imgBg, { viewMode: 2, dragMode: 'move' });
+    };
+  }
+}
+
+function dkmCropUebernehmen() {
+  if (cropperProfil) {
+    window._croppedProfil = cropperProfil.getCroppedCanvas({ width: 400, height: 400 }).toDataURL();
+  }
+  if (cropperBg) {
+    window._croppedBg = cropperBg.getCroppedCanvas({ width: 1080, height: 1350 }).toDataURL();
+  }
+  dkmZuStufe(3);
+  initVorschau();
+}
+
+function initVorschau() {
+  if (window._vorschauLaeuft) return;
+  window._vorschauLaeuft = true;
+  const design = window._selectedDesignObj;
+
+  const bg = document.getElementById('dkm-bg');
+  if (bg) {
+    bg.innerHTML = '';
+    bg.style.background = '#d0d0d0';
+    bg.style.backgroundSize = 'cover';
+    bg.style.backgroundPosition = 'center';
+    bg.style.backgroundRepeat = 'no-repeat';
+    if (window._croppedBg) {
+      bg.style.backgroundImage = 'url(' + window._croppedBg + ')';
+    } else if (design && design.file) {
+      bg.style.backgroundImage = 'url(' + design.file + ')';
+    } else {
+      bg.style.backgroundImage = 'none';
+      bg.style.background = '#e8e8e8';
+    }
+  }
+
+  const circle = document.getElementById('dkm-circle');
+  if (circle) {
+    if (window._croppedProfil) {
+      circle.style.backgroundImage = 'url(' + window._croppedProfil + ')';
+      circle.style.backgroundSize = 'cover';
+      circle.style.backgroundPosition = 'center';
+      circle.style.backgroundColor = 'transparent';
+      const icon = circle.querySelector('.dkm-circle-icon');
+      if (icon) icon.style.display = 'none';
+    } else {
+      circle.style.backgroundImage = 'none';
+      circle.style.backgroundColor = 'rgba(184,206,240,0.9)';
+      const icon = circle.querySelector('.dkm-circle-icon');
+      if (icon) { icon.style.display = 'flex'; icon.textContent = '👤'; }
+    }
+  }
+
+  const hook = document.getElementById('dkm-hook');
+  const sub = document.getElementById('dkm-subtitle');
+  if (hook) hook.textContent = window._selectedPostHook || 'Mal ehrlich…';
+  if (sub) sub.textContent = window._selectedPostSub || 'Auf einer Skala von 1–10: wie zufrieden bist du mit deinem jetzigen Beruf?';
+
+  renderDkmPaletten();
+  applyPalette(window._selectedPalette || 'p08');
+  setDkmFormat(window._selectedFormat || 'portrait');
+
+  console.log('initVorschau geladen:', {
+    design: design ? design.file : 'kein Design',
+    croppedBg: !!window._croppedBg,
+    croppedProfil: !!window._croppedProfil
+  });
+  setTimeout(function() { window._vorschauLaeuft = false; }, 200);
+}
+
+function renderDkmPaletten() {
+  const grid = document.getElementById('dkm-paletten-grid');
+  if (!grid) return;
+  grid.innerHTML = DKM_PALETTEN.map(p => `
+    <div class="dkm-palette-card ${window._selectedPalette === p.id ? 'active' : ''}"
+         id="palette-${p.id}"
+         onclick="applyPalette('${p.id}')">
+      <div class="dkm-palette-swatches">
+        <div class="dkm-swatch" style="background:${p.farben.akzent}"></div>
+        <div class="dkm-swatch" style="background:${p.farben.hintergrund}"></div>
+        <div class="dkm-swatch" style="background:${p.farben.schrift}"></div>
+      </div>
+      <div class="dkm-palette-name">${p.name}</div>
+    </div>
+  `).join('');
+}
+
+function applyPalette(id) {
+  const palette = DKM_PALETTEN.find(p => p.id === id);
+  if (!palette) return;
+  window._selectedPalette = id;
+  const stripe = document.getElementById('dkm-stripe');
+  const circle = document.getElementById('dkm-circle');
+  const textblock = document.getElementById('dkm-textblock');
+  const hook = document.getElementById('dkm-hook');
+  const subtitle = document.getElementById('dkm-subtitle');
+  if (stripe) stripe.style.background = palette.farben.akzent;
+  if (circle) { circle.style.borderColor = palette.farben.akzent; }
+  if (textblock) { textblock.style.background = '#FFFFFF'; textblock.style.color = '#111111'; }
+  if (hook) hook.style.color = '#111111';
+  if (subtitle) subtitle.style.color = '#333333';
+  document.querySelectorAll('.dkm-palette-card').forEach(card => {
+    card.classList.toggle('active', card.id === 'palette-' + id);
+  });
+  window._accentColor = palette.farben.akzent;
+  window._bgColor = palette.farben.hintergrund;
+  window._textColor = palette.farben.schrift;
+}
+
+function handleLogoUpload(input) {
+  if (!input.files || !input.files[0]) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new Image();
+    img.onload = function() {
+      const cvs = document.createElement('canvas');
+      cvs.width = img.width;
+      cvs.height = img.height;
+      const ctx = cvs.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const imageData = ctx.getImageData(0, 0, cvs.width, cvs.height);
+      const farben = extractColors(imageData);
+      const logoPalette = {
+        id: 'logo',
+        name: 'Aus deinem Logo',
+        farben: { akzent: farben[0], hintergrund: farben[1] || '#FFFFFF', schrift: getBestTextColor(farben[0]) }
+      };
+      const existing = DKM_PALETTEN.findIndex(p => p.id === 'logo');
+      if (existing > -1) { DKM_PALETTEN[existing] = logoPalette; } else { DKM_PALETTEN.unshift(logoPalette); }
+      renderDkmPaletten();
+      applyPalette('logo');
+      const st = document.getElementById('dkm-logo-status');
+      if (st) { st.textContent = '✓ Farben erkannt und angewendet'; st.style.color = '#4A6741'; }
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function extractColors(imageData) {
+  const data = imageData.data;
+  const colorMap = {};
+  const step = 20;
+  for (let i = 0; i < data.length; i += 4 * step) {
+    const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3];
+    if (a < 128) continue;
+    const key = Math.round(r/32)*32 + ',' + Math.round(g/32)*32 + ',' + Math.round(b/32)*32;
+    colorMap[key] = (colorMap[key] || 0) + 1;
+  }
+  return Object.entries(colorMap)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 3)
+    .map(([key]) => {
+      const [r, g, b] = key.split(',').map(Number);
+      return '#' + [r, g, b].map(v => Math.min(255, v).toString(16).padStart(2, '0')).join('');
+    });
+}
+
+function getBestTextColor(hexColor) {
+  const r = parseInt(hexColor.slice(1,3), 16);
+  const g = parseInt(hexColor.slice(3,5), 16);
+  const b = parseInt(hexColor.slice(5,7), 16);
+  return (0.299*r + 0.587*g + 0.114*b) / 255 > 0.5 ? '#111111' : '#FFFFFF';
+}
+
+function dkmZuStufe(nr) {
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('dkm-stufe-' + i);
+    if (el) el.style.display = i === nr ? 'block' : 'none';
+  }
+  updateDkmProgress(nr);
+  if (nr === 3) {
+    setTimeout(function() {
+      renderDkmPaletten();
+      applyPalette(window._selectedPalette || 'p08');
+    }, 50);
+  }
+}
+
+function dkmZurueck(vonStufe) {
+  dkmZuStufe(vonStufe - 1);
+}
+
+function updateDkmProgress(stufe) {
+  document.querySelectorAll('.dkm-progress-step').forEach((el, i) => {
+    el.classList.toggle('active', i + 1 === stufe);
+    el.classList.toggle('done', i + 1 < stufe);
+  });
+}
+
+function setDkmFormat(format) {
+  const canvas = document.getElementById('dkm-canvas');
+  if (!canvas) return;
+  canvas.className = 'dkm-canvas format-' + format;
+  document.querySelectorAll('.dkm-format-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.format === format);
+  });
+  window._selectedFormat = format;
+}
+
+function dkmZuInhalten() {
+  closeDesignModalBtn();
+  const lib = document.getElementById('content-library') || document.querySelector('#lib-accordion');
+  if (lib) lib.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function dkmMehrDesigns() {
+  closeDesignModalBtn();
+  const dg = document.getElementById('design-grid');
+  if (dg) dg.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function openDesignModal(id) {
+  window._vorschauLaeuft = false;
+  const design = DESIGN_LIBRARY.find(d => d.id === id);
+  if (!design) return;
+  window._selectedDesign = id;
+  window._selectedDesignObj = design;
+  window._selectedPalette = 'p08';
+  setTimeout(function() {
+    const stripe = document.getElementById('dkm-stripe');
+    if (stripe) stripe.style.background = '#C67B5A';
+  }, 10);
+  window._uploadedProfil = null;
+  window._uploadedBg = null;
+  window._croppedProfil = null;
+  window._croppedBg = null;
+  const rechteCheck = document.getElementById('dkm-rechte-check');
+  if (rechteCheck) rechteCheck.checked = false;
+  const uploadFelder = document.getElementById('dkm-upload-felder');
+  if (uploadFelder) uploadFelder.classList.add('disabled');
+  const weiterBtn = document.getElementById('dkm-weiter-1');
+  if (weiterBtn) weiterBtn.disabled = true;
+  const profilSt = document.getElementById('profil-status');
+  if (profilSt) { profilSt.textContent = 'Noch kein Foto gewählt'; profilSt.style.color = ''; }
+  const bgSt = document.getElementById('bg-status');
+  if (bgSt) { bgSt.textContent = 'Optional – ohne Foto wird ein Beispielbild verwendet'; bgSt.style.color = ''; }
+  const bgTab = document.getElementById('dkm-bg-tab');
+  if (bgTab) bgTab.style.display = 'none';
+  dkmZuStufe(1);
+  const modal = document.getElementById('design-konfigurator-modal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDesignModalBtn() {
+  const modal = document.getElementById('design-konfigurator-modal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
+  if (cropperProfil) { cropperProfil.destroy(); cropperProfil = null; }
+  if (cropperBg) { cropperBg.destroy(); cropperBg = null; }
+}
+
+function closeDesignModal(e) {
+  if (e.target.id === 'design-konfigurator-modal') closeDesignModalBtn();
 }
 
 function dsPalCard(p,idx){
@@ -3793,6 +4607,9 @@ try { buildLibrary(); } catch(e) {
 try { initDesignSection(); } catch(e) {
   console.error('FEHLER initDesignSection:', e);
   console.error('Stack:', e.stack);
+}
+try { renderDesignGrid('alle'); } catch(e) {
+  console.error('FEHLER renderDesignGrid:', e);
 }
 
 // Fallback: Sicherstellen dass Sections nach vollständigem Laden befüllt sind
