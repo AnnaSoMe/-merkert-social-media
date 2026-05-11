@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
@@ -784,7 +784,9 @@ footer a{color:var(--warm-brown);text-decoration:none}
   <h2 class="section-title">Wähle dein Design</h2>
   <p class="section-sub" style="margin-bottom:2rem">Klick auf einen Stil – er klappt auf und zeigt dir alle Farbpaletten zur Auswahl.</p>
   <div class="ds-accordion" id="ds-style-cards">
-    <!-- rendered by initDesignSection() -->
+    <details class="ds-item"><summary class="ds-item-summary"><div class="ds-item-meta"><div class="ds-item-label">Clean &amp; Minimal</div><div class="ds-item-desc">Nur dein Foto und ein starker Hook. Ruhig, zeitlos.</div></div><span class="ds-item-arrow">▼</span></summary></details>
+    <details class="ds-item"><summary class="ds-item-summary"><div class="ds-item-meta"><div class="ds-item-label">Strukturiert</div><div class="ds-item-desc">Klare Elemente, modernes Layout, Foto im Fokus.</div></div><span class="ds-item-arrow">▼</span></summary></details>
+    <details class="ds-item"><summary class="ds-item-summary"><div class="ds-item-meta"><div class="ds-item-label">Bold &amp; Dark</div><div class="ds-item-desc">Kontraststark, dunkel – bleibt im Kopf.</div></div><span class="ds-item-arrow">▼</span></summary></details>
   </div>
 </div>
 
@@ -800,7 +802,13 @@ footer a{color:var(--warm-brown);text-decoration:none}
     <span id="lib-count" style="font-family:sans-serif;font-size:13px;color:var(--warm-brown)">126 Posts verfügbar</span>
   </div>
   <div class="lib-empty" id="lib-empty">Kein Post gefunden. Versuch einen anderen Suchbegriff.</div>
-  <div id="lib-accordion"></div>
+  <div id="lib-accordion">
+    <div class="lib-saeule" id="ls-s01"><div class="s-hdr"><span class="s-icon">👥</span><span class="s-title">Teamaufbau &amp; Benefits</span><span class="s-cnt">76 Posts</span></div><div class="blist" id="g-s01"></div></div>
+    <div class="lib-saeule" id="ls-s02"><div class="s-hdr"><span class="s-icon">📊</span><span class="s-title">Produktkommunikation</span><span class="s-cnt">46 Posts</span></div><div class="blist" id="g-s02"></div></div>
+    <div class="lib-saeule" id="ls-s03"><div class="s-hdr"><span class="s-icon">🙋</span><span class="s-title">Personal Brand</span><span class="s-cnt">14 Posts</span></div><div class="blist" id="g-s03"></div></div>
+    <div class="lib-saeule" id="ls-s04"><div class="s-hdr"><span class="s-icon">📰</span><span class="s-title">Kundenkommunikation</span><span class="s-cnt">18 Posts</span></div><div class="blist" id="g-s04"></div></div>
+    <div class="lib-saeule" id="ls-s05"><div class="s-hdr"><span class="s-icon">😄</span><span class="s-title">Memes &amp; Humor</span><span class="s-cnt">12 Posts</span></div><div class="blist" id="g-s05"></div></div>
+  </div>
   <div class="lib-feedback">
     <div class="lib-feedback-text">
       <strong>Dir fehlt ein Thema?</strong>
@@ -2563,63 +2571,7 @@ renderProducts();
   <button id="ki-close" onclick="kiClose(event)">×</button>
   <div id="ki-bubble"></div>
   <div id="ki-crop">
-    <svg id="ki-anna-svg" viewBox="0 0 120 162" xmlns="http://www.w3.org/2000/svg" aria-label="Maja – Deine KI-Assistentin">
-      <ellipse cx="60" cy="159" rx="16" ry="3" fill="rgba(44,36,32,.12)"/>
-      <ellipse cx="22" cy="67" rx="22" ry="11" fill="rgba(220,238,255,0.78)" stroke="#aed0f0" stroke-width="1.2" transform="rotate(-22 22 67)"/>
-      <ellipse cx="27" cy="85" rx="14" ry="8" fill="rgba(220,238,255,0.62)" stroke="#aed0f0" stroke-width="1" transform="rotate(-12 27 85)"/>
-      <ellipse cx="98" cy="67" rx="22" ry="11" fill="rgba(220,238,255,0.78)" stroke="#aed0f0" stroke-width="1.2" transform="rotate(22 98 67)"/>
-      <ellipse cx="93" cy="85" rx="14" ry="8" fill="rgba(220,238,255,0.62)" stroke="#aed0f0" stroke-width="1" transform="rotate(12 93 85)"/>
-      <path d="M51 16 Q43 4 35 1" stroke="#2C2420" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <circle cx="33.5" cy="0.5" r="3.5" fill="#F5C842" stroke="#2C2420" stroke-width="1.5"/>
-      <path d="M69 16 Q77 4 85 1" stroke="#2C2420" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <circle cx="86.5" cy="0.5" r="3.5" fill="#F5C842" stroke="#2C2420" stroke-width="1.5"/>
-      <ellipse cx="37" cy="33" rx="4" ry="5" fill="#F2BF98"/>
-      <ellipse cx="83" cy="33" rx="4" ry="5" fill="#F2BF98"/>
-      <circle cx="60" cy="32" r="21" fill="#F2BF98"/>
-      <path d="M42 28 Q49 23 56 28 Q51.5 34.5 49 34.5 Q46.5 34.5 42 28Z" fill="white"/>
-      <circle cx="49" cy="29.5" r="4" fill="#5A8838"/>
-      <circle cx="49.3" cy="30" r="2.3" fill="#1a1a1a"/>
-      <circle cx="50.7" cy="28.4" r="1.1" fill="white"/>
-      <path d="M42 28 Q49 23.5 56 28" stroke="#1C0A04" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <line x1="43" y1="26.5" x2="41" y2="23" stroke="#1C0A04" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="46.5" y1="24.5" x2="45.5" y2="21" stroke="#1C0A04" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="49.5" y1="23.5" x2="49.5" y2="20" stroke="#1C0A04" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="52.5" y1="24.5" x2="53.5" y2="21" stroke="#1C0A04" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="55" y1="26.5" x2="57" y2="24" stroke="#1C0A04" stroke-width="1.2" stroke-linecap="round"/>
-      <path d="M42.5 22 Q49 18.5 55 21.5" stroke="#6B2D10" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-      <path d="M64 28 Q71 23 78 28 Q73.5 34.5 71 34.5 Q68.5 34.5 64 28Z" fill="white"/>
-      <circle cx="71" cy="29.5" r="4" fill="#5A8838"/>
-      <circle cx="71.3" cy="30" r="2.3" fill="#1a1a1a"/>
-      <circle cx="72.7" cy="28.4" r="1.1" fill="white"/>
-      <path d="M64 28 Q71 23.5 78 28" stroke="#1C0A04" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-      <line x1="65" y1="26.5" x2="63" y2="23" stroke="#1C0A04" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="68.5" y1="24.5" x2="67.5" y2="21" stroke="#1C0A04" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="71.5" y1="23.5" x2="71.5" y2="20" stroke="#1C0A04" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="74.5" y1="24.5" x2="75.5" y2="21" stroke="#1C0A04" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="77" y1="26.5" x2="79" y2="24" stroke="#1C0A04" stroke-width="1.2" stroke-linecap="round"/>
-      <path d="M64.5 22 Q71 18.5 77 21.5" stroke="#6B2D10" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-      <ellipse cx="39" cy="38" rx="5.5" ry="3" fill="#F07050" opacity=".22"/>
-      <ellipse cx="81" cy="38" rx="5.5" ry="3" fill="#F07050" opacity=".22"/>
-      <path d="M57.5 42 Q60 45 62.5 42" stroke="#D48A65" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-      <path d="M53 47 Q60 52.5 67 47" stroke="#C04035" stroke-width="1.9" fill="none" stroke-linecap="round"/>
-      <rect x="55" y="50" width="10" height="10" rx="3.5" fill="#F2BF98"/>
-      <ellipse cx="60" cy="90" rx="27" ry="30" fill="#F5C842"/>
-      <path d="M34 79 Q60 74 86 79 L86 87 Q60 82 34 87Z" fill="#2C2420" opacity=".8"/>
-      <path d="M34 93 Q60 88 86 93 L86 101 Q60 96 34 101Z" fill="#2C2420" opacity=".8"/>
-      <path d="M36 107 Q60 102 84 107 L83 114 Q60 110 37 114Z" fill="#2C2420" opacity=".8"/>
-      <ellipse cx="60" cy="90" rx="14" ry="19" fill="#FDE98A" opacity=".5"/>
-      <path d="M57 118 Q60 125 63 118" fill="#D4A820"/>
-      <path d="M35 83 Q16 104 14 126" stroke="#F5C842" stroke-width="9.5" stroke-linecap="round" fill="none"/>
-      <ellipse cx="13" cy="129" rx="6" ry="6.5" fill="#F2BF98"/>
-      <path d="M85 83 Q104 104 106 126" stroke="#F5C842" stroke-width="9.5" stroke-linecap="round" fill="none"/>
-      <ellipse cx="107" cy="129" rx="6" ry="6.5" fill="#F2BF98"/>
-      <rect x="7" y="127" width="106" height="27" rx="6" fill="#2C2420"/>
-      <rect x="11" y="130" width="98" height="21" rx="4" fill="#F5F0E8"/>
-      <rect x="14" y="133" width="92" height="5" rx="2" fill="#C67B5A" opacity=".75"/>
-      <rect x="14" y="141" width="68" height="2.5" rx="1.2" fill="#2C2420" opacity=".22"/>
-      <rect x="14" y="146" width="52" height="2.5" rx="1.2" fill="#2C2420" opacity=".22"/>
-      <polygon points="99,140 104,137 109,140 109,146 104,149 99,146" fill="#F5C842" opacity=".45"/>
-    </svg>
+    <img id="ki-anna-svg" src="assets/biene.png" alt="Maja – Deine KI-Assistentin">
   </div>
 </div>
 
@@ -3834,8 +3786,18 @@ async function startStripeCheckout() {
 function openBsModal(){document.getElementById('bs-modal').classList.add('open');document.body.style.overflow='hidden';}
 function closeBsModal(){document.getElementById('bs-modal').classList.remove('open');document.body.style.overflow='';}
 
-buildLibrary();
-initDesignSection();
+try { buildLibrary(); } catch(e) { console.error('buildLibrary Fehler:', e); }
+try { initDesignSection(); } catch(e) { console.error('initDesignSection Fehler:', e); }
+
+// Fallback: Sicherstellen dass Sections nach vollständigem Laden befüllt sind
+window.addEventListener('load', () => {
+  if (!document.getElementById('lib-accordion').hasChildNodes()) {
+    try { buildLibrary(); } catch(e) { console.error('buildLibrary load Fehler:', e); }
+  }
+  if (!document.getElementById('ds-style-cards').hasChildNodes()) {
+    try { initDesignSection(); } catch(e) { console.error('initDesignSection load Fehler:', e); }
+  }
+});
 
 // Auto-start on first visit
 window.addEventListener('load', () => {
