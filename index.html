@@ -104,7 +104,6 @@ nav{background:var(--white);border-bottom:1px solid var(--sand);padding:1rem 2.5
 .format-btn.active,.format-btn:hover{background:var(--coral,#C67B5A);border-color:var(--coral,#C67B5A);color:white}
 .format-icon{font-size:16px;display:block;margin-bottom:4px}
 /* ── DESIGN CANVAS WRAPPER ── */
-#design-preview-container{margin-top:32px;padding:24px;background:var(--cream,#F5F0E8);border-radius:12px;border:1.5px solid var(--sand,#E8DDD0)}
 #design-canvas-wrap{display:flex;justify-content:center;align-items:center}
 /* ── BASIS CANVAS ── */
 #design-canvas{position:relative;overflow:hidden;background:white;box-shadow:0 8px 40px rgba(0,0,0,.15);border-radius:4px;width:324px;height:405px;transition:width .3s,height .3s}
@@ -114,12 +113,9 @@ nav{background:var(--white);border-bottom:1px solid var(--sand);padding:1rem 2.5
 .dc-bg-hint{font-family:'DM Sans',sans-serif;font-size:11px;color:#999;text-align:center;padding:12px;pointer-events:none}
 /* ── DESIGN S1 ── */
 .dc-s1 .dc-textblock{position:absolute;top:0;left:0;width:78%;height:65%;background:white;padding:8% 7%;display:flex;flex-direction:column;justify-content:flex-start;gap:10px;z-index:2}
-.dc-s1 .dc-stripe{position:absolute;top:0;right:0;width:8%;height:100%;background:#2651B8;z-index:2}
 .dc-s1 .dc-circle{position:absolute;bottom:8%;right:10%;width:28%;height:0;padding-bottom:28%;border-radius:50%;background:#b8cef0;border:3px solid #2651B8;overflow:hidden;z-index:3;display:flex;align-items:center;justify-content:center}
 .dc-circle-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:24px;opacity:.5}
 /* ── TEXTE ── */
-.dc-hook{font-family:'Montserrat','DM Sans',sans-serif;font-weight:900;font-size:clamp(14px,4.5%,28px);color:#111;line-height:1.1;word-break:break-word}
-.dc-subtitle{font-family:'DM Sans',sans-serif;font-size:clamp(9px,2.8%,16px);color:#333;line-height:1.5;word-break:break-word}
 /* ── BESTSELLER BADGE ── */
 .dc-bestseller{display:none;position:absolute;top:5%;left:50%;transform:translateX(-50%);background:#FFD700;color:#111;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;padding:5px 14px;border-radius:20px;z-index:10;white-space:nowrap}
 /* ── FORMATE ── */
@@ -189,12 +185,12 @@ nav{background:var(--white);border-bottom:1px solid var(--sand);padding:1rem 2.5
 .dkm-canvas.format-story,.dkm-canvas.format-whatsapp{width:211px;height:375px}
 .dkm-canvas.format-linkedin,.dkm-canvas.format-facebook{width:375px;height:196px}
 .dkm-canvas.format-whatsapp .dkm-bestseller{display:block!important}
-.dkm-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#d0d0d0;image-rendering:auto;z-index:1}
+.dkm-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;background-color:#d0d0d0;z-index:1}
 .dkm-stripe{position:absolute;top:0;right:0;width:7%;height:100%;z-index:2}
-.dkm-textblock{position:absolute;top:0;left:0;width:78%;height:65%;background:white;padding:8% 7%;display:flex;flex-direction:column;justify-content:flex-start;gap:6px;z-index:2;box-sizing:border-box}
+.dkm-textblock{position:absolute;top:0;left:0;width:78%;height:65%;background:white;padding:8% 7%;display:flex;flex-direction:column;justify-content:flex-start;gap:6px;z-index:2;box-sizing:border-box;overflow:hidden}
 .dkm-hook{font-family:'Montserrat','DM Sans',sans-serif;font-weight:900;font-size:18px;color:#111;line-height:1.1;word-break:break-word;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
 .dkm-subtitle{font-family:'DM Sans',sans-serif;font-size:11px;color:#333;line-height:1.5;word-break:break-word;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical}
-.dkm-circle{position:absolute;bottom:5%;right:8%;width:28%;aspect-ratio:1/1;border-radius:50%;background:rgba(184,206,240,.9);border:3px solid #2651B8;overflow:hidden;z-index:4;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.dkm-circle{position:absolute;bottom:4%;right:8%;width:26%;aspect-ratio:1/1;border-radius:50%;background:rgba(184,206,240,.9);border:3px solid #2651B8;overflow:hidden;z-index:4;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.2)}
 .dkm-circle-icon{font-size:16px;opacity:.5;line-height:1}
 .dkm-bestseller{display:none;position:absolute;top:5%;left:50%;transform:translateX(-50%);background:#FFD700;color:#111;font-family:'Montserrat',sans-serif;font-size:8px;font-weight:800;letter-spacing:.1em;padding:3px 10px;border-radius:20px;z-index:10;white-space:nowrap}
 .format-linkedin .dkm-textblock,.format-facebook .dkm-textblock{width:60%!important;height:100%!important}
@@ -1606,6 +1602,12 @@ footer a{color:var(--warm-brown);text-decoration:none}
         <div class="dkm-abschluss-icon">✓</div>
         <div class="dkm-stufe-titel" style="text-align:center">Dein Design ist bereit</div>
         <div class="dkm-stufe-sub" style="text-align:center">Was möchtest du als nächstes tun?</div>
+        <div id="dkm-download-area" style="display:none;margin-bottom:16px"></div>
+        <button id="dkm-generate-btn" class="dkm-btn-primary"
+                style="width:100%;margin-bottom:16px;font-size:14px;padding:14px"
+                onclick="generateBannerbearImage()">
+          ✨ Post jetzt erstellen &amp; herunterladen
+        </button>
         <div class="dkm-abschluss-optionen">
           <button class="dkm-option-btn primary" onclick="dkmZuInhalten()">
             <span class="dkm-option-icon">📝</span>
@@ -3368,28 +3370,6 @@ function setFormat(format) {
   window._selectedFormat = format;
 }
 
-function showDesignPreview() {
-  document.getElementById('design-preview-container').style.display = 'block';
-  document.getElementById('format-auswahl').style.display = 'block';
-  const canvas = document.getElementById('design-canvas');
-  if (!canvas.classList.contains('format-portrait') &&
-      !canvas.className.match(/format-\w+/)) {
-    canvas.classList.add('format-portrait');
-  }
-}
-
-function setAccentColor(color) {
-  document.getElementById('dc-stripe').style.background = color;
-  document.getElementById('dc-circle').style.borderColor = color;
-  window._accentColor = color;
-}
-
-function updateDesignText(hook, subtitle) {
-  const h = document.getElementById('dc-hook');
-  const s = document.getElementById('dc-subtitle');
-  if (h) h.textContent = hook || 'Dein Hook-Text';
-  if (s) s.textContent = subtitle || 'Dein Untertitel erscheint hier';
-}
 
 function setCirclePhoto(src) {
   const circle = document.getElementById('dc-circle');
@@ -3680,6 +3660,12 @@ function dkmZuStufe(nr) {
       renderDkmPaletten();
       applyPalette(window._selectedPalette || 'p08');
     }, 50);
+  }
+  if (nr === 4) {
+    const btn = document.getElementById('dkm-generate-btn');
+    if (btn) { btn.textContent = '✨ Post jetzt erstellen & herunterladen'; btn.disabled = false; btn.style.background = ''; }
+    const dl = document.getElementById('dkm-download-area');
+    if (dl) { dl.style.display = 'none'; dl.innerHTML = ''; }
   }
 }
 
@@ -4782,6 +4768,227 @@ async function downloadPost() {
 const SUPABASE_URL      = 'https://yxhmyoyavozfmvhnzfcf.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_KwHHIMGrLa8jAm4jN0MG1w_gY3_rUvc';
 var supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ── Konfigurator-Export (html2canvas) ─────────────────────────────────────
+async function generateHtml2CanvasImage() {
+  const btn          = document.getElementById('dkm-generate-btn');
+  const downloadArea = document.getElementById('dkm-download-area');
+  const canvasEl     = document.getElementById('dkm-canvas');
+
+  if (!canvasEl) return;
+  if (typeof html2canvas === 'undefined') {
+    alert('Export-Bibliothek noch nicht geladen – bitte kurz warten und erneut versuchen.');
+    return;
+  }
+
+  if (btn) { btn.textContent = '⏳ Wird erstellt…'; btn.disabled = true; btn.style.background = ''; }
+  if (downloadArea) { downloadArea.style.display = 'none'; downloadArea.innerHTML = ''; }
+
+  // Ziel: 1080px breit – Scale dynamisch berechnen
+  const targetW = 1080;
+  const currentW = canvasEl.offsetWidth || 300;
+  const scale    = targetW / currentW;
+
+  try {
+    const result = await html2canvas(canvasEl, {
+      scale:           scale,
+      useCORS:         true,
+      allowTaint:      true,
+      backgroundColor: '#ffffff',
+      logging:         false,
+      onclone: function(doc) {
+        const cl = doc.getElementById('dkm-canvas');
+        if (cl) cl.style.transform = 'none';
+      }
+    });
+
+    const outW = result.width;
+    const outH = result.height;
+
+    // toBlob statt toDataURL – vermeidet korrupte Dateien bei großen Bildern
+    result.toBlob(function(blob) {
+      const blobUrl = URL.createObjectURL(blob);
+
+      if (btn) { btn.textContent = '✓ Post erstellt!'; btn.style.background = '#4A6741'; }
+
+      if (downloadArea) {
+        downloadArea.style.display = 'block';
+        downloadArea.innerHTML = `
+          <div style="text-align:center;padding:16px;background:#f0f5ee;border-radius:10px;border:1.5px solid #4A6741;margin-bottom:8px">
+            <div style="font-size:28px;margin-bottom:6px">✓</div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#2C2420;margin-bottom:12px">Dein Post ist fertig!</div>
+            <a href="${blobUrl}" download="merkert-post.png"
+               style="display:inline-block;padding:12px 28px;background:#C67B5A;color:white;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;text-decoration:none"
+               onclick="setTimeout(()=>URL.revokeObjectURL('${blobUrl}'), 10000)">
+              ⬇ Post herunterladen
+            </a>
+            <div style="font-family:'DM Sans',sans-serif;font-size:11px;color:#888;margin-top:8px">${outW} × ${outH} px · PNG</div>
+          </div>
+        `;
+      }
+    }, 'image/png');
+  } catch (err) {
+    console.error('html2canvas Fehler:', err);
+    if (btn) { btn.textContent = '✗ Fehler – nochmal versuchen'; btn.disabled = false; btn.style.background = ''; }
+    alert('Beim Erstellen ist ein Fehler aufgetreten:\n' + err.message);
+  }
+}
+
+// ── Bannerbear Integration ─────────────────────────────────────────────────
+const BB_API_KEY = 'bb_pr_ff742ac2277c57093b45cfe1ebdf7b';
+const BB_TEMPLATE_ID = 'j14WwV5VMj6nZa7XrB';
+const BB_AVATAR_BUCKET = 'temp-avatars';
+
+async function uploadAvatarToSupabase(base64DataUrl) {
+  try {
+    const response = await fetch(base64DataUrl);
+    const blob = await response.blob();
+    const fileName = 'avatar_' + Date.now() + '.jpg';
+
+    const { error } = await supabase.storage
+      .from(BB_AVATAR_BUCKET)
+      .upload(fileName, blob, { contentType: 'image/jpeg' });
+
+    if (error) throw error;
+
+    const { data: urlData } = supabase.storage
+      .from(BB_AVATAR_BUCKET)
+      .getPublicUrl(fileName);
+
+    console.log('Avatar hochgeladen:', urlData.publicUrl);
+    return { url: urlData.publicUrl, fileName };
+  } catch (err) {
+    console.error('Avatar Upload Fehler:', err);
+    return null;
+  }
+}
+
+async function deleteAvatarFromSupabase(fileName) {
+  try {
+    await supabase.storage.from(BB_AVATAR_BUCKET).remove([fileName]);
+    console.log('Avatar gelöscht:', fileName);
+  } catch (err) {
+    console.error('Avatar Löschen Fehler:', err);
+  }
+}
+
+async function generateBannerbearImage() {
+  const btn = document.getElementById('dkm-generate-btn');
+  if (btn) {
+    btn.textContent = '⏳ Wird erstellt…';
+    btn.disabled = true;
+  }
+
+  const modifications = [
+    { name: 'hook',     text: window._selectedPostHook || 'Mal ehrlich…',                              font_family: 'Montserrat', font_weight: '900' },
+    { name: 'subtitle', text: window._selectedPostSub  || 'Auf einer Skala von 1–10: wie zufrieden bist du?', font_family: 'Montserrat', font_weight: '400' },
+    { name: 'stripe',   color: window._accentColor || '#2651B8' }
+  ];
+
+  // Avatar via Supabase hochladen
+  let avatarFileName = null;
+  if (window._croppedProfil) {
+    if (btn) btn.textContent = '⏳ Foto wird vorbereitet…';
+    const uploadResult = await uploadAvatarToSupabase(window._croppedProfil);
+    if (uploadResult) {
+      modifications.push({ name: 'avatar', image_url: uploadResult.url });
+      avatarFileName = uploadResult.fileName;
+    }
+  }
+
+  if (window._croppedBg) {
+    const uploadResult = await uploadAvatarToSupabase(window._croppedBg);
+    if (uploadResult) {
+      modifications.push({ name: 'background', image_url: uploadResult.url });
+    }
+  }
+
+  if (btn) btn.textContent = '⏳ Post wird generiert…';
+
+  try {
+    const createResponse = await fetch('https://api.bannerbear.com/v2/images', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${BB_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ template: BB_TEMPLATE_ID, modifications: modifications, webhook_url: null })
+    });
+
+    const createData = await createResponse.json();
+    console.log('Bannerbear Response:', createData);
+
+    if (!createData.uid) {
+      throw new Error('Keine UID erhalten: ' + JSON.stringify(createData));
+    }
+
+    const imageUrl = await pollBannerbearImage(createData.uid);
+    showDownloadLink(imageUrl, avatarFileName);
+
+  } catch (error) {
+    console.error('Bannerbear Fehler:', error);
+    if (avatarFileName) deleteAvatarFromSupabase(avatarFileName);
+    if (btn) {
+      btn.textContent = '✗ Fehler – nochmal versuchen';
+      btn.disabled = false;
+    }
+    alert('Beim Erstellen des Posts ist ein Fehler aufgetreten. Bitte versuche es erneut.');
+  }
+}
+
+async function pollBannerbearImage(uid) {
+  const maxVersuche = 20;
+  const wartezeit = 3000;
+
+  for (let i = 0; i < maxVersuche; i++) {
+    await new Promise(resolve => setTimeout(resolve, wartezeit));
+
+    const response = await fetch(`https://api.bannerbear.com/v2/images/${uid}`, {
+      headers: { 'Authorization': `Bearer ${BB_API_KEY}` }
+    });
+    const data = await response.json();
+    console.log(`Polling ${i+1}/${maxVersuche}:`, data.status);
+
+    if (data.status === 'completed' && data.image_url) {
+      return data.image_url;
+    }
+    if (data.status === 'failed') {
+      throw new Error('Bannerbear: Bild-Erstellung fehlgeschlagen');
+    }
+  }
+  throw new Error('Timeout: Bild wurde nicht rechtzeitig fertig');
+}
+
+function showDownloadLink(imageUrl, avatarFileName) {
+  window._generatedImageUrl = imageUrl;
+
+  const btn = document.getElementById('dkm-generate-btn');
+  if (btn) {
+    btn.textContent = '✓ Post erstellt!';
+    btn.style.background = '#4A6741';
+  }
+
+  const downloadArea = document.getElementById('dkm-download-area');
+  if (downloadArea) {
+    downloadArea.style.display = 'block';
+    downloadArea.innerHTML = `
+      <div style="text-align:center;padding:16px;background:#f0f5ee;border-radius:10px;border:1.5px solid #4A6741">
+        <div style="font-size:32px;margin-bottom:8px">✓</div>
+        <div style="font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;color:#2C2420;margin-bottom:12px">Dein Post ist fertig!</div>
+        <a href="${imageUrl}" download="mein-post.png" target="_blank"
+           id="bb-download-link"
+           style="display:inline-block;padding:12px 24px;background:#C67B5A;color:white;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;text-decoration:none">
+          ⬇ Post herunterladen
+        </a>
+        <div style="font-family:'DM Sans',sans-serif;font-size:11px;color:#888;margin-top:8px">1080 × 1350 px · PNG · Druckqualität</div>
+      </div>
+    `;
+    if (avatarFileName) {
+      const dlLink = document.getElementById('bb-download-link');
+      if (dlLink) dlLink.addEventListener('click', () => deleteAvatarFromSupabase(avatarFileName), { once: true });
+    }
+  }
+}
 </script>
 
 <script src="js/designState.js"></script>
